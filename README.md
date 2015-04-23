@@ -1,6 +1,4 @@
 # Prephirence
-===========
-
 ![Logo](/logo-128x128.png)
 
 ![Platform](http://img.shields.io/badge/platform-iOS/MacOS-orange.svg?style=flat)
@@ -38,7 +36,7 @@ if let myValue = fromDicoLiteral.objectForKey("myKey") {..}
 if let myValue = fromDicoLiteral["bool"] as? Bool {..}
 
 var hasKey = fromDicoLiteral.hasObjectForKey("myKey")
-var myValue = fromDicoLiteral.boolForKey("myKey)
+var myValue = fromDicoLiteral.boolForKey("myKey")
 ..
 
 ```
@@ -78,7 +76,7 @@ You can defined a sub category of NSUserDefaults prefixed with your own string
 ```swift
 let myAppPrefs = userDefaults["myAppKey"] as! MutableProxyPreferences
 // We have :
-userDefaults["myAppKey.myKey] == myAppPrefs["myKey"] // is true
+userDefaults["myAppKey.myKey"] == myAppPrefs["myKey"] // is true
 ```
 
 ## Composing ##
@@ -114,7 +112,7 @@ Add `pod 'Prephirence', :git => 'https://github.com/phimage/Prephirence.git'` to
 # Licence #
 The MIT License (MIT)
 
-Copyright (c) 2015 Marcin Krzyzanowski
+Copyright (c) 2015 Eric Marchand
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
