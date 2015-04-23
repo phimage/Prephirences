@@ -9,11 +9,9 @@ Prephirence is a Swift library that provides useful protocols and methods to man
 
 Preferences could be user preferences (NSUserDefaults) or your own private application preferences, any object which implement protocol [PreferencesType](/Prephirence/PreferencesType.swift)
 
-
 ## Contents ##
 - [Usage](#usage)
 - [Setup](#setup)
-- [Roadmap](#roadmap)
 - [Licence](#licence)
 
 # Usage #
@@ -29,7 +27,7 @@ var fromDicoLiteral: DictionaryPreferences = ["myKey", "myValue", "bool", true]
 // From filepath
 if let fromFile = DictionaryPreferences(filePath: "/my/file/path") {..}
 // ...in main bundle ##
-if let fromFile = DictionaryPreferences(filename: "mypreferences", ofType: "plist") {..}
+if let fromFile = DictionaryPreferences(filename: "prefs", ofType: "plist") {..}
 ```
 
 ## Accessing ##
@@ -46,8 +44,11 @@ var myValue = fromDicoLiteral.boolForKey("myKey)
 ```
 
 ## Modifying ##
+
 Modifiable preferences implement protocol [MutablePreferencesTypes](/Prephirence/PreferencesType.swift)
+
 The simplest implementation is [MutableDictionaryPreferences](/Prephirence/DictionaryPreferences.swift)
+
 ```swift
 // From Dictionary
 var mutableFromDico: MutableDictionaryPreferences = ["myKey", "myValue"]
@@ -56,7 +57,6 @@ mutableFromDico["newKey"] = "newValue"
 mutableFromDico.setBool(true, "newKey")
 
 ```
-(todo)
 
 ## NSUserDefaults ##
 
@@ -70,33 +70,46 @@ if let myValue = userDefaults["mykey"] as? Bool {..}
 
 NSUserDefaults implement also MutablePreferencesType and can be modified with same methods
 ```swift
-(todo)
+userDefaults["mykey"] = "myvalue"
 ```
+
 ### Proxing user defaults ###
 You can defined a sub category of NSUserDefaults prefixed with your own string
 ```swift
-let myAppPreferences = userDefaults["myAppKey"] as! MutableProxyPreferences
+let myAppPrefs = userDefaults["myAppKey"] as! MutableProxyPreferences
 // We have :
-var test: Bool = userDefaults["myAppKey.myKey] == myAppPreferences["myKey"] // is true
+userDefaults["myAppKey.myKey] == myAppPrefs["myKey"] // is true
 ```
 
 ## Composing ##
 
+Composing allow to aggregate multiples PreferencesType objects into one PreferencesType
+
 ```swift
-...
-let myPreferences = MutableCompositePreferences([fromDico, fromFile, userDefaults])
-// or 
+let myPreferences = CompositePreferences([fromDico, fromFile, userDefaults])
+// With array literal
+let myPreferences: CompositePreferences = [fromDico, fromFile, userDefaults]
+
+// Mutable, only first mutable will be affected
 let myPreferences: MutableCompositePreferences = [fromDico, fromFile, userDefaults]
 ```
 
+You can access or modify this composite preferences like any PreferencesType.
+1. When accessing, first preferences that define a value for a specified key will respond
+1. When modifying, first mutable preferences will be affected
+
+The main goal is to define read-only preferences for your app (in code or files) and some mutable preferences (like NSUserDefaults)
 
 # Setup #
-- Import Prephirence.xcodeproj to your project
-- Or compile framework for your OS and import in your project
 
-# Roadmap #
-Add CocoaPod
+## Using xcode project ##
 
+1. Drag Prephirence.xcodeproj to your project/workspace or open it to compile it
+2. Add the Prephirence framework to your project
+
+## Using [cocoapods](http://cocoapods.org/) ##
+
+Add `pod 'Prephirence', :git => 'https://github.com/phimage/Prephirence.git'` to your `Podfile` and run `pod install`. Add `use_frameworks!` to the end of the `Podfile`.
 
 # Licence #
 The MIT License (MIT)
