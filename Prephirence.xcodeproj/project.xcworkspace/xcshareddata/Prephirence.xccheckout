@@ -6,31 +6,35 @@
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>9D684BF4-6054-4FB1-B6DB-41C042DDD38A</string>
+	<key>IDESourceControlProjectName</key>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>1164185F70B8614CB45298D78A9381AF0676EA42</key>
-		<string>gitlab:phimage/phials.git</string>
+		<key>7E8F4207189E397862054CDF36427497231A0BE5</key>
+		<string>https://github.com/phimage/Prephirence.git</string>
 	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Prephirence.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>1164185F70B8614CB45298D78A9381AF0676EA42</key>
-		<string>phials/</string>
+		<key>7E8F4207189E397862054CDF36427497231A0BE5</key>
+		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>gitlab:phimage/phials.git</string>
+	<string>https://github.com/phimage/Prephirence.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>1164185F70B8614CB45298D78A9381AF0676EA42</string>
+	<string>7E8F4207189E397862054CDF36427497231A0BE5</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>1164185F70B8614CB45298D78A9381AF0676EA42</string>
+			<string>7E8F4207189E397862054CDF36427497231A0BE5</string>
 			<key>IDESourceControlWCCName</key>
-			<string>phials</string>
+			<string>Prephirence</string>
 		</dict>
 	</array>
 </dict>

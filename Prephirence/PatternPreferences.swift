@@ -9,17 +9,32 @@
 import Foundation
 
 //MARK: composite pattern
-public class CompositePreferences: PreferencesType {
+public class CompositePreferences: PreferencesType , ArrayLiteralConvertible {
     
-    var prefsArray: [PreferencesType] = []
+    var array: [PreferencesType] = []
     
-    public init(array: [PreferencesType]){
-        self.prefsArray = array
+    // MARK: singleton
+    static let sharedInstance = CompositePreferences([]) // TODO make it lazy
+    
+    // MARK: init
+    public init(_ array: [PreferencesType]){
+        self.array = array
     }
     
+    // MARK: ArrayLiteralConvertible
+    public typealias Element = PreferencesType
+    
+    public convenience required init(arrayLiteral elements: Element...) {
+        self.init([])
+        for element in elements {
+            self.array.append(element)
+        }
+    }
+    
+    // MARK: PreferencesType
     public subscript(key: String) -> AnyObject? {
         get {
-            for prefs in prefsArray {
+            for prefs in array {
                 if let value: AnyObject = prefs.objectForKey(key){
                     return value
                 }
@@ -70,31 +85,39 @@ public class CompositePreferences: PreferencesType {
         return self[key] as? NSURL
     }
     
+    public func dictionary() -> [String : AnyObject] {
+        var dico = [String : AnyObject]()
+        for prefs in reverse(array) {
+            dico += prefs.dictionary()
+        }
+        return dico
+    }
     public func dictionaryRepresentation() -> [NSObject : AnyObject] {
         var dico = [NSObject : AnyObject]()
-        for prefs in reverse(prefsArray) {
+        for prefs in reverse(array) {
             dico += prefs.dictionaryRepresentation()
         }
         return dico
     }
+
 }
 
 public class MutableCompositePreferences: CompositePreferences, MutablePreferencesType {
     
     var affectOnlyFirstMutable: Bool
 
-    public override convenience init(array: [PreferencesType]){
-        self.init(array: array, affectOnlyFirstMutable: true)
+    public override convenience init(_ array: [PreferencesType]){
+        self.init(array, affectOnlyFirstMutable: true)
     }
     
-    public init(array: [PreferencesType], affectOnlyFirstMutable: Bool){
+    public init(_ array: [PreferencesType], affectOnlyFirstMutable: Bool){
         self.affectOnlyFirstMutable = affectOnlyFirstMutable
-        super.init(array: array)
+        super.init(array)
     }
     
     override public subscript(key: String) -> AnyObject? {
         get {
-            for prefs in prefsArray {
+            for prefs in array {
                 if let value: AnyObject = prefs.objectForKey(key){
                     return value
                 }
@@ -102,7 +125,7 @@ public class MutableCompositePreferences: CompositePreferences, MutablePreferenc
             return nil
         }
         set {
-            for prefs in prefsArray {
+            for prefs in array {
                 if let mutablePrefs = prefs as? MutablePreferencesType {
                     mutablePrefs.setObject(newValue, forKey: key)
                     if affectOnlyFirstMutable {
@@ -136,7 +159,7 @@ public class MutableCompositePreferences: CompositePreferences, MutablePreferenc
     }
     
     public func registerDefaults(registrationDictionary: [NSObject : AnyObject]){
-        for prefs in prefsArray {
+        for prefs in array {
             if let mutablePrefs = prefs as? MutablePreferencesType {
                 mutablePrefs.registerDefaults(registrationDictionary)
                 if affectOnlyFirstMutable {
@@ -146,7 +169,7 @@ public class MutableCompositePreferences: CompositePreferences, MutablePreferenc
         }
     }
     public  func clearAll() {
-        for prefs in prefsArray {
+        for prefs in array {
             if let mutablePrefs = prefs as? MutablePreferencesType {
                 mutablePrefs.clearAll()
             }
@@ -160,6 +183,10 @@ public class ProxyPreferences {
     private let proxiable: PreferencesType
     private let parentKey: String
     var separator: String
+    
+    public convenience init(_ proxiable: PreferencesType) {
+        self.init(proxiable, "", "")
+    }
     
     public init(_ proxiable: PreferencesType, _ parentKey: String, _ separator: String) {
         self.proxiable = proxiable
@@ -216,8 +243,11 @@ extension ProxyPreferences: PreferencesType {
     public func URLForKey(key: String) -> NSURL? {
         return self.proxiable.URLForKey(key)
     }
+    public func dictionary() -> [String : AnyObject] {
+        return self.proxiable.dictionary()
+    }
     public func dictionaryRepresentation() -> [NSObject : AnyObject] {
-        return self.dictionaryRepresentation()
+        return self.proxiable.dictionaryRepresentation()
     }
 }
 
@@ -280,4 +310,3 @@ extension MutableProxyPreferences: MutablePreferencesType {
         self.mutable.registerDefaults(registrationDictionary)
     }
 }
-

@@ -14,6 +14,9 @@ import Foundation
 extension NSUserDefaults: MutablePreferencesType {
     // other way is to encapsulate NSUserDefaults in new object NSUserDefaultsPrefs: MutablePreferencesType
     
+    public func dictionary() -> [String : AnyObject] {
+        return self.dictionaryRepresentation() as! [String:AnyObject]
+    }
     public func hasObjectForKey(key: String) -> Bool {
         return objectForKey(key) != nil
     }
@@ -25,7 +28,7 @@ extension NSUserDefaults: MutablePreferencesType {
 }
 
 //MARK: subscript access
-var NSUserDefaultsKeySeparator = "."
+public var NSUserDefaultsKeySeparator = "."
 extension NSUserDefaults {
     
     public subscript(key: String) -> AnyObject? {

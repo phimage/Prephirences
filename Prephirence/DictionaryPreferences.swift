@@ -8,12 +8,15 @@
 
 import Foundation
 
-public class DictionaryPreferences: PreferencesType {
-    
+// MARK: Dictionary Adapter
+// Adapt Dictionary to PreferencesType (with adapter pattern)
+public class DictionaryPreferences: PreferencesType, SequenceType, DictionaryLiteralConvertible {
+
     internal var dico : Dictionary<String,AnyObject>
-    
-    public init(dico: Dictionary<String,AnyObject>) {
-        self.dico = dico
+
+    // MARK: init
+    public init(dictionary: Dictionary<String,AnyObject>) {
+        self.dico = dictionary
     }
     
     public init?(filePath: String) {
@@ -41,7 +44,47 @@ public class DictionaryPreferences: PreferencesType {
             return nil
         }
     }
+
+    public init(preferences: PreferencesType) {
+        self.dico = preferences.dictionary()
+    }
     
+    // MARK: DictionaryLiteralConvertibles
+    public typealias Key = String
+    public typealias Value = AnyObject
+    public typealias Element = (Key, Value)
+
+    public required convenience init(dictionaryLiteral elements: Element...) {
+        self.init(dictionary: [:])
+        for (key, value) in elements {
+            dico[key] = value
+        }
+    }
+    
+    // MARK: SequenceType
+
+    public func generate() -> DictionaryGenerator<Key, Value> {
+        return self.dico.generate()
+    }
+    
+    public typealias Index = DictionaryIndex<Key, Value>
+    
+    public subscript (position: DictionaryIndex<Key, Value>) -> Element {
+        get {
+            return dico[position]
+        }
+    }
+
+    public subscript(key : Key?) -> Value? {
+        get {
+            if key != nil {
+                return dico[key!]
+            }
+            return nil
+        }
+    }
+    
+    // MARK: PreferencesType
     public subscript(key: String) -> AnyObject? {
         get {
             return dico[key]
@@ -86,18 +129,24 @@ public class DictionaryPreferences: PreferencesType {
     public func URLForKey(key: String) -> NSURL? {
         return dico[key] as? NSURL
     }
-    
+
+    public func dictionary() -> [String : AnyObject] {
+        return self.dico
+    }
     public func dictionaryRepresentation() -> [NSObject : AnyObject] {
-        return self.dico //FIXME return a non mutable representation...
+        return self.dico
     }
     
+    // MARK: specifics methods
     public func writeToFile(path: String, atomically: Bool) {
         (self.dico as NSDictionary).writeToFile(path, atomically: atomically)
     }
 }
 
+// MARK: - Mutable Dictionary Adapter
 public class MutableDictionaryPreferences: DictionaryPreferences, MutablePreferencesType {
     
+    // MARK: MutablePreferencesType
     public override subscript(key: String) -> AnyObject? {
         get {
             return dico[key]
@@ -140,3 +189,25 @@ public class MutableDictionaryPreferences: DictionaryPreferences, MutablePrefere
     
 }
 
+// MARK: - Buffered preferences
+public class BufferPreferences: MutableDictionaryPreferences {
+    var buffered: MutablePreferencesType
+    
+    public init(_ buffered: MutablePreferencesType) {
+        self.buffered = buffered
+        super.init(dictionary: buffered.dictionary())
+    }
+
+    public required convenience init(dictionaryLiteral elements: (Key, Value)...) {
+        fatalError("init(dictionaryLiteral:) has not been implemented")
+    }
+
+    // MARK: specifics methods
+    func commit() {
+        buffered.registerDefaults(self.dictionaryRepresentation())
+    }
+    
+    func rollback() {
+        self.dico = buffered.dictionary()
+    }
+}

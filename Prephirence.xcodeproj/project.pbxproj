@@ -19,6 +19,7 @@
 		C42115191AE7D91300A09DD9 /* PatternPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114D41AE7D32800A09DD9 /* PatternPreferences.swift */; };
 		C421151A1AE7D91600A09DD9 /* NSUserDefaults+Prephirence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114CE1AE7D15000A09DD9 /* NSUserDefaults+Prephirence.swift */; };
 		C421151D1AE7DF2300A09DD9 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C42114C11AE7D0CB00A09DD9 /* Info.plist */; };
+		C45D31381AE8FAE10034D1E3 /* Test.plist in Resources */ = {isa = PBXBuildFile; fileRef = C45D31371AE8FAE10034D1E3 /* Test.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		C42115011AE7D8E200A09DD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C42115021AE7D8E200A09DD9 /* PrephirenceMacOSX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrephirenceMacOSX.h; sourceTree = "<group>"; };
 		C421151B1AE7D97900A09DD9 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		C45D31371AE8FAE10034D1E3 /* Test.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Test.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 		C42114C01AE7D0CB00A09DD9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C45D31371AE8FAE10034D1E3 /* Test.plist */,
 				C42114C11AE7D0CB00A09DD9 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -266,6 +269,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C45D31381AE8FAE10034D1E3 /* Test.plist in Resources */,
 				C421151D1AE7DF2300A09DD9 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

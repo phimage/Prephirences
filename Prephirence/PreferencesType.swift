@@ -9,7 +9,7 @@
 import Foundation
 
 public protocol PreferencesType {
-    
+
     subscript(key: String) -> AnyObject? {get}
 
     func objectForKey(key: String) -> AnyObject?
@@ -26,7 +26,12 @@ public protocol PreferencesType {
     func boolForKey(key: String) -> Bool
     func URLForKey(key: String) -> NSURL?
     
+    func dictionary() -> [String : AnyObject]
     func dictionaryRepresentation() -> [NSObject : AnyObject]
+    
+    // TODO SequenceType for all Preferences? maybe conflit with CompositePreferences
+    //typealias Key = String
+    //typealias Value = AnyObject
 }
 
 public protocol MutablePreferencesType: PreferencesType {
