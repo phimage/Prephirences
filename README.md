@@ -1,15 +1,30 @@
 # Prephirence
-![Logo](/logo-128x128.png)
+[![License](https://img.shields.io/badge/License-MIT-lightgreen.svg?style=flat
+            )](http://mit-license.org)
+[![Platform](http://img.shields.io/badge/platform-iOS/MacOS-orange.svg?style=flat
+             )](https://developer.apple.com/resources/)
+[![Language](http://img.shields.io/badge/language-swift-brightgreen.svg?style=flat
+             )](https://developer.apple.com/swift)
+[![Issues](https://img.shields.io/github/issues/phimage/Prephirence.svg?style=flat
+           )](https://github.com/phimage/Prephirence/issues)
 
-![Platform](http://img.shields.io/badge/platform-iOS/MacOS-orange.svg?style=flat)
+![Logo](/logo-128x128.png)
 
 Prephirence is a Swift library that provides useful protocols and methods to manage preferences.
 
-Preferences could be user preferences (NSUserDefaults) or your own private application preferences, any object which implement protocol [PreferencesType](/Prephirence/PreferencesType.swift)
+Preferences could be user preferences (NSUserDefaults) or your own private application preferences - any object which implement protocol [PreferencesType](/Prephirence/PreferencesType.swift)
 
 ## Contents ##
 - [Usage](#usage)
+  - [Creating](#creating)
+  - [Accessing](#accessing)
+  - [Modifying](#modifying)
+  - [NSUserDefaults](#nsuserdefaults)
+  - [Proxing user defaults](#proxing-user-defaults)
+  - [Composing](#composing)
 - [Setup](#setup)
+  - [Using xcode project](#using-xcode-project)
+  - [Using cocoapods](#using-cocoapods)
 - [Licence](#licence)
 
 # Usage #
@@ -29,7 +44,7 @@ if let fromFile = DictionaryPreferences(filename: "prefs", ofType: "plist") {..}
 ```
 
 ## Accessing ##
-You can access with all methods defined in PreferencesType
+You can access with all methods defined in PreferencesType protocol
 
 ```swift
 if let myValue = fromDicoLiteral.objectForKey("myKey") {..}
@@ -52,7 +67,8 @@ The simplest implementation is [MutableDictionaryPreferences](/Prephirence/Dicti
 var mutableFromDico: MutableDictionaryPreferences = ["myKey", "myValue"]
 
 mutableFromDico["newKey"] = "newValue"
-mutableFromDico.setBool(true, "newKey")
+mutableFromDico.setObject("myValue", forKey: "newKey")
+mutableFromDico.setBool(true, forKey: "newKey")
 
 ```
 
@@ -71,13 +87,14 @@ NSUserDefaults implement also MutablePreferencesType and can be modified with sa
 userDefaults["mykey"] = "myvalue"
 ```
 
-### Proxing user defaults ###
-You can defined a sub category of NSUserDefaults prefixed with your own string
+### Proxying user defaults ###
+You can defined a subcategory of NSUserDefaults prefixed with your own string like that
 ```swift
 let myAppPrefs = userDefaults["myAppKey"] as! MutableProxyPreferences
 // We have :
 userDefaults["myAppKey.myKey"] == myAppPrefs["myKey"] // is true
 ```
+This allow prefixing all your defaults with same key
 
 ## Composing ##
 
@@ -93,10 +110,11 @@ let myPreferences: MutableCompositePreferences = [fromDico, fromFile, userDefaul
 ```
 
 You can access or modify this composite preferences like any PreferencesType.
-1. When accessing, first preferences that define a value for a specified key will respond
-1. When modifying, first mutable preferences will be affected
 
-The main goal is to define read-only preferences for your app (in code or files) and some mutable preferences (like NSUserDefaults)
+1. When accessing, first preferences that define a value for a specified key will respond
+2. When modifying, first mutable preferences will be affected
+
+The main goal is to define read-only preferences for your app (in code or files) and some mutable preferences (like NSUserDefaults). You can then access to one preference value without care about the origin
 
 # Setup #
 
@@ -110,9 +128,10 @@ The main goal is to define read-only preferences for your app (in code or files)
 Add `pod 'Prephirence', :git => 'https://github.com/phimage/Prephirence.git'` to your `Podfile` and run `pod install`. Add `use_frameworks!` to the end of the `Podfile`.
 
 # Licence #
+```
 The MIT License (MIT)
 
-Copyright (c) 2015 Eric Marchand
+Copyright (c) 2015 Eric Marchand (phimage)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -131,4 +150,4 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
+```
