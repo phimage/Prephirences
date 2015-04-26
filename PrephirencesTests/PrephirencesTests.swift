@@ -1,6 +1,6 @@
 //
-//  PrephirenceTests.swift
-//  PrephirenceTests
+//  PrephirencesTests.swift
+//  PrephirencesTests
 //
 //  Created by phimage on 22/04/15.
 //  Copyright (c) 2015 phimage. All rights reserved.
@@ -8,9 +8,9 @@
 
 import Foundation
 import XCTest
-import PrephirenceMacOSX
+import PrephirencesMacOSX
 
-class PrephirenceTests: XCTestCase {
+class PrephirencesTests: XCTestCase {
     
     let mykey = "key"
     let myvalue = "value"

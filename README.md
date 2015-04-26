@@ -1,18 +1,18 @@
-# Prephirence
-[![License](https://img.shields.io/badge/License-MIT-lightgreen.svg?style=flat
+# Prephirences
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat
             )](http://mit-license.org)
-[![Platform](http://img.shields.io/badge/platform-iOS/MacOS-orange.svg?style=flat
+[![Platform](http://img.shields.io/badge/platform-iOS/MacOS-lightgrey.svg?style=flat
              )](https://developer.apple.com/resources/)
-[![Language](http://img.shields.io/badge/language-swift-brightgreen.svg?style=flat
+[![Language](http://img.shields.io/badge/language-swift-orange.svg?style=flat
              )](https://developer.apple.com/swift)
-[![Issues](https://img.shields.io/github/issues/phimage/Prephirence.svg?style=flat
-           )](https://github.com/phimage/Prephirence/issues)
+[![Issues](https://img.shields.io/github/issues/phimage/Prephirences.svg?style=flat
+           )](https://github.com/phimage/Prephirences/issues)
 
 ![Logo](/logo-128x128.png)
 
-Prephirence is a Swift library that provides useful protocols and methods to manage preferences.
+Prephirences is a Swift library that provides useful protocols and methods to manage preferences.
 
-Preferences could be user preferences (NSUserDefaults) or your own private application preferences - any object which implement protocol [PreferencesType](/Prephirence/PreferencesType.swift)
+Preferences could be user preferences (NSUserDefaults) or your own private application preferences - any object which implement protocol [PreferencesType](/Prephirences/PreferencesType.swift)
 
 ## Contents ##
 - [Usage](#usage)
@@ -20,7 +20,7 @@ Preferences could be user preferences (NSUserDefaults) or your own private appli
   - [Accessing](#accessing)
   - [Modifying](#modifying)
   - [NSUserDefaults](#nsuserdefaults)
-  - [Proxing user defaults](#proxing-user-defaults)
+  - [Proxying user defaults](#proxying-user-defaults)
   - [Composing](#composing)
 - [Setup](#setup)
   - [Using xcode project](#using-xcode-project)
@@ -30,7 +30,7 @@ Preferences could be user preferences (NSUserDefaults) or your own private appli
 # Usage #
 
 ## Creating ##
-The simplest implementation of [PreferencesType](/Prephirence/PreferencesType.swift) is [DictionaryPreferences](/Prephirence/DictionaryPreferences.swift)
+The simplest implementation of [PreferencesType](/Prephirences/PreferencesType.swift) is [DictionaryPreferences](/Prephirences/DictionaryPreferences.swift)
 ```swift
 // From Dictionary
 var fromDico = DictionaryPreferences(myDictionary)
@@ -58,9 +58,9 @@ var myValue = fromDicoLiteral.boolForKey("myKey")
 
 ## Modifying ##
 
-Modifiable preferences implement protocol [MutablePreferencesTypes](/Prephirence/PreferencesType.swift)
+Modifiable preferences implement protocol [MutablePreferencesTypes](/Prephirences/PreferencesType.swift)
 
-The simplest implementation is [MutableDictionaryPreferences](/Prephirence/DictionaryPreferences.swift)
+The simplest implementation is [MutableDictionaryPreferences](/Prephirences/DictionaryPreferences.swift)
 
 ```swift
 // From Dictionary
@@ -120,12 +120,12 @@ The main goal is to define read-only preferences for your app (in code or files)
 
 ## Using xcode project ##
 
-1. Drag Prephirence.xcodeproj to your project/workspace or open it to compile it
-2. Add the Prephirence framework to your project
+1. Drag Prephirences.xcodeproj to your project/workspace or open it to compile it
+2. Add the Prephirences framework to your project
 
 ## Using [cocoapods](http://cocoapods.org/) ##
 
-Add `pod 'Prephirence', :git => 'https://github.com/phimage/Prephirence.git'` to your `Podfile` and run `pod install`. Add `use_frameworks!` to the end of the `Podfile`.
+Add `pod 'Prephirences', :git => 'https://github.com/phimage/Prephirences.git'` to your `Podfile` and run `pod install`. Add `use_frameworks!` to the end of the `Podfile`.
 
 # Licence #
 ```

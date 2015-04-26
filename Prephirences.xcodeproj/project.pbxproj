@@ -7,39 +7,39 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C42114C31AE7D0CB00A09DD9 /* PrephirenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114C21AE7D0CB00A09DD9 /* PrephirenceTests.swift */; };
-		C42114E01AE7D84900A09DD9 /* PrephirenceiOS.h in Headers */ = {isa = PBXBuildFile; fileRef = C42114DF1AE7D84900A09DD9 /* PrephirenceiOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C42114C31AE7D0CB00A09DD9 /* PrephirencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114C21AE7D0CB00A09DD9 /* PrephirencesTests.swift */; };
+		C42114E01AE7D84900A09DD9 /* PrephirencesiOS.h in Headers */ = {isa = PBXBuildFile; fileRef = C42114DF1AE7D84900A09DD9 /* PrephirencesiOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C42114F41AE7D86D00A09DD9 /* PreferencesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114D01AE7D15D00A09DD9 /* PreferencesType.swift */; };
 		C42114F51AE7D86F00A09DD9 /* DictionaryPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114D21AE7D1F200A09DD9 /* DictionaryPreferences.swift */; };
 		C42114F61AE7D87400A09DD9 /* PatternPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114D41AE7D32800A09DD9 /* PatternPreferences.swift */; };
-		C42114F71AE7D87600A09DD9 /* NSUserDefaults+Prephirence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114CE1AE7D15000A09DD9 /* NSUserDefaults+Prephirence.swift */; };
-		C42115031AE7D8E200A09DD9 /* PrephirenceMacOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = C42115021AE7D8E200A09DD9 /* PrephirenceMacOSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C42114F71AE7D87600A09DD9 /* NSUserDefaults+Prephirences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114CE1AE7D15000A09DD9 /* NSUserDefaults+Prephirences.swift */; };
+		C42115031AE7D8E200A09DD9 /* PrephirencesMacOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = C42115021AE7D8E200A09DD9 /* PrephirencesMacOSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C42115171AE7D90E00A09DD9 /* PreferencesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114D01AE7D15D00A09DD9 /* PreferencesType.swift */; };
 		C42115181AE7D91100A09DD9 /* DictionaryPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114D21AE7D1F200A09DD9 /* DictionaryPreferences.swift */; };
 		C42115191AE7D91300A09DD9 /* PatternPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114D41AE7D32800A09DD9 /* PatternPreferences.swift */; };
-		C421151A1AE7D91600A09DD9 /* NSUserDefaults+Prephirence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114CE1AE7D15000A09DD9 /* NSUserDefaults+Prephirence.swift */; };
+		C421151A1AE7D91600A09DD9 /* NSUserDefaults+Prephirences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114CE1AE7D15000A09DD9 /* NSUserDefaults+Prephirences.swift */; };
 		C421151D1AE7DF2300A09DD9 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C42114C11AE7D0CB00A09DD9 /* Info.plist */; };
 		C45D31381AE8FAE10034D1E3 /* Test.plist in Resources */ = {isa = PBXBuildFile; fileRef = C45D31371AE8FAE10034D1E3 /* Test.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C42114BB1AE7D0CB00A09DD9 /* PrephirenceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PrephirenceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C42114BB1AE7D0CB00A09DD9 /* PrephirencesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PrephirencesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C42114C11AE7D0CB00A09DD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C42114C21AE7D0CB00A09DD9 /* PrephirenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrephirenceTests.swift; sourceTree = "<group>"; };
-		C42114CE1AE7D15000A09DD9 /* NSUserDefaults+Prephirence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUserDefaults+Prephirence.swift"; sourceTree = "<group>"; };
+		C42114C21AE7D0CB00A09DD9 /* PrephirencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrephirencesTests.swift; sourceTree = "<group>"; };
+		C42114CE1AE7D15000A09DD9 /* NSUserDefaults+Prephirences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUserDefaults+Prephirences.swift"; sourceTree = "<group>"; };
 		C42114D01AE7D15D00A09DD9 /* PreferencesType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesType.swift; sourceTree = "<group>"; };
 		C42114D21AE7D1F200A09DD9 /* DictionaryPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryPreferences.swift; sourceTree = "<group>"; };
 		C42114D41AE7D32800A09DD9 /* PatternPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatternPreferences.swift; sourceTree = "<group>"; };
-		C42114DB1AE7D84900A09DD9 /* PrephirenceiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PrephirenceiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C42114DB1AE7D84900A09DD9 /* PrephirencesiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PrephirencesiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C42114DE1AE7D84900A09DD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C42114DF1AE7D84900A09DD9 /* PrephirenceiOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrephirenceiOS.h; sourceTree = "<group>"; };
+		C42114DF1AE7D84900A09DD9 /* PrephirencesiOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrephirencesiOS.h; sourceTree = "<group>"; };
 		C42114FE1AE7D8E200A09DD9 /* PrephirenceMacOSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PrephirenceMacOSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C42115011AE7D8E200A09DD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C42115021AE7D8E200A09DD9 /* PrephirenceMacOSX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrephirenceMacOSX.h; sourceTree = "<group>"; };
+		C42115021AE7D8E200A09DD9 /* PrephirencesMacOSX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrephirencesMacOSX.h; sourceTree = "<group>"; };
 		C421151B1AE7D97900A09DD9 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C45D31371AE8FAE10034D1E3 /* Test.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Test.plist; sourceTree = "<group>"; };
 		C45D31391AE929D40034D1E3 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		C45D313A1AE929DD0034D1E3 /* Prephirence.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = Prephirence.podspec; sourceTree = "<group>"; };
+		C45D313A1AE929DD0034D1E3 /* Prephirences.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = Prephirences.podspec; sourceTree = "<group>"; };
 		C45D313C1AE92A100034D1E3 /* logo-128x128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-128x128.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -71,9 +71,9 @@
 		C42114A61AE7D0CB00A09DD9 = {
 			isa = PBXGroup;
 			children = (
-				C42114B21AE7D0CB00A09DD9 /* Prephirence */,
-				C42114DC1AE7D84900A09DD9 /* PrephirenceiOS */,
-				C42114FF1AE7D8E200A09DD9 /* PrephirenceMacOSX */,
+				C42114B21AE7D0CB00A09DD9 /* Prephirences */,
+				C42114DC1AE7D84900A09DD9 /* PrephirencesiOS */,
+				C42114FF1AE7D8E200A09DD9 /* PrephirencesMacOSX */,
 				C42114BF1AE7D0CB00A09DD9 /* PrephirenceTests */,
 				C45D313B1AE929F10034D1E3 /* Resources */,
 				C42114B11AE7D0CB00A09DD9 /* Products */,
@@ -83,31 +83,32 @@
 		C42114B11AE7D0CB00A09DD9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C42114BB1AE7D0CB00A09DD9 /* PrephirenceTests.xctest */,
-				C42114DB1AE7D84900A09DD9 /* PrephirenceiOS.framework */,
+				C42114BB1AE7D0CB00A09DD9 /* PrephirencesTests.xctest */,
+				C42114DB1AE7D84900A09DD9 /* PrephirencesiOS.framework */,
 				C42114FE1AE7D8E200A09DD9 /* PrephirenceMacOSX.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		C42114B21AE7D0CB00A09DD9 /* Prephirence */ = {
+		C42114B21AE7D0CB00A09DD9 /* Prephirences */ = {
 			isa = PBXGroup;
 			children = (
 				C42114D01AE7D15D00A09DD9 /* PreferencesType.swift */,
 				C42114D21AE7D1F200A09DD9 /* DictionaryPreferences.swift */,
 				C42114D41AE7D32800A09DD9 /* PatternPreferences.swift */,
-				C42114CE1AE7D15000A09DD9 /* NSUserDefaults+Prephirence.swift */,
+				C42114CE1AE7D15000A09DD9 /* NSUserDefaults+Prephirences.swift */,
 			);
-			path = Prephirence;
+			path = Prephirences;
 			sourceTree = "<group>";
 		};
 		C42114BF1AE7D0CB00A09DD9 /* PrephirenceTests */ = {
 			isa = PBXGroup;
 			children = (
-				C42114C21AE7D0CB00A09DD9 /* PrephirenceTests.swift */,
+				C42114C21AE7D0CB00A09DD9 /* PrephirencesTests.swift */,
 				C42114C01AE7D0CB00A09DD9 /* Supporting Files */,
 			);
-			path = PrephirenceTests;
+			name = PrephirenceTests;
+			path = PrephirencesTests;
 			sourceTree = "<group>";
 		};
 		C42114C01AE7D0CB00A09DD9 /* Supporting Files */ = {
@@ -119,13 +120,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		C42114DC1AE7D84900A09DD9 /* PrephirenceiOS */ = {
+		C42114DC1AE7D84900A09DD9 /* PrephirencesiOS */ = {
 			isa = PBXGroup;
 			children = (
-				C42114DF1AE7D84900A09DD9 /* PrephirenceiOS.h */,
+				C42114DF1AE7D84900A09DD9 /* PrephirencesiOS.h */,
 				C42114DD1AE7D84900A09DD9 /* Supporting Files */,
 			);
-			path = PrephirenceiOS;
+			path = PrephirencesiOS;
 			sourceTree = "<group>";
 		};
 		C42114DD1AE7D84900A09DD9 /* Supporting Files */ = {
@@ -136,13 +137,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		C42114FF1AE7D8E200A09DD9 /* PrephirenceMacOSX */ = {
+		C42114FF1AE7D8E200A09DD9 /* PrephirencesMacOSX */ = {
 			isa = PBXGroup;
 			children = (
-				C42115021AE7D8E200A09DD9 /* PrephirenceMacOSX.h */,
+				C42115021AE7D8E200A09DD9 /* PrephirencesMacOSX.h */,
 				C42115001AE7D8E200A09DD9 /* Supporting Files */,
 			);
-			path = PrephirenceMacOSX;
+			path = PrephirencesMacOSX;
 			sourceTree = "<group>";
 		};
 		C42115001AE7D8E200A09DD9 /* Supporting Files */ = {
@@ -158,7 +159,7 @@
 			children = (
 				C421151B1AE7D97900A09DD9 /* README.md */,
 				C45D31391AE929D40034D1E3 /* LICENSE */,
-				C45D313A1AE929DD0034D1E3 /* Prephirence.podspec */,
+				C45D313A1AE929DD0034D1E3 /* Prephirences.podspec */,
 				C45D313C1AE92A100034D1E3 /* logo-128x128.png */,
 			);
 			name = Resources;
@@ -171,7 +172,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C42114E01AE7D84900A09DD9 /* PrephirenceiOS.h in Headers */,
+				C42114E01AE7D84900A09DD9 /* PrephirencesiOS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,16 +180,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C42115031AE7D8E200A09DD9 /* PrephirenceMacOSX.h in Headers */,
+				C42115031AE7D8E200A09DD9 /* PrephirencesMacOSX.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		C42114BA1AE7D0CB00A09DD9 /* PrephirenceTests */ = {
+		C42114BA1AE7D0CB00A09DD9 /* PrephirencesTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C42114C91AE7D0CB00A09DD9 /* Build configuration list for PBXNativeTarget "PrephirenceTests" */;
+			buildConfigurationList = C42114C91AE7D0CB00A09DD9 /* Build configuration list for PBXNativeTarget "PrephirencesTests" */;
 			buildPhases = (
 				C42114B71AE7D0CB00A09DD9 /* Sources */,
 				C42114B81AE7D0CB00A09DD9 /* Frameworks */,
@@ -198,14 +199,14 @@
 			);
 			dependencies = (
 			);
-			name = PrephirenceTests;
+			name = PrephirencesTests;
 			productName = PrephirenceTests;
-			productReference = C42114BB1AE7D0CB00A09DD9 /* PrephirenceTests.xctest */;
+			productReference = C42114BB1AE7D0CB00A09DD9 /* PrephirencesTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		C42114DA1AE7D84900A09DD9 /* PrephirenceiOS */ = {
+		C42114DA1AE7D84900A09DD9 /* PrephirencesiOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C42114EE1AE7D84A00A09DD9 /* Build configuration list for PBXNativeTarget "PrephirenceiOS" */;
+			buildConfigurationList = C42114EE1AE7D84A00A09DD9 /* Build configuration list for PBXNativeTarget "PrephirencesiOS" */;
 			buildPhases = (
 				C42114D61AE7D84900A09DD9 /* Sources */,
 				C42114D71AE7D84900A09DD9 /* Frameworks */,
@@ -216,14 +217,14 @@
 			);
 			dependencies = (
 			);
-			name = PrephirenceiOS;
+			name = PrephirencesiOS;
 			productName = PrephirenceiOS;
-			productReference = C42114DB1AE7D84900A09DD9 /* PrephirenceiOS.framework */;
+			productReference = C42114DB1AE7D84900A09DD9 /* PrephirencesiOS.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		C42114FD1AE7D8E200A09DD9 /* PrephirenceMacOSX */ = {
+		C42114FD1AE7D8E200A09DD9 /* PrephirencesMacOSX */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C42115111AE7D8E200A09DD9 /* Build configuration list for PBXNativeTarget "PrephirenceMacOSX" */;
+			buildConfigurationList = C42115111AE7D8E200A09DD9 /* Build configuration list for PBXNativeTarget "PrephirencesMacOSX" */;
 			buildPhases = (
 				C42114F91AE7D8E200A09DD9 /* Sources */,
 				C42114FA1AE7D8E200A09DD9 /* Frameworks */,
@@ -234,7 +235,7 @@
 			);
 			dependencies = (
 			);
-			name = PrephirenceMacOSX;
+			name = PrephirencesMacOSX;
 			productName = PrephirenceMacOSX;
 			productReference = C42114FE1AE7D8E200A09DD9 /* PrephirenceMacOSX.framework */;
 			productType = "com.apple.product-type.framework";
@@ -259,7 +260,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C42114AA1AE7D0CB00A09DD9 /* Build configuration list for PBXProject "Prephirence" */;
+			buildConfigurationList = C42114AA1AE7D0CB00A09DD9 /* Build configuration list for PBXProject "Prephirences" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -271,9 +272,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C42114DA1AE7D84900A09DD9 /* PrephirenceiOS */,
-				C42114FD1AE7D8E200A09DD9 /* PrephirenceMacOSX */,
-				C42114BA1AE7D0CB00A09DD9 /* PrephirenceTests */,
+				C42114DA1AE7D84900A09DD9 /* PrephirencesiOS */,
+				C42114FD1AE7D8E200A09DD9 /* PrephirencesMacOSX */,
+				C42114BA1AE7D0CB00A09DD9 /* PrephirencesTests */,
 			);
 		};
 /* End PBXProject section */
@@ -309,7 +310,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C42114C31AE7D0CB00A09DD9 /* PrephirenceTests.swift in Sources */,
+				C42114C31AE7D0CB00A09DD9 /* PrephirencesTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,7 +320,7 @@
 			files = (
 				C42114F61AE7D87400A09DD9 /* PatternPreferences.swift in Sources */,
 				C42114F51AE7D86F00A09DD9 /* DictionaryPreferences.swift in Sources */,
-				C42114F71AE7D87600A09DD9 /* NSUserDefaults+Prephirence.swift in Sources */,
+				C42114F71AE7D87600A09DD9 /* NSUserDefaults+Prephirences.swift in Sources */,
 				C42114F41AE7D86D00A09DD9 /* PreferencesType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -330,7 +331,7 @@
 			files = (
 				C42115191AE7D91300A09DD9 /* PatternPreferences.swift in Sources */,
 				C42115181AE7D91100A09DD9 /* DictionaryPreferences.swift in Sources */,
-				C421151A1AE7D91600A09DD9 /* NSUserDefaults+Prephirence.swift in Sources */,
+				C421151A1AE7D91600A09DD9 /* NSUserDefaults+Prephirences.swift in Sources */,
 				C42115171AE7D90E00A09DD9 /* PreferencesType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -434,7 +435,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = PrephirenceTests/Info.plist;
+				INFOPLIST_FILE = PrephirencesTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -448,7 +449,7 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = PrephirenceTests/Info.plist;
+				INFOPLIST_FILE = PrephirencesTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -467,7 +468,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = PrephirenceiOS/Info.plist;
+				INFOPLIST_FILE = PrephirencesiOS/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -486,7 +487,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = PrephirenceiOS/Info.plist;
+				INFOPLIST_FILE = PrephirencesiOS/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -511,7 +512,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = PrephirenceMacOSX/Info.plist;
+				INFOPLIST_FILE = PrephirencesMacOSX/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -528,7 +529,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = PrephirenceMacOSX/Info.plist;
+				INFOPLIST_FILE = PrephirencesMacOSX/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -539,7 +540,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C42114AA1AE7D0CB00A09DD9 /* Build configuration list for PBXProject "Prephirence" */ = {
+		C42114AA1AE7D0CB00A09DD9 /* Build configuration list for PBXProject "Prephirences" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C42114C41AE7D0CB00A09DD9 /* Debug */,
@@ -548,7 +549,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C42114C91AE7D0CB00A09DD9 /* Build configuration list for PBXNativeTarget "PrephirenceTests" */ = {
+		C42114C91AE7D0CB00A09DD9 /* Build configuration list for PBXNativeTarget "PrephirencesTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C42114CA1AE7D0CB00A09DD9 /* Debug */,
@@ -557,7 +558,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C42114EE1AE7D84A00A09DD9 /* Build configuration list for PBXNativeTarget "PrephirenceiOS" */ = {
+		C42114EE1AE7D84A00A09DD9 /* Build configuration list for PBXNativeTarget "PrephirencesiOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C42114EF1AE7D84A00A09DD9 /* Debug */,
@@ -566,7 +567,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C42115111AE7D8E200A09DD9 /* Build configuration list for PBXNativeTarget "PrephirenceMacOSX" */ = {
+		C42115111AE7D8E200A09DD9 /* Build configuration list for PBXNativeTarget "PrephirencesMacOSX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C42115121AE7D8E200A09DD9 /* Debug */,

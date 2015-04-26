@@ -1,6 +1,6 @@
 //
-//  NSUserDefaults+Prephirence.swift
-//  Prephirence
+//  NSUserDefaults+Prephirences.swift
+//  Prephirences
 //
 //  Created by phimage on 22/04/15.
 //  Copyright (c) 2015 phimage. All rights reserved.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-/** Prephirence Extends NSUserDefaults
+/** Prephirences Extends NSUserDefaults
 
 */
 extension NSUserDefaults: MutablePreferencesType {

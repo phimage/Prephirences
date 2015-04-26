@@ -7,7 +7,7 @@
       buildImplicitDependencies = "YES">
       <BuildActionEntries>
          <BuildActionEntry
-            buildForTesting = "YES"
+            buildForTesting = "NO"
             buildForRunning = "YES"
             buildForProfiling = "YES"
             buildForArchiving = "YES"
@@ -15,23 +15,23 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C42114DA1AE7D84900A09DD9"
-               BuildableName = "PrephirenceiOS.framework"
-               BlueprintName = "PrephirenceiOS"
-               ReferencedContainer = "container:Prephirence.xcodeproj">
+               BuildableName = "PrephirencesiOS.framework"
+               BlueprintName = "PrephirencesiOS"
+               ReferencedContainer = "container:Prephirences.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
             buildForTesting = "YES"
-            buildForRunning = "YES"
+            buildForRunning = "NO"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
+            buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C42114E41AE7D84900A09DD9"
-               BuildableName = "PrephirenceiOSTests.xctest"
-               BlueprintName = "PrephirenceiOSTests"
-               ReferencedContainer = "container:Prephirence.xcodeproj">
+               BlueprintIdentifier = "C42114BA1AE7D0CB00A09DD9"
+               BuildableName = "PrephirencesTests.xctest"
+               BlueprintName = "PrephirencesTests"
+               ReferencedContainer = "container:Prephirences.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,21 +47,12 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C42114BA1AE7D0CB00A09DD9"
-               BuildableName = "PrephirenceTests.xctest"
-               BlueprintName = "PrephirenceTests"
-               ReferencedContainer = "container:Prephirence.xcodeproj">
+               BuildableName = "PrephirencesTests.xctest"
+               BlueprintName = "PrephirencesTests"
+               ReferencedContainer = "container:Prephirences.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C42114DA1AE7D84900A09DD9"
-            BuildableName = "PrephirenceiOS.framework"
-            BlueprintName = "PrephirenceiOS"
-            ReferencedContainer = "container:Prephirence.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -76,9 +67,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C42114DA1AE7D84900A09DD9"
-            BuildableName = "PrephirenceiOS.framework"
-            BlueprintName = "PrephirenceiOS"
-            ReferencedContainer = "container:Prephirence.xcodeproj">
+            BuildableName = "PrephirencesiOS.framework"
+            BlueprintName = "PrephirencesiOS"
+            ReferencedContainer = "container:Prephirences.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -94,9 +85,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C42114DA1AE7D84900A09DD9"
-            BuildableName = "PrephirenceiOS.framework"
-            BlueprintName = "PrephirenceiOS"
-            ReferencedContainer = "container:Prephirence.xcodeproj">
+            BuildableName = "PrephirencesiOS.framework"
+            BlueprintName = "PrephirencesiOS"
+            ReferencedContainer = "container:Prephirences.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

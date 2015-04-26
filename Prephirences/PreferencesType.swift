@@ -1,6 +1,6 @@
 //
 //  PreferencesType.swift
-//  Prephirence
+//  Prephirences
 //
 //  Created by phimage on 26/03/15.
 //  Copyright (c) 2015 phimage. All rights reserved.

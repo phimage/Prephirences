@@ -7,7 +7,7 @@
       buildImplicitDependencies = "YES">
       <BuildActionEntries>
          <BuildActionEntry
-            buildForTesting = "YES"
+            buildForTesting = "NO"
             buildForRunning = "YES"
             buildForProfiling = "YES"
             buildForArchiving = "YES"
@@ -15,23 +15,23 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C42114FD1AE7D8E200A09DD9"
-               BuildableName = "PrephirenceMacOSX.framework"
-               BlueprintName = "PrephirenceMacOSX"
-               ReferencedContainer = "container:Prephirence.xcodeproj">
+               BuildableName = "PrephirencesMacOSX.framework"
+               BlueprintName = "PrephirencesMacOSX"
+               ReferencedContainer = "container:Prephirences.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
             buildForTesting = "YES"
-            buildForRunning = "YES"
+            buildForRunning = "NO"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
+            buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C42115071AE7D8E200A09DD9"
-               BuildableName = "PrephirenceMacOSXTests.xctest"
-               BlueprintName = "PrephirenceMacOSXTests"
-               ReferencedContainer = "container:Prephirence.xcodeproj">
+               BlueprintIdentifier = "C42114BA1AE7D0CB00A09DD9"
+               BuildableName = "PrephirencesTests.xctest"
+               BlueprintName = "PrephirencesTests"
+               ReferencedContainer = "container:Prephirences.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,24 +47,19 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C42114BA1AE7D0CB00A09DD9"
-               BuildableName = "PrephirenceTests.xctest"
-               BlueprintName = "PrephirenceTests"
-               ReferencedContainer = "container:Prephirence.xcodeproj">
+               BuildableName = "PrephirencesTests.xctest"
+               BlueprintName = "PrephirencesTests"
+               ReferencedContainer = "container:Prephirences.xcodeproj">
             </BuildableReference>
-            <SkippedTests>
-               <Test
-                  Identifier = "PrephirenceTests/testPerformanceExample()">
-               </Test>
-            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C42114FD1AE7D8E200A09DD9"
-            BuildableName = "PrephirenceMacOSX.framework"
-            BlueprintName = "PrephirenceMacOSX"
-            ReferencedContainer = "container:Prephirence.xcodeproj">
+            BuildableName = "PrephirencesMacOSX.framework"
+            BlueprintName = "PrephirencesMacOSX"
+            ReferencedContainer = "container:Prephirences.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -81,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C42114FD1AE7D8E200A09DD9"
-            BuildableName = "PrephirenceMacOSX.framework"
-            BlueprintName = "PrephirenceMacOSX"
-            ReferencedContainer = "container:Prephirence.xcodeproj">
+            BuildableName = "PrephirencesMacOSX.framework"
+            BlueprintName = "PrephirencesMacOSX"
+            ReferencedContainer = "container:Prephirences.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -99,9 +94,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C42114FD1AE7D8E200A09DD9"
-            BuildableName = "PrephirenceMacOSX.framework"
-            BlueprintName = "PrephirenceMacOSX"
-            ReferencedContainer = "container:Prephirence.xcodeproj">
+            BuildableName = "PrephirencesMacOSX.framework"
+            BlueprintName = "PrephirencesMacOSX"
+            ReferencedContainer = "container:Prephirences.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
