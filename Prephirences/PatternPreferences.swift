@@ -92,14 +92,6 @@ public class CompositePreferences: PreferencesType , ArrayLiteralConvertible {
         }
         return dico
     }
-    public func dictionaryRepresentation() -> [NSObject : AnyObject] {
-        var dico = [NSObject : AnyObject]()
-        for prefs in reverse(array) {
-            dico += prefs.dictionaryRepresentation()
-        }
-        return dico
-    }
-
 }
 
 public class MutableCompositePreferences: CompositePreferences, MutablePreferencesType {
@@ -158,10 +150,10 @@ public class MutableCompositePreferences: CompositePreferences, MutablePreferenc
         self[key] = url
     }
     
-    public func registerDefaults(registrationDictionary: [NSObject : AnyObject]){
+    public func setObjectsForKeysWithDictionary(dictionary: [String : AnyObject]){
         for prefs in array {
             if let mutablePrefs = prefs as? MutablePreferencesType {
-                mutablePrefs.registerDefaults(registrationDictionary)
+                mutablePrefs.setObjectsForKeysWithDictionary(dictionary)
                 if affectOnlyFirstMutable {
                     break
                 }
@@ -184,11 +176,11 @@ public class ProxyPreferences {
     private let parentKey: String
     var separator: String
     
-    public convenience init(_ proxiable: PreferencesType) {
-        self.init(proxiable, "", "")
+    public convenience init(preferences proxiable: PreferencesType) {
+        self.init(preferences: proxiable, key: "", separator: "")
     }
     
-    public init(_ proxiable: PreferencesType, _ parentKey: String, _ separator: String) {
+    public init(preferences proxiable: PreferencesType, key parentKey: String, separator: String) {
         self.proxiable = proxiable
         self.parentKey = parentKey
         self.separator = separator
@@ -200,7 +192,7 @@ public class ProxyPreferences {
             if let value: AnyObject = self.proxiable.objectForKey(finalKey) {
                 return value
             }
-            return ProxyPreferences(self.proxiable, finalKey, self.separator)
+            return ProxyPreferences(preferences: self.proxiable, key: finalKey, separator: self.separator)
         }
     }
     
@@ -246,9 +238,6 @@ extension ProxyPreferences: PreferencesType {
     public func dictionary() -> [String : AnyObject] {
         return self.proxiable.dictionary()
     }
-    public func dictionaryRepresentation() -> [NSObject : AnyObject] {
-        return self.proxiable.dictionaryRepresentation()
-    }
 }
 
 public class MutableProxyPreferences: ProxyPreferences {
@@ -257,8 +246,8 @@ public class MutableProxyPreferences: ProxyPreferences {
         return self.proxiable as! MutablePreferencesType
     }
     
-    public init(_ proxiable: MutablePreferencesType, _ parentKey: String, _ separator: String) {
-        super.init(proxiable, parentKey, separator)
+    public init(preferences proxiable: MutablePreferencesType, key parentKey: String, separator: String) {
+        super.init(preferences: proxiable, key: parentKey, separator: separator)
     }
     
     override public subscript(key: String) -> AnyObject? {
@@ -267,7 +256,7 @@ public class MutableProxyPreferences: ProxyPreferences {
             if let value: AnyObject = self.proxiable.objectForKey(finalKey) {
                 return value
             }
-            return ProxyPreferences(self.proxiable, finalKey, self.separator)
+            return ProxyPreferences(preferences: self.proxiable, key: finalKey, separator: self.separator)
         }
         set {
             let finalKey = self.parentKey + self.separator + key
@@ -306,7 +295,150 @@ extension MutableProxyPreferences: MutablePreferencesType {
     public func clearAll(){
         self.mutable.clearAll()
     }
-    public func registerDefaults(registrationDictionary: [NSObject : AnyObject]){
-        self.mutable.registerDefaults(registrationDictionary)
+    public func setObjectsForKeysWithDictionary(registrationDictionary: [String : AnyObject]){
+        self.mutable.setObjectsForKeysWithDictionary(registrationDictionary)
+    }
+}
+
+
+// MARK : KVC
+// object must informal protocol NSKeyValueCoding
+public class KVCPreferences {
+    private let object: NSObject
+    
+    public init(_ object: NSObject) {
+        self.object = object
+    }
+    
+    public subscript(key: String) -> AnyObject? {
+        get {
+            return self.objectForKey(key)
+        }
+    }
+    
+}
+
+extension KVCPreferences: PreferencesType {
+    
+    public func objectForKey(key: String) -> AnyObject? {
+        return self.object.valueForKey(key)
+    }
+    public func hasObjectForKey(key: String) -> Bool {
+        return self.object.valueForKey(key) != nil
+    }
+    public func stringForKey(key: String) -> String? {
+        return self.objectForKey(key) as? String
+    }
+    public func arrayForKey(key: String) -> [AnyObject]? {
+        return self.objectForKey(key) as? [AnyObject]
+    }
+    public func dictionaryForKey(key: String) -> [NSObject : AnyObject]? {
+        return self.objectForKey(key) as? [NSObject : AnyObject]
+    }
+    public func dataForKey(key: String) -> NSData? {
+        return self.objectForKey(key) as? NSData
+    }
+    public func stringArrayForKey(key: String) -> [AnyObject]? {
+        return self.objectForKey(key) as? [AnyObject]
+    }
+    public func integerForKey(key: String) -> Int {
+        return self.objectForKey(key) as? Int ?? 0
+    }
+    public func floatForKey(key: String) -> Float {
+        return self.objectForKey(key) as? Float ?? 0
+    }
+    public func doubleForKey(key: String) -> Double {
+        return self.objectForKey(key) as? Double ?? 0
+    }
+    public func boolForKey(key: String) -> Bool {
+        return self.objectForKey(key) as? Bool ?? false
+    }
+    public func URLForKey(key: String) -> NSURL? {
+        return self.objectForKey(key) as? NSURL
+    }
+    public func dictionary() -> [String : AnyObject] {
+        var dico:Dictionary<String, AnyObject> = [:]
+        for name in propertyNames() {
+            if let value: AnyObject = self.object.valueForKey(name) {
+                dico[name] = value
+            }
+        }
+        return dico
+    }
+    public func dictionaryRepresentation() -> [NSObject : AnyObject] {
+        var dico:Dictionary<NSObject, AnyObject> = [:]
+        for name in propertyNames() {
+            if let value: AnyObject = self.object.valueForKey(name) {
+                dico[name] = value
+            }
+        }
+        return dico
+    }
+    
+    private func propertyNames() -> [String] {
+        var names: [String] = []
+        var count: UInt32 = 0
+        // FIXME: not recursive?
+        var properties = class_copyPropertyList(self.object.classForCoder, &count)
+        for var i = 0; i < Int(count); ++i {
+            let property: objc_property_t = properties[i]
+            let name: String = String.fromCString(property_getName(property))!
+            names.append(name)
+        }
+        free(properties)
+        return names
+    }
+}
+
+public class MutableKVCPreferences: KVCPreferences {
+    
+    public override init(_ object: NSObject) {
+        super.init(object)
+    }
+    
+    override public subscript(key: String) -> AnyObject? {
+        get {
+             return self.objectForKey(key)
+        }
+        set {
+            self.setObject(newValue, forKey: key)
+        }
+    }
+    
+}
+
+extension MutableKVCPreferences: MutablePreferencesType {
+    public func setObject(value: AnyObject?, forKey key: String){
+        if (self.object.respondsToSelector(NSSelectorFromString(key))) {
+            self.object.setValue(value, forKey: key)
+        }
+    }
+    public func removeObjectForKey(key: String){
+        if (self.object.respondsToSelector(NSSelectorFromString(key))) {
+            self.object.setValue(nil, forKey: key)
+        }
+    }
+    public func setInteger(value: Int, forKey key: String){
+        self.setObject(NSNumber(integer: value), forKey: key)
+    }
+    public func setFloat(value: Float, forKey key: String){
+        self.setObject(NSNumber(float: value), forKey: key)
+    }
+    public func setDouble(value: Double, forKey key: String){
+        self.setObject(NSNumber(double: value), forKey: key)
+    }
+    public func setBool(value: Bool, forKey key: String){
+        self.setObject(NSNumber(bool: value), forKey: key)
+    }
+    public func setURL(url: NSURL, forKey key: String){
+        self.setObject(url, forKey: key)
+    }
+    public func clearAll(){
+       // not implemented, maybe add protocol to set defaults attributes values
+    }
+    public func setObjectsForKeysWithDictionary(dictionary: [String : AnyObject]){
+        for (key,value) in dictionary {
+            setObject(value, forKey: key )
+        }
     }
 }

@@ -20,7 +20,7 @@ Preferences could be user preferences (NSUserDefaults) or your own private appli
   - [Accessing](#accessing)
   - [Modifying](#modifying)
   - [NSUserDefaults](#nsuserdefaults)
-  - [Proxying user defaults](#proxying-user-defaults)
+  - [Proxying user defaults](#proxying-preferences-with-prefix)
   - [Composing](#composing)
 - [Setup](#setup)
   - [Using xcode project](#using-xcode-project)
@@ -87,14 +87,14 @@ NSUserDefaults implement also MutablePreferencesType and can be modified with sa
 userDefaults["mykey"] = "myvalue"
 ```
 
-### Proxying user defaults ###
-You can defined a subcategory of NSUserDefaults prefixed with your own string like that
+### Proxying preferences with prefix ###
+You can defined a subcategory of preferences prefixed with your own string like that
 ```swift
-let myAppPrefs = userDefaults["myAppKey"] as! MutableProxyPreferences
+let myAppPrefs = MutableProxyPreferences(preferences: userDefaults, key: "myAppKey", separator: ".")
 // We have :
 userDefaults["myAppKey.myKey"] == myAppPrefs["myKey"] // is true
 ```
-This allow prefixing all your defaults with same key
+This allow prefixing all your preferences (user defaults) with same key
 
 ## Composing ##
 

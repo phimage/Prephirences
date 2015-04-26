@@ -27,7 +27,6 @@ public protocol PreferencesType {
     func URLForKey(key: String) -> NSURL?
     
     func dictionary() -> [String : AnyObject]
-    func dictionaryRepresentation() -> [NSObject : AnyObject]
     
     // TODO SequenceType for all Preferences? maybe conflit with CompositePreferences
     //typealias Key = String
@@ -48,9 +47,28 @@ public protocol MutablePreferencesType: PreferencesType {
     func setURL(url: NSURL, forKey key: String)
     
     func clearAll()
-    func registerDefaults(registrationDictionary: [NSObject : AnyObject])
+    func setObjectsForKeysWithDictionary(dictionary: [String : AnyObject])
 }
 
 // MARK: usefull functions
 // dictionary append
 internal func +=<K, V> (inout left: [K : V], right: [K : V]) { for (k, v) in right { left[k] = v } }
+
+
+// MARK: operators
+public func += (inout left: MutablePreferencesType, right: PreferencesType) {
+    for (k, v) in right.dictionary() { left[k] = v }
+}
+
+public func += (inout left: MutablePreferencesType, right: Dictionary<String,AnyObject>) {
+    for (k, v) in right { left[k] = v }
+}
+
+public func += (inout left: MutablePreferencesType, right: (String, AnyObject)...) {
+    for (k, v) in right { left[k] = v }
+}
+
+public func - (inout left: MutablePreferencesType, right: String) {
+    left.removeObjectForKey(right)
+}
+

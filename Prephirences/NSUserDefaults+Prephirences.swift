@@ -25,18 +25,20 @@ extension NSUserDefaults: MutablePreferencesType {
             self.removePersistentDomainForName(bI)
         }
     }
+    
+    public func setObjectsForKeysWithDictionary(dictionary: [String:AnyObject]) {
+        for (key, value) in dictionary {
+            self.setObject(value, forKey: key)
+        }
+    }
 }
 
 //MARK: subscript access
-public var NSUserDefaultsKeySeparator = "."
 extension NSUserDefaults {
     
     public subscript(key: String) -> AnyObject? {
         get {
-            if let value: AnyObject = self.objectForKey(key) {
-                return value
-            }
-            return MutableProxyPreferences(self, key, NSUserDefaultsKeySeparator)
+            return self.objectForKey(key)
         }
         set {
             if newValue == nil {
@@ -48,21 +50,3 @@ extension NSUserDefaults {
     }
     
 }
-
-// MARK: utility methods
-extension NSUserDefaults {
-    
-    func setObjects(objects: [AnyObject], forKeys keys: [String]) {
-        for var keyIndex = 0; keyIndex < keys.count; keyIndex++
-        {
-            self.setObject(objects[keyIndex], forKey: keys [keyIndex])
-        }
-    }
-    
-    func addObjectsAndKeysFromDictionary(keyValuePairs: [String:AnyObject]) {
-        for (key, value) in keyValuePairs {
-            self.setObject(value, forKey: key)
-        }
-    }
-}
-

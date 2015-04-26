@@ -20,6 +20,10 @@
 		C421151A1AE7D91600A09DD9 /* NSUserDefaults+Prephirences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114CE1AE7D15000A09DD9 /* NSUserDefaults+Prephirences.swift */; };
 		C421151D1AE7DF2300A09DD9 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C42114C11AE7D0CB00A09DD9 /* Info.plist */; };
 		C45D31381AE8FAE10034D1E3 /* Test.plist in Resources */ = {isa = PBXBuildFile; fileRef = C45D31371AE8FAE10034D1E3 /* Test.plist */; };
+		C47F324D1AED144500195CDA /* ManagedObjectPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F324C1AED144500195CDA /* ManagedObjectPreferences.swift */; };
+		C47F324E1AED144500195CDA /* ManagedObjectPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F324C1AED144500195CDA /* ManagedObjectPreferences.swift */; };
+		C47F32511AED1E3B00195CDA /* NSUserDefaults+Adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F32501AED1E3B00195CDA /* NSUserDefaults+Adds.swift */; };
+		C47F32521AED1E3B00195CDA /* NSUserDefaults+Adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F32501AED1E3B00195CDA /* NSUserDefaults+Adds.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +45,9 @@
 		C45D31391AE929D40034D1E3 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		C45D313A1AE929DD0034D1E3 /* Prephirences.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = Prephirences.podspec; sourceTree = "<group>"; };
 		C45D313C1AE92A100034D1E3 /* logo-128x128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-128x128.png"; sourceTree = "<group>"; };
+		C47F324C1AED144500195CDA /* ManagedObjectPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectPreferences.swift; sourceTree = "<group>"; };
+		C47F32501AED1E3B00195CDA /* NSUserDefaults+Adds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUserDefaults+Adds.swift"; sourceTree = "<group>"; };
+		C47F32531AED289400195CDA /* NSUbiquitousKeyValueStore+Prephirences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUbiquitousKeyValueStore+Prephirences.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +104,9 @@
 				C42114D21AE7D1F200A09DD9 /* DictionaryPreferences.swift */,
 				C42114D41AE7D32800A09DD9 /* PatternPreferences.swift */,
 				C42114CE1AE7D15000A09DD9 /* NSUserDefaults+Prephirences.swift */,
+				C47F32531AED289400195CDA /* NSUbiquitousKeyValueStore+Prephirences.swift */,
+				C47F324F1AED1DD900195CDA /* UserDefaults */,
+				C47F324B1AED142100195CDA /* CoreData */,
 			);
 			path = Prephirences;
 			sourceTree = "<group>";
@@ -163,6 +173,22 @@
 				C45D313C1AE92A100034D1E3 /* logo-128x128.png */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		C47F324B1AED142100195CDA /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				C47F324C1AED144500195CDA /* ManagedObjectPreferences.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		C47F324F1AED1DD900195CDA /* UserDefaults */ = {
+			isa = PBXGroup;
+			children = (
+				C47F32501AED1E3B00195CDA /* NSUserDefaults+Adds.swift */,
+			);
+			path = UserDefaults;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -322,6 +348,8 @@
 				C42114F51AE7D86F00A09DD9 /* DictionaryPreferences.swift in Sources */,
 				C42114F71AE7D87600A09DD9 /* NSUserDefaults+Prephirences.swift in Sources */,
 				C42114F41AE7D86D00A09DD9 /* PreferencesType.swift in Sources */,
+				C47F324D1AED144500195CDA /* ManagedObjectPreferences.swift in Sources */,
+				C47F32511AED1E3B00195CDA /* NSUserDefaults+Adds.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,6 +361,8 @@
 				C42115181AE7D91100A09DD9 /* DictionaryPreferences.swift in Sources */,
 				C421151A1AE7D91600A09DD9 /* NSUserDefaults+Prephirences.swift in Sources */,
 				C42115171AE7D90E00A09DD9 /* PreferencesType.swift in Sources */,
+				C47F324E1AED144500195CDA /* ManagedObjectPreferences.swift in Sources */,
+				C47F32521AED1E3B00195CDA /* NSUserDefaults+Adds.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

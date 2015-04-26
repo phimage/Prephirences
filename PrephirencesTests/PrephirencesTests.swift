@@ -89,20 +89,17 @@ class PrephirencesTests: XCTestCase {
         let userDefaults = NSUserDefaults.standardUserDefaults()
         
         let appKey = "appname"
-        if let appDefaults = userDefaults[appKey] as? MutableProxyPreferences {
-            let fullKey = appKey + NSUserDefaultsKeySeparator + mykey
-            
-            appDefaults[mykey] = myvalue
-            XCTAssert(appDefaults[mykey] as! String == myvalue, "not affected")
-            XCTAssert(userDefaults[fullKey] as! String == myvalue, "not affected")
-            appDefaults[mykey] = nil
-            XCTAssert(appDefaults[mykey] as? String ?? nil == nil, "not nil affected")
-            XCTAssert(userDefaults[fullKey] as? String ?? nil == nil, "not nil affected")
-            
-        }
-        else {
-            XCTFail("not proxy")
-        }
+        let appDefaults = MutableProxyPreferences(preferences: userDefaults, key: appKey, separator: UserDefaultsKeySeparator)
+        
+        let fullKey = appKey + UserDefaultsKeySeparator + mykey
+        
+        appDefaults[mykey] = myvalue
+        XCTAssert(appDefaults[mykey] as! String == myvalue, "not affected")
+        XCTAssert(userDefaults[fullKey] as! String == myvalue, "not affected")
+        appDefaults[mykey] = nil
+        XCTAssert(appDefaults[mykey] as? String ?? nil == nil, "not nil affected")
+        XCTAssert(userDefaults[fullKey] as? String ?? nil == nil, "not nil affected")
+       
     }
     
 }

@@ -133,9 +133,6 @@ public class DictionaryPreferences: PreferencesType, SequenceType, DictionaryLit
     public func dictionary() -> [String : AnyObject] {
         return self.dico
     }
-    public func dictionaryRepresentation() -> [NSObject : AnyObject] {
-        return self.dico
-    }
     
     // MARK: specifics methods
     public func writeToFile(path: String, atomically: Bool) {
@@ -179,8 +176,8 @@ public class MutableDictionaryPreferences: DictionaryPreferences, MutablePrefere
         dico[key] = url
     }
     
-    public func registerDefaults(registrationDictionary: [NSObject : AnyObject]){
-        dico += registrationDictionary as! [String : AnyObject]
+    public func setObjectsForKeysWithDictionary(dictionary: [String:AnyObject]) {
+         dico += dictionary
     }
     
     public func clearAll() {
@@ -204,7 +201,7 @@ public class BufferPreferences: MutableDictionaryPreferences {
 
     // MARK: specifics methods
     func commit() {
-        buffered.registerDefaults(self.dictionaryRepresentation())
+        buffered.setObjectsForKeysWithDictionary(self.dictionary())
     }
     
     func rollback() {
