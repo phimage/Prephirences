@@ -1,5 +1,5 @@
 # Prephirences - Preϕrence
-[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat
             )](http://mit-license.org)
 [![Platform](http://img.shields.io/badge/platform-iOS/MacOS-lightgrey.svg?style=flat
              )](https://developer.apple.com/resources/)
@@ -8,8 +8,8 @@
 [![Issues](https://img.shields.io/github/issues/phimage/Prephirences.svg?style=flat
            )](https://github.com/phimage/Prephirences/issues)
 
-![Logo](/logo-128x128.png)
 
+<img align="left" src="/logo-128x128.png" hspace="20">
 Prephirences is a Swift library that provides useful protocols and methods to manage preferences.
 
 Preferences could be user preferences (NSUserDefaults) or your own private application preferences - any object which implement protocol [PreferencesType](/Prephirences/PreferencesType.swift)
@@ -36,7 +36,7 @@ The simplest implementation of [PreferencesType](/Prephirences/PreferencesType.s
 // From Dictionary
 var fromDico = DictionaryPreferences(myDictionary)
 // or literal
-var fromDicoLiteral: DictionaryPreferences = ["myKey", "myValue", "bool", true]
+var fromDicoLiteral: DictionaryPreferences = ["myKey": "myValue", "bool": true]
 
 // From filepath
 if let fromFile = DictionaryPreferences(filePath: "/my/file/path") {..}
@@ -65,7 +65,7 @@ The simplest implementation is [MutableDictionaryPreferences](/Prephirences/Dict
 
 ```swift
 // From Dictionary
-var mutableFromDico: MutableDictionaryPreferences = ["myKey", "myValue"]
+var mutableFromDico: MutableDictionaryPreferences = ["myKey": "myValue"]
 
 mutableFromDico["newKey"] = "newValue"
 mutableFromDico.setObject("myValue", forKey: "newKey")

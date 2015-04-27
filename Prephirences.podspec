@@ -38,7 +38,7 @@ Pod::Spec.new do |s|
 
   s.subspec "UserDefaults" do  |sp|
     sp.source_files = ['UserDefaults/*.swift']
-    sp.dependency 'Prephirences/Prephirences/Core'
+    sp.dependency 'Prephirences/Core'
   end
 
   s.subspec "All" do  |sp|
