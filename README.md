@@ -1,4 +1,4 @@
-# Prephirences
+# Prephirences - Preϕrence
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat
             )](http://mit-license.org)
 [![Platform](http://img.shields.io/badge/platform-iOS/MacOS-lightgrey.svg?style=flat
@@ -19,13 +19,14 @@ Preferences could be user preferences (NSUserDefaults) or your own private appli
   - [Creating](#creating)
   - [Accessing](#accessing)
   - [Modifying](#modifying)
-  - [NSUserDefaults](#nsuserdefaults)
-  - [Proxying user defaults](#proxying-preferences-with-prefix)
+  - [Some implementation](#some-implementation)
+  - [Proxying preferences with prefix](#proxying-preferences-with-prefix)
   - [Composing](#composing)
 - [Setup](#setup)
   - [Using xcode project](#using-xcode-project)
   - [Using cocoapods](#using-cocoapods)
 - [Licence](#licence)
+- [Logo](#logo)
 
 # Usage #
 
@@ -44,7 +45,7 @@ if let fromFile = DictionaryPreferences(filename: "prefs", ofType: "plist") {..}
 ```
 
 ## Accessing ##
-You can access with all methods defined in PreferencesType protocol
+You can access with all methods defined in `PreferencesType` protocol
 
 ```swift
 if let myValue = fromDicoLiteral.objectForKey("myKey") {..}
@@ -72,9 +73,10 @@ mutableFromDico.setBool(true, forKey: "newKey")
 
 ```
 
-## NSUserDefaults ##
+## Some implementation ##
+### NSUserDefaults ###
 
-NSUserDefaults implement PreferencesType and can be acceded with same methods
+`NSUserDefaults` implement `PreferencesType` and can be acceded with same methods
 
 ```swift
 let userDefaults = NSUserDefaults.standardUserDefaults()
@@ -82,19 +84,35 @@ let userDefaults = NSUserDefaults.standardUserDefaults()
 if let myValue = userDefaults["mykey"] as? Bool {..}
 ```
 
-NSUserDefaults implement also MutablePreferencesType and can be modified with same methods
+NSUserDefaults implement also `MutablePreferencesType` and can be modified with same methods
 ```swift
 userDefaults["mykey"] = "myvalue"
 ```
 
-### Proxying preferences with prefix ###
+### NSUbiquitousKeyValueStore ###
+To store in iCloud, `NSUbiquitousKeyValueStore` implement also `PreferencesType`
+
+### KVC ###
+You can wrap an object respond to implicit protocol [NSKeyValueCoding](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/KeyValueCoding/Articles/KeyValueCoding.html) in `KVCPreferences` or `MutableKVCPreferences`
+```swift
+let kvcPref = MutableKVCPreferences(myObject)
+```
+
+### Core Data ###
+You can wrap on `NSManageObject` in `ManageObjectPreferences` or `MutableManageObjectPreferences`
+```swift
+let managedPref = ManageObjectPreferences(myManagedObject)
+```
+
+## Proxying preferences with prefix ##
 You can defined a subcategory of preferences prefixed with your own string like that
 ```swift
-let myAppPrefs = MutableProxyPreferences(preferences: userDefaults, key: "myAppKey", separator: ".")
+let myAppPrefs = MutableProxyPreferences(preferences: userDefaults, key: "myAppKey.")
 // We have :
 userDefaults["myAppKey.myKey"] == myAppPrefs["myKey"] // is true
 ```
 This allow prefixing all your preferences (user defaults) with same key
+
 
 ## Composing ##
 
@@ -112,9 +130,9 @@ let myPreferences: MutableCompositePreferences = [fromDico, fromFile, userDefaul
 You can access or modify this composite preferences like any PreferencesType.
 
 1. When accessing, first preferences that define a value for a specified key will respond
-2. When modifying, first mutable preferences will be affected
+2. When modifying, first mutable preferences will be affected by default  (tou can set `MutableCompositePreferences.affectOnlyFirstMutable = false` to affect all mutable preferences)
 
-The main goal is to define read-only preferences for your app (in code or files) and some mutable preferences (like NSUserDefaults). You can then access to one preference value without care about the origin
+The main goal is to define read-only preferences for your app (in code or files) and some mutable preferences (like NSUserDefaults, NSUbiquitousKeyValueStore). You can then access to one preference value without care about the origin
 
 # Setup #
 
@@ -125,7 +143,12 @@ The main goal is to define read-only preferences for your app (in code or files)
 
 ## Using [cocoapods](http://cocoapods.org/) ##
 
-Add `pod 'Prephirences', :git => 'https://github.com/phimage/Prephirences.git'` to your `Podfile` and run `pod install`. Add `use_frameworks!` to the end of the `Podfile`.
+Add `pod 'Prephirences', :git => 'https://github.com/phimage/Prephirences.git'` to your `Podfile` and run `pod install`. 
+
+Add `use_frameworks!` to the end of the `Podfile`.
+
+### For core data ###
+Add `pod 'Prephirences/CoreData', :git => 'https://github.com/phimage/Prephirences.git'`
 
 # Licence #
 ```
@@ -151,3 +174,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+# Logo #
+By [kodlian] (http://www.kodlian.com/), inspired by [apple swift logo](http://en.wikipedia.org/wiki/File:Apple_Swift_Logo.png)
+## Why a logo?
+I like to see an image for each of my project when I browse them with [SourceTree](http://www.sourcetreeapp.com/)

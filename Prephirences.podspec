@@ -24,7 +24,27 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/phimage/Prephirences.git" }
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  s.source_files  = "Classes", "Prephirences/*.swift"
+
+  s.default_subspec = 'Core'
+
+  s.subspec "Core" do  |sp|
+    sp.source_files = "Prephirences/*.swift"
+  end
+
+  s.subspec "CoreData" do  |sp|
+    sp.source_files = ['Prephirences/CoreData/*.swift']
+    sp.dependency 'Prephirences/Core'
+  end
+
+  s.subspec "UserDefaults" do  |sp|
+    sp.source_files = ['UserDefaults/*.swift']
+    sp.dependency 'Prephirences/Prephirences/Core'
+  end
+
+  s.subspec "All" do  |sp|
+    sp.dependency 'Prephirences/CoreData'
+    sp.dependency 'Prephirences/UserDefaults'
+  end
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   s.resource  = "logo-128x128.png"

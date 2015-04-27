@@ -1,10 +1,29 @@
 //
 //  PatternPreferences.swift
 //  Prephirences
-//
-//  Created by phimage on 22/04/15.
-//  Copyright (c) 2015 phimage. All rights reserved.
-//
+/*
+The MIT License (MIT)
+
+Copyright (c) 2015 Eric Marchand (phimage)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
 
 import Foundation
 
@@ -96,7 +115,7 @@ public class CompositePreferences: PreferencesType , ArrayLiteralConvertible {
 
 public class MutableCompositePreferences: CompositePreferences, MutablePreferencesType {
     
-    var affectOnlyFirstMutable: Bool
+    public var affectOnlyFirstMutable: Bool
 
     public override convenience init(_ array: [PreferencesType]){
         self.init(array, affectOnlyFirstMutable: true)
@@ -174,25 +193,40 @@ public class MutableCompositePreferences: CompositePreferences, MutablePreferenc
 public class ProxyPreferences {
     private let proxiable: PreferencesType
     private let parentKey: String
-    var separator: String
+    var separator: String?
     
     public convenience init(preferences proxiable: PreferencesType) {
-        self.init(preferences: proxiable, key: "", separator: "")
+        self.init(preferences: proxiable, key: "")
     }
     
-    public init(preferences proxiable: PreferencesType, key parentKey: String, separator: String) {
+    public convenience init(preferences proxiable: PreferencesType, key parentKey: String) {
+        self.init(preferences: proxiable, key: parentKey, separator: nil)
+    }
+    
+    public init(preferences proxiable: PreferencesType, key parentKey: String, separator: String?) {
         self.proxiable = proxiable
         self.parentKey = parentKey
         self.separator = separator
     }
     
+    private func computeKey(key: String) -> String {
+        return self.parentKey + (self.separator ?? "") + key
+    }
+    
+    private func hasRecursion() -> Bool {
+        return self.separator != nil
+    }
+    
     public subscript(key: String) -> AnyObject? {
         get {
-            let finalKey = self.parentKey + self.separator + key
+            let finalKey = computeKey(key)
             if let value: AnyObject = self.proxiable.objectForKey(finalKey) {
                 return value
             }
-            return ProxyPreferences(preferences: self.proxiable, key: finalKey, separator: self.separator)
+            if hasRecursion() {
+                return ProxyPreferences(preferences: self.proxiable, key: finalKey, separator: self.separator)
+            }
+            return nil
         }
     }
     
@@ -252,14 +286,17 @@ public class MutableProxyPreferences: ProxyPreferences {
     
     override public subscript(key: String) -> AnyObject? {
         get {
-            let finalKey = self.parentKey + self.separator + key
+            let finalKey = computeKey(key)
             if let value: AnyObject = self.proxiable.objectForKey(finalKey) {
                 return value
             }
-            return ProxyPreferences(preferences: self.proxiable, key: finalKey, separator: self.separator)
+            if hasRecursion() {
+                return ProxyPreferences(preferences: self.proxiable, key: finalKey, separator: self.separator)
+            }
+            return nil
         }
         set {
-            let finalKey = self.parentKey + self.separator + key
+            let finalKey = computeKey(key)
             if newValue == nil {
                 self.mutable.removeObjectForKey(finalKey)
             } else {
@@ -300,14 +337,20 @@ extension MutableProxyPreferences: MutablePreferencesType {
     }
 }
 
+// MARK: adapter generic
+// Subclasses must implement objectForKey & keys
+public class PreferencesAdapter: PreferencesType {
 
-// MARK : KVC
-// object must informal protocol NSKeyValueCoding
-public class KVCPreferences {
-    private let object: NSObject
+    internal init() {
+        // abstract
+    }
     
-    public init(_ object: NSObject) {
-        self.object = object
+    public func objectForKey(key: String) -> AnyObject? {
+        fatalError("Not implemented. Must be overriden")
+    }
+    
+    internal func keys() -> [String] {
+        fatalError("Not implemented. Must be overriden")
     }
     
     public subscript(key: String) -> AnyObject? {
@@ -315,16 +358,8 @@ public class KVCPreferences {
             return self.objectForKey(key)
         }
     }
-    
-}
-
-extension KVCPreferences: PreferencesType {
-    
-    public func objectForKey(key: String) -> AnyObject? {
-        return self.object.valueForKey(key)
-    }
     public func hasObjectForKey(key: String) -> Bool {
-        return self.object.valueForKey(key) != nil
+        return self.objectForKey(key) != nil
     }
     public func stringForKey(key: String) -> String? {
         return self.objectForKey(key) as? String
@@ -358,24 +393,32 @@ extension KVCPreferences: PreferencesType {
     }
     public func dictionary() -> [String : AnyObject] {
         var dico:Dictionary<String, AnyObject> = [:]
-        for name in propertyNames() {
-            if let value: AnyObject = self.object.valueForKey(name) {
+        for name in self.keys() {
+            if let value: AnyObject = self.objectForKey(name) {
                 dico[name] = value
             }
         }
         return dico
     }
-    public func dictionaryRepresentation() -> [NSObject : AnyObject] {
-        var dico:Dictionary<NSObject, AnyObject> = [:]
-        for name in propertyNames() {
-            if let value: AnyObject = self.object.valueForKey(name) {
-                dico[name] = value
-            }
-        }
-        return dico
+
+}
+
+
+// MARK : KVC
+// object must informal protocol NSKeyValueCoding
+public class KVCPreferences: PreferencesAdapter {
+    private let object: NSObject
+    
+    public init(_ object: NSObject) {
+        self.object = object
+        super.init()
     }
     
-    private func propertyNames() -> [String] {
+    public override func objectForKey(key: String) -> AnyObject? {
+        return self.object.valueForKey(key)
+    }
+    
+    internal override func keys() -> [String] {
         var names: [String] = []
         var count: UInt32 = 0
         // FIXME: not recursive?
@@ -388,6 +431,7 @@ extension KVCPreferences: PreferencesType {
         free(properties)
         return names
     }
+    
 }
 
 public class MutableKVCPreferences: KVCPreferences {
