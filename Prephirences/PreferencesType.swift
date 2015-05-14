@@ -87,7 +87,7 @@ public func += (inout left: MutablePreferencesType, right: (String, AnyObject)..
     for (k, v) in right { left[k] = v }
 }
 
-public func - (inout left: MutablePreferencesType, right: String) {
+public func -= (inout left: MutablePreferencesType, right: String) {
     left.removeObjectForKey(right)
 }
 
