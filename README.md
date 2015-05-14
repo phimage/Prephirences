@@ -9,7 +9,7 @@
            )](https://github.com/phimage/Prephirences/issues)
 
 
-<img align="left" src="/logo-128x128.png" hspace="20">(#logo)
+[<img align="left" src="/logo-128x128.png" hspace="20">](#logo)
 Prephirences is a Swift library that provides useful protocols and methods to manage preferences.
 
 ```swift
