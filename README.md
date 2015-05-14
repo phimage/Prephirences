@@ -10,7 +10,7 @@
 
 
 [<img align="left" src="/logo-128x128.png" hspace="20">](#logo)
-Prephirences is a Swift library that provides useful protocols and methods to manage preferences.
+Prephirences is a Swift library that provides useful protocols and convenience methods to manage application preferences, configurations and app-state.
 
 ```swift
 let userDefaults = NSUserDefaults.standardUserDefaults()
