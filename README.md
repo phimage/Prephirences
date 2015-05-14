@@ -9,17 +9,28 @@
            )](https://github.com/phimage/Prephirences/issues)
 
 
-<img align="left" src="/logo-128x128.png" hspace="20">
+<img align="left" src="/logo-128x128.png" hspace="20">(#logo)
 Prephirences is a Swift library that provides useful protocols and methods to manage preferences.
 
-Preferences could be user preferences (NSUserDefaults) or your own private application preferences - any object which implement protocol [PreferencesType](/Prephirences/PreferencesType.swift)
+```swift
+let userDefaults = NSUserDefaults.standardUserDefaults()
+if let enabled = userDefaults["enabled"] as? Bool {..}
+```
+
+Preferences could be user preferences `NSUserDefaults`, iCloud stored preferences `NSUbiquitousKeyValueStore`, file stored preferences or your own private application preferences - ie. any object which implement the protocol [PreferencesType](/Prephirences/PreferencesType.swift), which define key value store methods
+
+You can merge multiples preferences and work with them transparently (see [Composing](#composing))
 
 ## Contents ##
 - [Usage](#usage)
   - [Creating](#creating)
   - [Accessing](#accessing)
   - [Modifying](#modifying)
-  - [Some implementation](#some-implementation)
+  - [Some implementations](#some-implementations)
+    - [NSUserDefaults](#nsuserdefaults)
+    - [NSUbiquitousKeyValueStore](#nsubiquitouskeyvaluestore)
+    - [Key Value Coding](#kvc)
+    - [Core Data](#core-data)
   - [Proxying preferences with prefix](#proxying-preferences-with-prefix)
   - [Composing](#composing)
 - [Setup](#setup)
@@ -73,7 +84,7 @@ mutableFromDico.setBool(true, forKey: "newKey")
 
 ```
 
-## Some implementation ##
+## Some implementations ##
 ### NSUserDefaults ###
 
 `NSUserDefaults` implement `PreferencesType` and can be acceded with same methods
@@ -97,6 +108,7 @@ You can wrap an object respond to implicit protocol [NSKeyValueCoding](https://d
 ```swift
 let kvcPref = MutableKVCPreferences(myObject)
 ```
+Be sure to affect the correct object type
 
 ### Core Data ###
 You can wrap on `NSManageObject` in `ManageObjectPreferences` or `MutableManageObjectPreferences`
@@ -130,7 +142,7 @@ let myPreferences: MutableCompositePreferences = [fromDico, fromFile, userDefaul
 You can access or modify this composite preferences like any PreferencesType.
 
 1. When accessing, first preferences that define a value for a specified key will respond
-2. When modifying, first mutable preferences will be affected by default  (tou can set `MutableCompositePreferences.affectOnlyFirstMutable = false` to affect all mutable preferences)
+2. When modifying, first mutable preferences will be affected by default  (you can set `MutableCompositePreferences` attribute `affectOnlyFirstMutable` to `false` to affect all mutable preferences)
 
 The main goal is to define read-only preferences for your app (in code or files) and some mutable preferences (like NSUserDefaults, NSUbiquitousKeyValueStore). You can then access to one preference value without care about the origin
 
