@@ -75,13 +75,20 @@ Modifiable preferences implement protocol [MutablePreferencesTypes](/Prephirence
 The simplest implementation is [MutableDictionaryPreferences](/Prephirences/DictionaryPreferences.swift)
 
 ```swift
-// From Dictionary
 var mutableFromDico: MutableDictionaryPreferences = ["myKey": "myValue"]
 
 mutableFromDico["newKey"] = "newValue"
 mutableFromDico.setObject("myValue", forKey: "newKey")
 mutableFromDico.setBool(true, forKey: "newKey")
 
+```
+You can append dictionary or other `PreferencesType`
+```swift
+mutableFromDico += ["newKey": "newValue", "otherKey": true]
+```
+You can remove one preference
+```swift
+mutableFromDico -= "myKey"
 ```
 
 ## Some implementations ##
