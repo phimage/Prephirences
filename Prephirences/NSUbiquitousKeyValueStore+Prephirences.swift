@@ -76,7 +76,13 @@ extension NSUbiquitousKeyValueStore : MutablePreferencesType {
         if let bookData = self.dataForKey(key) {
             var isStale : ObjCBool = false
             var error : NSErrorPointer = nil
-            if let url = NSURL(byResolvingBookmarkData: bookData, options: .WithSecurityScope, relativeToURL: nil, bookmarkDataIsStale: &isStale, error: error) {
+            #if os(OSX)
+            let options = NSURLBookmarkResolutionOptions.WithSecurityScope
+            #elseif os(iOS)
+            let options = NSURLBookmarkResolutionOptions.WithoutUI
+            #endif
+            
+            if let url = NSURL(byResolvingBookmarkData: bookData, options: options, relativeToURL: nil, bookmarkDataIsStale: &isStale, error: error) {
                 if error == nil {
                     return url
                 }
@@ -86,7 +92,12 @@ extension NSUbiquitousKeyValueStore : MutablePreferencesType {
     }
     
     public func setURL(url: NSURL, forKey key: String) {
-        let data = url.bookmarkDataWithOptions(.WithSecurityScope | .SecurityScopeAllowOnlyReadAccess, includingResourceValuesForKeys:nil, relativeToURL:nil, error:nil)
+        #if os(OSX)
+            let options = NSURLBookmarkCreationOptions.WithSecurityScope | NSURLBookmarkCreationOptions.SecurityScopeAllowOnlyReadAccess
+        #elseif os(iOS)
+            let options = NSURLBookmarkCreationOptions.allZeros
+        #endif
+        let data = url.bookmarkDataWithOptions(options, includingResourceValuesForKeys:nil, relativeToURL:nil, error:nil)
         setData(data, forKey: key)
     }
 }
