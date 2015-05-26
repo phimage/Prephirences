@@ -46,6 +46,10 @@ Pod::Spec.new do |s|
     sp.dependency 'Prephirences/UserDefaults'
   end
 
+  s.subspec "Cocoa" do  |sp|
+    sp.source_files = ['Prephirences/PrephirencesMacOSX/*.swift']
+  end
+
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   s.resource  = "logo-128x128.png"
 

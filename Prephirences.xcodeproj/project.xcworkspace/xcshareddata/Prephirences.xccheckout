@@ -11,7 +11,7 @@
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>7E8F4207189E397862054CDF36427497231A0BE5</key>
-		<string>https://github.com/phimage/Prephirence.git</string>
+		<string>https://github.com/phimage/Prephirences.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Prephirences.xcodeproj</string>
@@ -21,7 +21,7 @@
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/phimage/Prephirence.git</string>
+	<string>https://github.com/phimage/Prephirences.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
@@ -34,7 +34,7 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>7E8F4207189E397862054CDF36427497231A0BE5</string>
 			<key>IDESourceControlWCCName</key>
-			<string>Prephirence</string>
+			<string>Prephirences</string>
 		</dict>
 	</array>
 </dict>

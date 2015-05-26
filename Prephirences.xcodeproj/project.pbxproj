@@ -22,11 +22,11 @@
 		C45D31381AE8FAE10034D1E3 /* Test.plist in Resources */ = {isa = PBXBuildFile; fileRef = C45D31371AE8FAE10034D1E3 /* Test.plist */; };
 		C46B4C171AEE432000B95F6B /* NSUbiquitousKeyValueStore+Prephirences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F32531AED289400195CDA /* NSUbiquitousKeyValueStore+Prephirences.swift */; };
 		C46B4C181AEE432000B95F6B /* NSUbiquitousKeyValueStore+Prephirences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F32531AED289400195CDA /* NSUbiquitousKeyValueStore+Prephirences.swift */; };
-		C46B4C191AEE51F000B95F6B /* ManagedObjectPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F324C1AED144500195CDA /* ManagedObjectPreferences.swift */; };
 		C47F324D1AED144500195CDA /* ManagedObjectPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F324C1AED144500195CDA /* ManagedObjectPreferences.swift */; };
 		C47F324E1AED144500195CDA /* ManagedObjectPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F324C1AED144500195CDA /* ManagedObjectPreferences.swift */; };
 		C47F32511AED1E3B00195CDA /* NSUserDefaults+Adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F32501AED1E3B00195CDA /* NSUserDefaults+Adds.swift */; };
 		C47F32521AED1E3B00195CDA /* NSUserDefaults+Adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F32501AED1E3B00195CDA /* NSUserDefaults+Adds.swift */; };
+		C4F2A6861B147CCD0092017D /* PreferencesTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F2A6851B147CCD0092017D /* PreferencesTabViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,7 +40,7 @@
 		C42114DB1AE7D84900A09DD9 /* PrephirencesiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PrephirencesiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C42114DE1AE7D84900A09DD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C42114DF1AE7D84900A09DD9 /* PrephirencesiOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrephirencesiOS.h; sourceTree = "<group>"; };
-		C42114FE1AE7D8E200A09DD9 /* PrephirenceMacOSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = PrephirenceMacOSX.framework; path = PrephirencesMacOSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C42114FE1AE7D8E200A09DD9 /* PrephirencesMacOSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PrephirencesMacOSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C42115011AE7D8E200A09DD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C42115021AE7D8E200A09DD9 /* PrephirencesMacOSX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrephirencesMacOSX.h; sourceTree = "<group>"; };
 		C421151B1AE7D97900A09DD9 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -51,6 +51,7 @@
 		C47F324C1AED144500195CDA /* ManagedObjectPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectPreferences.swift; sourceTree = "<group>"; };
 		C47F32501AED1E3B00195CDA /* NSUserDefaults+Adds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUserDefaults+Adds.swift"; sourceTree = "<group>"; };
 		C47F32531AED289400195CDA /* NSUbiquitousKeyValueStore+Prephirences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUbiquitousKeyValueStore+Prephirences.swift"; sourceTree = "<group>"; };
+		C4F2A6851B147CCD0092017D /* PreferencesTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesTabViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,7 +96,7 @@
 			children = (
 				C42114BB1AE7D0CB00A09DD9 /* PrephirencesTests.xctest */,
 				C42114DB1AE7D84900A09DD9 /* PrephirencesiOS.framework */,
-				C42114FE1AE7D8E200A09DD9 /* PrephirenceMacOSX.framework */,
+				C42114FE1AE7D8E200A09DD9 /* PrephirencesMacOSX.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -153,6 +154,7 @@
 		C42114FF1AE7D8E200A09DD9 /* PrephirencesMacOSX */ = {
 			isa = PBXGroup;
 			children = (
+				C4F2A6851B147CCD0092017D /* PreferencesTabViewController.swift */,
 				C42115021AE7D8E200A09DD9 /* PrephirencesMacOSX.h */,
 				C42115001AE7D8E200A09DD9 /* Supporting Files */,
 			);
@@ -266,7 +268,7 @@
 			);
 			name = PrephirencesMacOSX;
 			productName = PrephirenceMacOSX;
-			productReference = C42114FE1AE7D8E200A09DD9 /* PrephirenceMacOSX.framework */;
+			productReference = C42114FE1AE7D8E200A09DD9 /* PrephirencesMacOSX.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -340,7 +342,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C42114C31AE7D0CB00A09DD9 /* PrephirencesTests.swift in Sources */,
-				C46B4C191AEE51F000B95F6B /* ManagedObjectPreferences.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,6 +366,7 @@
 				C42115191AE7D91300A09DD9 /* PatternPreferences.swift in Sources */,
 				C42115181AE7D91100A09DD9 /* DictionaryPreferences.swift in Sources */,
 				C421151A1AE7D91600A09DD9 /* NSUserDefaults+Prephirences.swift in Sources */,
+				C4F2A6861B147CCD0092017D /* PreferencesTabViewController.swift in Sources */,
 				C42115171AE7D90E00A09DD9 /* PreferencesType.swift in Sources */,
 				C47F324E1AED144500195CDA /* ManagedObjectPreferences.swift in Sources */,
 				C47F32521AED1E3B00195CDA /* NSUserDefaults+Adds.swift in Sources */,
