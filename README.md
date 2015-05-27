@@ -1,25 +1,21 @@
-# Prephirences - Preϕrence
+# Prephirences - Preϕrences
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat
-            )](http://mit-license.org)
-[![Platform](http://img.shields.io/badge/platform-iOS/MacOS-lightgrey.svg?style=flat
-             )](https://developer.apple.com/resources/)
-[![Language](http://img.shields.io/badge/language-swift-orange.svg?style=flat
-             )](https://developer.apple.com/swift)
-[![Issues](https://img.shields.io/github/issues/phimage/Prephirences.svg?style=flat
+            )](http://mit-license.org) [![Platform](http://img.shields.io/badge/platform-iOS/MacOS-lightgrey.svg?style=flat
+             )](https://developer.apple.com/resources/) [![Language](http://img.shields.io/badge/language-swift-orange.svg?style=flat
+             )](https://developer.apple.com/swift) [![Issues](https://img.shields.io/github/issues/phimage/Prephirences.svg?style=flat
            )](https://github.com/phimage/Prephirences/issues)
 
 
-[<img align="left" src="/logo-128x128.png" hspace="20">](#logo)
-Prephirences is a Swift library that provides useful protocols and convenience methods to manage application preferences, configurations and app-state.
+[<img align="left" src="logo-128x128.png" hspace="20">](#logo) Prephirences is a Swift library that provides useful protocols and convenience methods to manage application preferences, configurations and app-state.
 
 ```swift
 let userDefaults = NSUserDefaults.standardUserDefaults()
 if let enabled = userDefaults["enabled"] as? Bool {..}
 ```
 
-Preferences could be user preferences `NSUserDefaults`, iCloud stored preferences `NSUbiquitousKeyValueStore`, file stored preferences or your own private application preferences - ie. any object which implement the protocol [PreferencesType](/Prephirences/PreferencesType.swift), which define key value store methods
+Preferences could be user preferences `NSUserDefaults`, iCloud stored preferences `NSUbiquitousKeyValueStore`, file stored preferences (ex: *[plist](http://en.wikipedia.org/wiki/Property_list)*) or your own private application preferences - ie. any object which implement the protocol [PreferencesType](/Prephirences/PreferencesType.swift), which define key value store methods
 
-You can merge multiples preferences and work with them transparently (see [Composing](#composing))
+You can 'merge' multiples preferences and work with them transparently (see [Composing](#composing))
 
 ## Contents ##
 - [Usage](#usage)
@@ -31,6 +27,7 @@ You can merge multiples preferences and work with them transparently (see [Compo
     - [NSUbiquitousKeyValueStore](#nsubiquitouskeyvaluestore)
     - [Key Value Coding](#kvc)
     - [Core Data](#core-data)
+    - [Plist](#plist)
   - [Proxying preferences with prefix](#proxying-preferences-with-prefix)
   - [Composing](#composing)
 - [Setup](#setup)
@@ -122,6 +119,13 @@ You can wrap on `NSManageObject` in `ManageObjectPreferences` or `MutableManageO
 ```swift
 let managedPref = ManageObjectPreferences(myManagedObject)
 ```
+### Plist ###
+There is many way to play with plist file
+
+- You can use `Plist` (with the useful `write` method)
+- You can init `DictionaryPreferences` or `MutableDictionaryPreferences` with plist file
+- You can read dictionnary from plist file and use`setObjectsForKeysWithDictionary` on any mutable preferences
+
 
 ## Proxying preferences with prefix ##
 You can defined a subcategory of preferences prefixed with your own string like that
@@ -151,7 +155,7 @@ You can access or modify this composite preferences like any PreferencesType.
 1. When accessing, first preferences that define a value for a specified key will respond
 2. When modifying, first mutable preferences will be affected by default  (you can set `MutableCompositePreferences` attribute `affectOnlyFirstMutable` to `false` to affect all mutable preferences)
 
-The main goal is to define read-only preferences for your app (in code or files) and some mutable preferences (like NSUserDefaults, NSUbiquitousKeyValueStore). You can then access to one preference value without care about the origin
+The main goal is to define read-only preferences for your app (in code or files) and some mutable preferences (like `NSUserDefaults`, `NSUbiquitousKeyValueStore`). You can then access to one preference value without care about the origin
 
 # Setup #
 
@@ -195,6 +199,6 @@ SOFTWARE.
 ```
 
 # Logo #
-By [kodlian] (http://www.kodlian.com/), inspired by [apple swift logo](http://en.wikipedia.org/wiki/File:Apple_Swift_Logo.png)
+By [kodlian](http://www.kodlian.com/), inspired by [apple swift logo](http://en.wikipedia.org/wiki/File:Apple_Swift_Logo.png)
 ## Why a logo?
 I like to see an image for each of my project when I browse them with [SourceTree](http://www.sourcetreeapp.com/)

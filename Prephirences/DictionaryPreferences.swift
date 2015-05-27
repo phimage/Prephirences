@@ -48,8 +48,8 @@ public class DictionaryPreferences: PreferencesType, SequenceType, DictionaryLit
         }
     }
 
-    public init?(filename: String?, ofType ext: String?) {
-        if let filePath = NSBundle.mainBundle().pathForResource(filename, ofType: ext) {
+    public init?(filename: String?, ofType ext: String?, bundle: NSBundle = NSBundle.mainBundle()) {
+        if let filePath = bundle.pathForResource(filename, ofType: ext) {
             if let d = NSDictionary(contentsOfFile: filePath) as? Dictionary<String,AnyObject> {
                 self.dico = d
             }
@@ -154,8 +154,8 @@ public class DictionaryPreferences: PreferencesType, SequenceType, DictionaryLit
     }
     
     // MARK: specifics methods
-    public func writeToFile(path: String, atomically: Bool) {
-        (self.dico as NSDictionary).writeToFile(path, atomically: atomically)
+    public func writeToFile(path: String, atomically: Bool = true) -> Bool {
+        return (self.dico as NSDictionary).writeToFile(path, atomically: atomically)
     }
 }
 
