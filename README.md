@@ -30,6 +30,7 @@ You can 'merge' multiples preferences and work with them transparently (see [Com
     - [Plist](#plist)
   - [Proxying preferences with prefix](#proxying-preferences-with-prefix)
   - [Composing](#composing)
+  - [Managing preferences instances](#managing-preferences-instances)
 - [Setup](#setup)
   - [Using xcode project](#using-xcode-project)
   - [Using cocoapods](#using-cocoapods)
@@ -156,6 +157,25 @@ You can access or modify this composite preferences like any PreferencesType.
 2. When modifying, first mutable preferences will be affected by default  (you can set `MutableCompositePreferences` attribute `affectOnlyFirstMutable` to `false` to affect all mutable preferences)
 
 The main goal is to define read-only preferences for your app (in code or files) and some mutable preferences (like `NSUserDefaults`, `NSUbiquitousKeyValueStore`). You can then access to one preference value without care about the origin
+
+## Managing preferences instances ##
+If you want to use Prephirences into a framework or want to get a `Preferences` without adding dependencies between classes, you can register any `PreferencesType` into `Prephirences` 
+
+as shared instance
+```swift
+Prephirences.sharedInstance = myPreferences
+```
+ or by providing an `Hashable` key
+```swift
+Prephirences.registerPreferences(myPreferences, forKey: "myKey")
+Prephirences.instances()["myKey"] = myPreferences
+Prephirences.instances()[NSStringFromClass(self.dynamicType)] = currentClassPreferences
+```
+Then you can access it anywhere
+```swift
+if let pref = Prephirences.instanceForKey("myKey") {..}
+if let pref = Prephirences.instances()["myKey"] {..}
+```
 
 # Setup #
 

@@ -8,7 +8,12 @@
 
 import Foundation
 import XCTest
-import PrephirencesMacOSX
+#if os(iOS)
+    import PrephirencesiOS
+#endif
+#if os(OSX)
+    import PrephirencesMacOSX
+#endif
 
 class PrephirencesTests: XCTestCase {
     
