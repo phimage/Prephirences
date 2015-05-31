@@ -64,7 +64,7 @@ extension NSUbiquitousKeyValueStore : MutablePreferencesType {
     }
 
     public func setInteger(value: Int, forKey key: String){
-        setLongLong(Int64(value.value), forKey: key)
+        setLongLong(Int64(value), forKey: key)
     }
     public func setFloat(value: Float, forKey key: String){
         setDouble(Double(value), forKey: key)
@@ -99,6 +99,14 @@ extension NSUbiquitousKeyValueStore : MutablePreferencesType {
         #endif
         let data = url.bookmarkDataWithOptions(options, includingResourceValuesForKeys:nil, relativeToURL:nil, error:nil)
         setData(data, forKey: key)
+    }
+    
+    // MARK: archive
+    public func unarchiveObjectForKey(key: String) -> AnyObject? {
+        return Prephirences.unarchiveObject(self, forKey: key)
+    }
+    public func setObjectToArchive(value: AnyObject?, forKey key: String) {
+        Prephirences.archiveObject(value, preferences: self, forKey: key)
     }
 }
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C41E78EA1B1B48B9009CB458 /* Prephirences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B3ED2B1B17165C00D807DA /* Prephirences.swift */; };
 		C42114C31AE7D0CB00A09DD9 /* PrephirencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114C21AE7D0CB00A09DD9 /* PrephirencesTests.swift */; };
 		C42114E01AE7D84900A09DD9 /* PrephirencesiOS.h in Headers */ = {isa = PBXBuildFile; fileRef = C42114DF1AE7D84900A09DD9 /* PrephirencesiOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C42114F41AE7D86D00A09DD9 /* PreferencesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114D01AE7D15D00A09DD9 /* PreferencesType.swift */; };
@@ -379,6 +380,7 @@
 				C4F2A6861B147CCD0092017D /* PreferencesTabViewController.swift in Sources */,
 				C42115171AE7D90E00A09DD9 /* PreferencesType.swift in Sources */,
 				C47F324E1AED144500195CDA /* ManagedObjectPreferences.swift in Sources */,
+				C41E78EA1B1B48B9009CB458 /* Prephirences.swift in Sources */,
 				C47F32521AED1E3B00195CDA /* NSUserDefaults+Adds.swift in Sources */,
 				C46B4C181AEE432000B95F6B /* NSUbiquitousKeyValueStore+Prephirences.swift in Sources */,
 			);

@@ -104,6 +104,10 @@ public class CompositePreferences: PreferencesType , ArrayLiteralConvertible {
         return self[key] as? NSURL
     }
     
+    public func unarchiveObjectForKey(key: String) -> AnyObject? {
+        return Prephirences.unarchiveObject(self, forKey: key)
+    }
+    
     public func dictionary() -> [String : AnyObject] {
         var dico = [String : AnyObject]()
         for prefs in reverse(array) {
@@ -167,6 +171,10 @@ public class MutableCompositePreferences: CompositePreferences, MutablePreferenc
     }
     public func setURL(url: NSURL, forKey key: String) {
         self[key] = url
+    }
+    
+    public func setObjectToArchive(value: AnyObject?, forKey key: String) {
+        Prephirences.archiveObject(value, preferences: self, forKey: key)
     }
     
     public func setObjectsForKeysWithDictionary(dictionary: [String : AnyObject]){
@@ -269,6 +277,9 @@ extension ProxyPreferences: PreferencesType {
     public func URLForKey(key: String) -> NSURL? {
         return self.proxiable.URLForKey(key)
     }
+    public func unarchiveObjectForKey(key: String) -> AnyObject? {
+        return self.proxiable.unarchiveObjectForKey(key)
+    }
     public func dictionary() -> [String : AnyObject] {
         return self.proxiable.dictionary()
     }
@@ -328,6 +339,9 @@ extension MutableProxyPreferences: MutablePreferencesType {
     }
     public func setURL(url: NSURL, forKey key: String){
         self.mutable.setURL(url, forKey: key)
+    }
+    public func setObjectToArchive(value: AnyObject?, forKey key: String) {
+         self.mutable.setObjectToArchive(value, forKey: key)
     }
     public func clearAll(){
         self.mutable.clearAll()
@@ -390,6 +404,9 @@ public class PreferencesAdapter: PreferencesType {
     }
     public func URLForKey(key: String) -> NSURL? {
         return self.objectForKey(key) as? NSURL
+    }
+    public func unarchiveObjectForKey(key: String) -> AnyObject? {
+        return self.objectForKey(key)
     }
     public func dictionary() -> [String : AnyObject] {
         var dico:Dictionary<String, AnyObject> = [:]
@@ -476,6 +493,9 @@ extension MutableKVCPreferences: MutablePreferencesType {
     }
     public func setURL(url: NSURL, forKey key: String){
         self.setObject(url, forKey: key)
+    }
+    public func setObjectToArchive(value: AnyObject?, forKey key: String) {
+        Prephirences.archiveObject(value, preferences: self, forKey: key)
     }
     public func clearAll(){
        // not implemented, maybe add protocol to set defaults attributes values

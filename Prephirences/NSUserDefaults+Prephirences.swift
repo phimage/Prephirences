@@ -32,7 +32,14 @@ import Foundation
 */
 extension NSUserDefaults: MutablePreferencesType {
     // other way is to encapsulate NSUserDefaults in new object NSUserDefaultsPrefs: MutablePreferencesType
-    
+
+    public func unarchiveObjectForKey(key: String) -> AnyObject? {
+        return Prephirences.unarchiveObject(self, forKey: key)
+    }
+    public func setObjectToArchive(value: AnyObject?, forKey key: String) {
+        Prephirences.archiveObject(value, preferences: self, forKey: key)
+    }
+
     public func dictionary() -> [String : AnyObject] {
         return self.dictionaryRepresentation() as! [String:AnyObject]
     }

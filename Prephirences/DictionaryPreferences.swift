@@ -149,6 +149,10 @@ public class DictionaryPreferences: PreferencesType, SequenceType, DictionaryLit
         return dico[key] as? NSURL
     }
 
+    public func unarchiveObjectForKey(key: String) -> AnyObject? {
+        return Prephirences.unarchiveObject(self, forKey: key)
+    }
+
     public func dictionary() -> [String : AnyObject] {
         return self.dico
     }
@@ -193,6 +197,10 @@ public class MutableDictionaryPreferences: DictionaryPreferences, MutablePrefere
     }
     public func setURL(url: NSURL, forKey key: String) {
         dico[key] = url
+    }
+    
+    public func setObjectToArchive(value: AnyObject?, forKey key: String) {
+        Prephirences.archiveObject(value, preferences: self, forKey: key)
     }
     
     public func setObjectsForKeysWithDictionary(dictionary: [String:AnyObject]) {

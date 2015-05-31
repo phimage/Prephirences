@@ -72,6 +72,26 @@ public class Prephirences {
     public static func instances<KeyType: Hashable>() -> PrephirencesForType<KeyType> {
         return PrephirencesForType<KeyType>()
     }
+    
+    // MARK: archive/unarchive
+    
+    public static func unarchiveObject(preferences: PreferencesType, forKey key: String) -> AnyObject? {
+        if let data = preferences.dataForKey(key) {
+            return NSKeyedUnarchiver.unarchiveObjectWithData(data)
+        }
+        return nil
+    }
+    
+    public static func archiveObject(value: AnyObject?, preferences: MutablePreferencesType, forKey key: String){
+        if let toArchive: AnyObject = value {
+            let data = NSKeyedArchiver.archivedDataWithRootObject(toArchive)
+            preferences.setObject(data, forKey: key)
+        }
+        else {
+            preferences.removeObjectForKey(key)
+        }
+    }
+
 }
 
 /* Allow to access or modify Preferences according to key type */

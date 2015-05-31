@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
 
   # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   s.name         = "Prephirences"
-  s.version      = "0.0.2"
+  s.version      = "1.0.0"
   s.summary      = "A Swift library to manage preferences"
   s.description  = <<-DESC
                    Prephirences is a Swift library that provides useful protocols and methods to manage preferences.
@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/phimage/Prephirences"
 
   # ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  s.license      = "MIT (example)"
+  s.license      = "MIT"
 
   # ――― Author Metadata  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   s.author             = { "phimage" => "eric.marchand.n7@gmail.com" }
@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = "10.9"
 
   # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  s.source       = { :git => "https://github.com/phimage/Prephirences.git" }
+  s.source       = { :git => "https://github.com/phimage/Prephirences.git", :tag => '1.0.0' }
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 
@@ -47,7 +47,7 @@ Pod::Spec.new do |s|
   end
 
   s.subspec "Cocoa" do  |sp|
-    sp.source_files = ['Prephirences/PrephirencesMacOSX/*.swift']
+    sp.source_files = ['PrephirencesMacOSX/*.swift']
   end
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #

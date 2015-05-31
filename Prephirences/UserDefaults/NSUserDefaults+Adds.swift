@@ -56,22 +56,17 @@ public extension NSUserDefaults {
     // MARK: color
     #if os(OSX)
     typealias Color = NSColor
-    typealias Archiver = NSArchiver
-    typealias Unarchiver = NSUnarchiver
-    #endif
-    #if os(iOS)
+    #elseif os(iOS)
     typealias Color = UIColor
-    typealias Archiver = NSKeyedArchiver
-    typealias Unarchiver = NSKeyedUnarchiver
     #endif
     
     public func setColor(aColor: Color, forKey aKey: String) {
-        let theData = Archiver.archivedDataWithRootObject(aColor)
+        let theData = NSKeyedArchiver.archivedDataWithRootObject(aColor)
         self.setObject(theData, forKey:aKey)
     }
     
     public func colorForKey(aKey: String) -> Color? {
-        if let theData = self.dataForKey(aKey), color = Unarchiver.unarchiveObjectWithData(theData) as? Color {
+        if let theData = self.dataForKey(aKey), color = NSKeyedUnarchiver.unarchiveObjectWithData(theData) as? Color {
             return color
         }
         return nil

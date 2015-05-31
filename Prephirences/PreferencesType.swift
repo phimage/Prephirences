@@ -44,6 +44,8 @@ public protocol PreferencesType {
     func doubleForKey(key: String) -> Double
     func boolForKey(key: String) -> Bool
     func URLForKey(key: String) -> NSURL?
+
+    func unarchiveObjectForKey(key: String) -> AnyObject?
     
     func dictionary() -> [String : AnyObject]
     
@@ -64,6 +66,8 @@ public protocol MutablePreferencesType: PreferencesType {
     func setDouble(value: Double, forKey key: String)
     func setBool(value: Bool, forKey key: String)
     func setURL(url: NSURL, forKey key: String)
+
+    func setObjectToArchive(value: AnyObject?, forKey key: String)
     
     func clearAll()
     func setObjectsForKeysWithDictionary(dictionary: [String : AnyObject])

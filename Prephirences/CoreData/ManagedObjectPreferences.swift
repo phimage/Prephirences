@@ -91,6 +91,9 @@ extension MutableManageObjectPreferences: MutablePreferencesType {
     public func setURL(url: NSURL, forKey key: String){
         self.setObject(url, forKey: key)
     }
+    public func setObjectToArchive(value: AnyObject?, forKey key: String) {
+        Prephirences.archiveObject(value, preferences: self, forKey: key)
+    }
     public func clearAll(){
         // not implemented, maybe add protocol to set defaults attributes values
     }
