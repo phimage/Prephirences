@@ -47,7 +47,8 @@ Pod::Spec.new do |s|
   end
 
   s.subspec "Cocoa" do  |sp|
-    sp.source_files = ['PrephirencesMacOSX/*.swift']
+    sp.platform = :osx, '10.10'
+    sp.osx.source_files = ['PrephirencesMacOSX/*.swift']
   end
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #

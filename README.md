@@ -1,9 +1,9 @@
 # Prephirences - Preϕrences
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat
-            )](http://mit-license.org) [![Platform](http://img.shields.io/badge/platform-iOS/MacOS-lightgrey.svg?style=flat
+            )](http://mit-license.org) [![Platform](http://img.shields.io/badge/platform-ios_osx-lightgrey.svg?style=flat
              )](https://developer.apple.com/resources/) [![Language](http://img.shields.io/badge/language-swift-orange.svg?style=flat
              )](https://developer.apple.com/swift) [![Issues](https://img.shields.io/github/issues/phimage/Prephirences.svg?style=flat
-           )](https://github.com/phimage/Prephirences/issues)
+           )](https://github.com/phimage/Prephirences/issues) [![Cocoapod](http://img.shields.io/cocoapods/v/Prephirences.svg?style=flat)](http://cocoadocs.org/docsets/Prephirences/)
 
 
 [<img align="left" src="logo-128x128.png" hspace="20">](#logo) Prephirences is a Swift library that provides useful protocols and convenience methods to manage application preferences, configurations and app-state.
@@ -121,11 +121,11 @@ You can wrap on `NSManageObject` in `ManageObjectPreferences` or `MutableManageO
 let managedPref = ManageObjectPreferences(myManagedObject)
 ```
 ### Plist ###
-There is many way to play with plist file
+There is many way to play with plist files
 
 - You can use `Plist` (with the useful `write` method)
 - You can init `DictionaryPreferences` or `MutableDictionaryPreferences` with plist file
-- You can read dictionnary from plist file and use`setObjectsForKeysWithDictionary` on any mutable preferences
+- You can read dictionnary from plist file and use `setObjectsForKeysWithDictionary` on any mutable preferences
 
 
 ## Proxying preferences with prefix ##
@@ -179,19 +179,19 @@ if let pref = Prephirences.instances()["myKey"] {..}
 
 # Setup #
 
+## Using [cocoapods](http://cocoapods.org/) ##
+
+Add `pod 'Prephirences'` to your `Podfile` and run `pod install`. 
+
+*Add `use_frameworks!` to the end of the `Podfile`.*
+
+### For core data ###
+Add `pod 'Prephirences/CoreData'`
+
 ## Using xcode project ##
 
 1. Drag Prephirences.xcodeproj to your project/workspace or open it to compile it
 2. Add the Prephirences framework to your project
-
-## Using [cocoapods](http://cocoapods.org/) ##
-
-Add `pod 'Prephirences', :git => 'https://github.com/phimage/Prephirences.git'` to your `Podfile` and run `pod install`. 
-
-Add `use_frameworks!` to the end of the `Podfile`.
-
-### For core data ###
-Add `pod 'Prephirences/CoreData', :git => 'https://github.com/phimage/Prephirences.git'`
 
 # Licence #
 ```
@@ -221,4 +221,4 @@ SOFTWARE.
 # Logo #
 By [kodlian](http://www.kodlian.com/), inspired by [apple swift logo](http://en.wikipedia.org/wiki/File:Apple_Swift_Logo.png)
 ## Why a logo?
-I like to see an image for each of my project when I browse them with [SourceTree](http://www.sourcetreeapp.com/)
+I like to see an image for each of my projects when I browse them with [SourceTree](http://www.sourcetreeapp.com/)
