@@ -20,20 +20,6 @@
                ReferencedContainer = "container:Prephirences.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "NO"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C42114BA1AE7D0CB00A09DD9"
-               BuildableName = "PrephirencesTests.xctest"
-               BlueprintName = "PrephirencesTests"
-               ReferencedContainer = "container:Prephirences.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -46,13 +32,22 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C42114BA1AE7D0CB00A09DD9"
-               BuildableName = "PrephirencesTests.xctest"
-               BlueprintName = "PrephirencesTests"
+               BlueprintIdentifier = "C4969D871B21897B000E8E71"
+               BuildableName = "PrephirencesiOSTests.xctest"
+               BlueprintName = "PrephirencesiOSTests"
                ReferencedContainer = "container:Prephirences.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "C42114DA1AE7D84900A09DD9"
+            BuildableName = "PrephirencesiOS.framework"
+            BlueprintName = "PrephirencesiOS"
+            ReferencedContainer = "container:Prephirences.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"

@@ -1,8 +1,8 @@
 //
-//  PrephirencesTests.swift
-//  PrephirencesTests
+//  PrephirencesiOSTests.swift
+//  PrephirencesiOSTests
 //
-//  Created by phimage on 22/04/15.
+//  Created by phimage on 05/06/15.
 //  Copyright (c) 2015 phimage. All rights reserved.
 //
 
@@ -10,12 +10,14 @@ import Foundation
 import XCTest
 #if os(iOS)
     import PrephirencesiOS
+    import UIKit
 #endif
 #if os(OSX)
     import PrephirencesMacOSX
+    import AppKit
 #endif
 
-class PrephirencesTests: XCTestCase {
+class PrephirencesiOSTests: XCTestCase {
     
     let mykey = "key"
     let myvalue = "value"
@@ -53,32 +55,52 @@ class PrephirencesTests: XCTestCase {
         printDictionaryPreferences(preferences)
     }
     
-    /*func testFromFile() {
-        if let url = NSBundle(forClass: self.dynamicType).URLForResource("Test", withExtension: "plist"),
-            filePath = url.absoluteString,
-            dico = NSDictionary(contentsOfFile: filePath),
-            preference = DictionaryPreferences(filePath: filePath) {
-                for (key,value) in preference.dictionaryRepresentation() {
-                    println("\(key)=\(value)")
-                }
-                
-        } else {
-            XCTFail("Failed to read from file")
-        }
+    /*func testWriteDictionaryLiteral() {
+        var preferences: DictionaryPreferences = [mykey: myvalue, "key2": "value2"]
+        printDictionaryPreferences(preferences)
+        
+        preferences.writeToFile("/tmp/prephirence.test", atomically: true)
+  
     }*/
     
+    func testFromFile() {
+        if let filePath = NSBundle(forClass: self.dynamicType).pathForResource("Test", ofType: "plist") {
+            if  let preference = DictionaryPreferences(filePath: filePath) {
+                    for (key,value) in preference.dictionary() {
+                        println("\(key)=\(value)")
+                    }
+                    
+            } else {
+                XCTFail("Failed to read from file")
+            }
+        }else {
+            XCTFail("Failed to get file url")
+        }
+        
+        
+        if  let  preference = DictionaryPreferences(filename: "Test", ofType: "plist", bundle: NSBundle(forClass: self.dynamicType)) {
+            for (key,value) in preference.dictionary() {
+                println("\(key)=\(value)")
+            }
+            
+        } else {
+            XCTFail("Failed to read from file using shortcut init")
+        }
+
+    }
+
     func testUserDefaults() {
         let userDefaults = NSUserDefaults.standardUserDefaults()
         printPreferences(userDefaults)
         
-       
-
+        
+        
         userDefaults[mykey] = myvalue
         XCTAssert(userDefaults[mykey] as! String == myvalue, "not affected")
         userDefaults[mykey] = nil
         XCTAssert(userDefaults[mykey] as? String ?? nil == nil, "not nil affected") // return a proxyPreferences
         
-      
+        
         userDefaults.setObject(myvalue, forKey:mykey)
         XCTAssert(userDefaults.objectForKey(mykey) as! String == myvalue, "not affected")
         userDefaults.setObject(nil, forKey:mykey)
@@ -104,7 +126,7 @@ class PrephirencesTests: XCTestCase {
         appDefaults[mykey] = nil
         XCTAssert(appDefaults[mykey] as? String ?? nil == nil, "not nil affected")
         XCTAssert(userDefaults[fullKey] as? String ?? nil == nil, "not nil affected")
-       
+        
     }
     
 }
