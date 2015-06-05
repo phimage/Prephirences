@@ -92,6 +92,11 @@ public class Prephirences {
         }
     }
 
+    // MARK: immutable
+    public static func immutableProxy(preferences: MutablePreferencesType) -> PreferencesType {
+        return ProxyPreferences(preferences: preferences)
+    }
+
 }
 
 /* Allow to access or modify Preferences according to key type */
