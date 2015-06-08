@@ -406,7 +406,7 @@ public class PreferencesAdapter: PreferencesType {
         return self.objectForKey(key) as? NSURL
     }
     public func unarchiveObjectForKey(key: String) -> AnyObject? {
-        return self.objectForKey(key)
+        return Prephirences.unarchiveObject(self, forKey: key)
     }
     public func dictionary() -> [String : AnyObject] {
         var dico:Dictionary<String, AnyObject> = [:]

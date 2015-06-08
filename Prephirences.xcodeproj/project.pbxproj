@@ -28,6 +28,8 @@
 		C4969D8E1B21897B000E8E71 /* PrephirencesiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C42114DB1AE7D84900A09DD9 /* PrephirencesiOS.framework */; };
 		C4969D941B2189DD000E8E71 /* Test.plist in Resources */ = {isa = PBXBuildFile; fileRef = C45D31371AE8FAE10034D1E3 /* Test.plist */; };
 		C4B3ED2C1B17165C00D807DA /* Prephirences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B3ED2B1B17165C00D807DA /* Prephirences.swift */; };
+		C4BF518A1B259C3900C4FF98 /* KeychainPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF51891B259C3900C4FF98 /* KeychainPreferences.swift */; };
+		C4BF518B1B259C3900C4FF98 /* KeychainPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF51891B259C3900C4FF98 /* KeychainPreferences.swift */; };
 		C4EBB8441B15DE4D0075187B /* Plist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EBB8431B15DE4D0075187B /* Plist.swift */; };
 		C4EBB8451B15E1180075187B /* Plist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EBB8431B15DE4D0075187B /* Plist.swift */; };
 		C4F2A6861B147CCD0092017D /* PreferencesTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F2A6851B147CCD0092017D /* PreferencesTabViewController.swift */; };
@@ -67,6 +69,7 @@
 		C4969D8B1B21897B000E8E71 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C4969D8C1B21897B000E8E71 /* PrephirencesiOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrephirencesiOSTests.swift; sourceTree = "<group>"; };
 		C4B3ED2B1B17165C00D807DA /* Prephirences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Prephirences.swift; sourceTree = "<group>"; };
+		C4BF51891B259C3900C4FF98 /* KeychainPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainPreferences.swift; sourceTree = "<group>"; };
 		C4EBB8431B15DE4D0075187B /* Plist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plist.swift; sourceTree = "<group>"; };
 		C4F2A6851B147CCD0092017D /* PreferencesTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesTabViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -128,6 +131,7 @@
 				C4EBB8431B15DE4D0075187B /* Plist.swift */,
 				C42114CE1AE7D15000A09DD9 /* NSUserDefaults+Prephirences.swift */,
 				C47F32531AED289400195CDA /* NSUbiquitousKeyValueStore+Prephirences.swift */,
+				C4BF51891B259C3900C4FF98 /* KeychainPreferences.swift */,
 				C4B3ED2B1B17165C00D807DA /* Prephirences.swift */,
 				C47F324F1AED1DD900195CDA /* UserDefaults */,
 				C47F324B1AED142100195CDA /* CoreData */,
@@ -365,6 +369,7 @@
 				C42114F51AE7D86F00A09DD9 /* DictionaryPreferences.swift in Sources */,
 				C4EBB8441B15DE4D0075187B /* Plist.swift in Sources */,
 				C42114F71AE7D87600A09DD9 /* NSUserDefaults+Prephirences.swift in Sources */,
+				C4BF518A1B259C3900C4FF98 /* KeychainPreferences.swift in Sources */,
 				C42114F41AE7D86D00A09DD9 /* PreferencesType.swift in Sources */,
 				C47F324D1AED144500195CDA /* ManagedObjectPreferences.swift in Sources */,
 				C4B3ED2C1B17165C00D807DA /* Prephirences.swift in Sources */,
@@ -384,6 +389,7 @@
 				C4F2A6861B147CCD0092017D /* PreferencesTabViewController.swift in Sources */,
 				C42115171AE7D90E00A09DD9 /* PreferencesType.swift in Sources */,
 				C47F324E1AED144500195CDA /* ManagedObjectPreferences.swift in Sources */,
+				C4BF518B1B259C3900C4FF98 /* KeychainPreferences.swift in Sources */,
 				C41E78EA1B1B48B9009CB458 /* Prephirences.swift in Sources */,
 				C47F32521AED1E3B00195CDA /* NSUserDefaults+Adds.swift in Sources */,
 				C46B4C181AEE432000B95F6B /* NSUbiquitousKeyValueStore+Prephirences.swift in Sources */,
@@ -648,6 +654,7 @@
 				C4969D931B21897B000E8E71 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

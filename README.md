@@ -13,7 +13,7 @@ let userDefaults = NSUserDefaults.standardUserDefaults()
 if let enabled = userDefaults["enabled"] as? Bool {..}
 ```
 
-Preferences could be user preferences `NSUserDefaults`, iCloud stored preferences `NSUbiquitousKeyValueStore`, file stored preferences (ex: *[plist](http://en.wikipedia.org/wiki/Property_list)*) or your own private application preferences - ie. any object which implement the protocol [PreferencesType](/Prephirences/PreferencesType.swift), which define key value store methods
+Preferences could be user preferences `NSUserDefaults`, iCloud stored preferences `NSUbiquitousKeyValueStore`, key chain, file stored preferences (ex: *[plist](http://en.wikipedia.org/wiki/Property_list)*) or your own private application preferences - ie. any object which implement the protocol [PreferencesType](/Prephirences/PreferencesType.swift), which define key value store methods
 
 You can 'merge' multiples preferences and work with them transparently (see [Composing](#composing))
 
@@ -28,6 +28,7 @@ You can 'merge' multiples preferences and work with them transparently (see [Com
     - [Key Value Coding](#kvc)
     - [Core Data](#core-data)
     - [Plist](#plist)
+    - [Keychain](#keychain)
   - [Proxying preferences with prefix](#proxying-preferences-with-prefix)
   - [Composing](#composing)
   - [Managing preferences instances](#managing-preferences-instances)
@@ -126,6 +127,25 @@ There is many way to play with plist files
 - You can use `Plist` (with the useful `write` method)
 - You can init `DictionaryPreferences` or `MutableDictionaryPreferences` with plist file
 - You can read dictionnary from plist file and use `setObjectsForKeysWithDictionary` on any mutable preferences
+
+### Keychain ###
+To store into keychain, use an instance of ```KeychainPreferences```
+
+```swift
+KeychainPreferences.sharedInstance // default instance with main bundle id
+var keychain = KeychainPreferences(service: "com.github.example")
+```
+
+```swift
+keychain["username"] = "password-encoded"
+```
+
+**Sharing Keychain items**
+```swift
+keychain.accessGroup = "AKEY.shared"
+```
+ 
+
 
 
 ## Proxying preferences with prefix ##
