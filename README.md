@@ -135,10 +135,16 @@ To store into keychain, use an instance of ```KeychainPreferences```
 KeychainPreferences.sharedInstance // default instance with main bundle id
 var keychain = KeychainPreferences(service: "com.github.example")
 ```
-
+then store `String` or `NSData`
 ```swift
-keychain["username"] = "password-encoded"
+keychain["anUserName"] = "password-encoded"
+
+if let pass = keychain.stringForKey("anUserName") {..}
 ```
+**Accessibility**
+````
+keychain.accessibility = .AccessibleAfterFirstUnlock
+````
 
 **Sharing Keychain items**
 ```swift
