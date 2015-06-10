@@ -112,7 +112,7 @@ class PrephirencesiOSTests: XCTestCase {
         XCTAssert(userDefaults.stringForKey(mykey) == nil, "not nil affected")
     }
     
-    func testUserDefaultsProxu() {
+    func testUserDefaultsProxy() {
         let userDefaults = NSUserDefaults.standardUserDefaults()
         
         let appKey = "appname"
@@ -127,6 +127,69 @@ class PrephirencesiOSTests: XCTestCase {
         XCTAssert(appDefaults[mykey] as? String ?? nil == nil, "not nil affected")
         XCTAssert(userDefaults[fullKey] as? String ?? nil == nil, "not nil affected")
         
+    }
+    
+    func testPreference() {
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+ 
+        var intPref: MutablePreference<Int> = Prephirences.preferenceForKey("int", userDefaults)
+        intPref.value = nil
+        
+        intPref++
+        XCTAssert(intPref.value! == 1)
+        intPref--
+        XCTAssert(intPref.value! == 0)
+        intPref += 30
+        XCTAssert(intPref.value! == 30)
+        intPref -= 30
+        XCTAssert(intPref.value! == 0)
+        
+        intPref.value = 1
+        XCTAssert(intPref.value! == 1)
+        
+        intPref *= 20
+        XCTAssert(intPref.value! == 20)
+        intPref %= 7
+        XCTAssert(intPref.value! == 6)
+        intPref %= 2
+        XCTAssert(intPref.value! == 0)
+        
+        intPref += 30
+        intPref /= 3
+        XCTAssert(intPref.value! == 10)
+        
+        
+        var boolPref: MutablePreference<Bool> = Prephirences.preferenceForKey("bool", userDefaults)
+        boolPref.value = nil
+        
+        boolPref &&= false
+        XCTAssert(boolPref.value! == false)
+        boolPref &&= true
+        XCTAssert(boolPref.value! == false)
+        
+        boolPref.value = true
+        XCTAssert(boolPref.value! == true)
+        boolPref &&= true
+        XCTAssert(boolPref.value! == true)
+        boolPref &&= false
+        XCTAssert(boolPref.value! == false)
+        
+        boolPref != false
+        XCTAssert(boolPref.value! == true)
+        
+        
+        boolPref ||= true
+        XCTAssert(boolPref.value! == true)
+        boolPref ||= false
+        XCTAssert(boolPref.value! == true)
+
+        boolPref != true
+        XCTAssert(boolPref.value! == false)
+        
+        boolPref ||= false
+        XCTAssert(boolPref.value! == false)
+        boolPref ||= true
+        XCTAssert(boolPref.value! == true)
     }
     
 }

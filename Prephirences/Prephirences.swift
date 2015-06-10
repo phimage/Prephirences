@@ -96,7 +96,14 @@ public class Prephirences {
     public static func immutableProxy(preferences: MutablePreferencesType) -> PreferencesType {
         return ProxyPreferences(preferences: preferences)
     }
-
+    
+    // MARK: get an instance of preference for a key
+    public static func preferenceForKey<T>(key: String,_ preferences: MutablePreferencesType) -> MutablePreference<T> {
+        return MutablePreference<T>(preferences: preferences, key: key)
+    }
+    public static func preferenceForKey<T>(key: String,_ preferences: PreferencesType) -> Preference<T> {
+        return Preference<T>(preferences: preferences, key: key)
+    }
 }
 
 /* Allow to access or modify Preferences according to key type */

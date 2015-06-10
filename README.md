@@ -90,6 +90,26 @@ You can remove one preference
 mutableFromDico -= "myKey"
 ```
 
+### Apply operators to one preference ###
+```swift
+var intPref: MutablePreference<Int> = Prephirences.preferenceForKey("intKey", aPrefs)
+
+intPref++
+intPref--
+intPref += 30
+intPref -= 30
+intPref *= 20
+intPref %= 7
+intPref /= 3
+
+var boolPref: MutablePreference<Bool> = Prephirences.preferenceForKey("boolKey", aPrefs)
+
+boolPref &= false
+boolPref |= true
+boolPref != true
+
+```
+
 ## Some implementations ##
 ### NSUserDefaults ###
 

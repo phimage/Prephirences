@@ -47,11 +47,9 @@ public protocol PreferencesType {
 
     func unarchiveObjectForKey(key: String) -> AnyObject?
     
+    // func preferenceForKey<T>(key: String) -> Preference<T>
+
     func dictionary() -> [String : AnyObject]
-    
-    // TODO SequenceType for all Preferences? maybe conflit with CompositePreferences
-    //typealias Key = String
-    //typealias Value = AnyObject
 }
 
 public protocol MutablePreferencesType: PreferencesType {
@@ -71,6 +69,8 @@ public protocol MutablePreferencesType: PreferencesType {
     
     func clearAll()
     func setObjectsForKeysWithDictionary(dictionary: [String : AnyObject])
+
+    // func preferenceForKey<T>(key: String) -> MutablePreference<T>
 }
 
 // MARK: usefull functions
