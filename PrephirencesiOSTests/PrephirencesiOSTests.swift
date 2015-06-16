@@ -158,6 +158,19 @@ class PrephirencesiOSTests: XCTestCase {
         intPref /= 3
         XCTAssert(intPref.value! == 10)
         
+        switch(intPref) {
+        case 1: XCTFail("not equal in switch")
+        case 10: println("ok")
+        default: XCTFail("not equal in switch")
+        }
+        
+        switch(intPref) {
+        case 0...9: XCTFail("not equal in switch")
+        case 11...999: XCTFail("not equal in switch")
+        case 9...11: println("ok")
+        default: XCTFail("not equal in switch")
+        }
+        
         
         var boolPref: MutablePreference<Bool> = Prephirences.preferenceForKey("bool", userDefaults)
         boolPref.value = nil
@@ -190,6 +203,20 @@ class PrephirencesiOSTests: XCTestCase {
         XCTAssert(boolPref.value! == false)
         boolPref ||= true
         XCTAssert(boolPref.value! == true)
+        
+        switch(boolPref) {
+        case true: println("ok")
+        case false: XCTFail("not true")
+        default: XCTFail("nil")
+        }
+        
+        var stringPref: MutablePreference<String> = Prephirences.preferenceForKey("string", userDefaults)
+        stringPref.value = "pref"
+        
+        stringPref += "erence"
+        XCTAssert(stringPref.value! == "preference")
+  
+        
     }
     
 }

@@ -87,16 +87,36 @@ public func ?=<T> (preference: MutablePreference<T>, @autoclosure expr: () -> T)
     }
 }
 
+// MARK: Pattern match
+public func ~=<T: Equatable> (value: T, preference: Preference<T>) -> Bool {
+    if let pv = preference.value  {
+        return pv ~= value
+    }
+    return false
+}
+public func ~=<I: IntervalType> (value: I.Bound, preference: Preference<I>) -> Bool {
+    if let pv = preference.value  {
+        return pv ~= value
+    }
+    return false
+}
+public func ~=<I: ForwardIndexType where I : Comparable> (value: Range<I>, preference: Preference<I>) -> Bool {
+    if let pv = preference.value  {
+        return value ~= pv
+    }
+    return false
+}
+
 // MARK: Equatable
-func ==<T where T: Equatable> (left: Preference<T>, right: Preference<T>) -> Bool {
+public func ==<T: Equatable> (left: Preference<T>, right: Preference<T>) -> Bool {
     return left.value == right.value
 }
-func !=<T where T: Equatable> (left: Preference<T>, right: Preference<T>) -> Bool {
+public func !=<T: Equatable> (left: Preference<T>, right: Preference<T>) -> Bool {
     return !(left == right)
 }
 
 // MARK: Comparable
-func < <T where T: Comparable> (left: Preference<T>, right: Preference<T>) -> Bool {
+public func < <T: Comparable> (left: Preference<T>, right: Preference<T>) -> Bool {
     return left.value < right.value
 }
 

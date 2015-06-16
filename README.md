@@ -102,6 +102,12 @@ intPref *= 20
 intPref %= 7
 intPref /= 3
 
+switch(intPref) {
+   case 1: println("one")
+   case 2...10: println("not one or zero but...")
+   default: println("unkwown")
+}
+
 var boolPref: MutablePreference<Bool> = Prephirences.preferenceForKey("boolKey", aPrefs)
 
 boolPref &= false
