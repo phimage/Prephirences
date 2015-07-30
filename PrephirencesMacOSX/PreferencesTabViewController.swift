@@ -37,6 +37,7 @@ public let kPreferencesTabViewSize = "preferencesTabViewSize"
 
 /* Controller which resize parent window according to tab view items, useful for preferences */
 public class PreferencesTabViewController: NSTabViewController {
+    private var observe = false
     
     // Keep size of subview
     private var cacheSize = [NSView: NSSize]()
@@ -51,8 +52,9 @@ public class PreferencesTabViewController: NSTabViewController {
     override public func tabView(tabView: NSTabView, willSelectTabViewItem tabViewItem: NSTabViewItem) {
         // remove listener on previous selected tab view
         if let selectedTabViewItem = self.selectedTabViewItem as? NSTabViewItem,
-            viewController = selectedTabViewItem.viewController as? PreferencesTabViewItemControllerType {
+            viewController = selectedTabViewItem.viewController as? PreferencesTabViewItemControllerType where observe {
                 (viewController as! NSViewController).removeObserver(self, forKeyPath: kPreferencesTabViewSize, context: nil)
+                observe = false
         }
         
         super.tabView(tabView, willSelectTabViewItem: tabViewItem)
@@ -67,6 +69,7 @@ public class PreferencesTabViewController: NSTabViewController {
                 // Observe kPreferencesTabViewSize
                 let options = NSKeyValueObservingOptions.New | NSKeyValueObservingOptions.Old
                 (viewController as! NSViewController).addObserver(self, forKeyPath: kPreferencesTabViewSize, options: options, context: nil)
+                observe = true
             }
             else {
                cacheSize[view] = cacheSize[view] ?? currentSize
