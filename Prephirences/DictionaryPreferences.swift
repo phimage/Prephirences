@@ -124,13 +124,13 @@ public class DictionaryPreferences: PreferencesType, SequenceType, DictionaryLit
     public func arrayForKey(key: String) -> [AnyObject]? {
         return dico[key] as? [AnyObject]
     }
-    public func dictionaryForKey(key: String) -> [NSObject : AnyObject]? {
+    public func dictionaryForKey(key: String) -> [String : AnyObject]? {
         return dico[key] as? [String: AnyObject]
     }
     public func dataForKey(key: String) -> NSData? {
         return dico[key] as? NSData
     }
-    public func stringArrayForKey(key: String) -> [AnyObject]? {
+    public func stringArrayForKey(key: String) -> [String]? {
         return self.arrayForKey(key) as? [String]
     }
     public func integerForKey(key: String) -> Int {
@@ -195,7 +195,7 @@ public class MutableDictionaryPreferences: DictionaryPreferences, MutablePrefere
     public func setBool(value: Bool, forKey key: String) {
         dico[key] = value
     }
-    public func setURL(url: NSURL, forKey key: String) {
+    public func setURL(url: NSURL?, forKey key: String) {
         dico[key] = url
     }
     

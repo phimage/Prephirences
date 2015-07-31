@@ -42,7 +42,7 @@ public class ManageObjectPreferences : PreferencesAdapter {
     }
     
     internal override func keys() -> [String] {
-        let attr = self.object.entity.attributesByName as! [String: AnyObject]
+        let attr = self.object.entity.attributesByName
         return attr.keys.array
     }
     
@@ -88,7 +88,7 @@ extension MutableManageObjectPreferences: MutablePreferencesType {
     public func setBool(value: Bool, forKey key: String){
         self.setObject(NSNumber(bool: value), forKey: key)
     }
-    public func setURL(url: NSURL, forKey key: String){
+    public func setURL(url: NSURL?, forKey key: String){
         self.setObject(url, forKey: key)
     }
     public func setObjectToArchive(value: AnyObject?, forKey key: String) {

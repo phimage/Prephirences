@@ -268,6 +268,6 @@ public func sumOf<T where T: Addable, T:Initializable>(input : T...) -> T {
 }
 
 public func sumOf<T where T:Addable, T:Initializable>(input : [T]) -> T {
-    return reduce(input, T()) {$0 + $1}
+    return input.reduce(T()) {$0 + $1}
 }
 

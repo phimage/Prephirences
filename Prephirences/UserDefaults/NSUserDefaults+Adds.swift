@@ -45,7 +45,7 @@ public extension NSUserDefaults {
     public func copyDefaults(defaults: NSUserDefaults) {
         let dict = defaults.dictionaryRepresentation()
         for (key, value) in dict {
-            setObject(value, forKey: key as! String)
+            setObject(value, forKey: key)
         }
     }
 }

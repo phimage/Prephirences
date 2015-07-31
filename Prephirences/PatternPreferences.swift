@@ -76,13 +76,13 @@ public class CompositePreferences: PreferencesType , ArrayLiteralConvertible {
     public func arrayForKey(key: String) -> [AnyObject]? {
         return self[key] as? [AnyObject]
     }
-    public func dictionaryForKey(key: String) -> [NSObject : AnyObject]? {
+    public func dictionaryForKey(key: String) -> [String : AnyObject]? {
         return self[key] as? [String: AnyObject]
     }
     public func dataForKey(key: String) -> NSData? {
         return self[key] as? NSData
     }
-    public func stringArrayForKey(key: String) -> [AnyObject]? {
+    public func stringArrayForKey(key: String) -> [String]? {
         return self.arrayForKey(key) as? [String]
     }
     public func integerForKey(key: String) -> Int {
@@ -110,7 +110,7 @@ public class CompositePreferences: PreferencesType , ArrayLiteralConvertible {
     
     public func dictionary() -> [String : AnyObject] {
         var dico = [String : AnyObject]()
-        for prefs in reverse(array) {
+        for prefs in array.reverse() {
             dico += prefs.dictionary()
         }
         return dico
@@ -169,7 +169,7 @@ public class MutableCompositePreferences: CompositePreferences, MutablePreferenc
     public func setBool(value: Bool, forKey key: String) {
         self[key] = value
     }
-    public func setURL(url: NSURL, forKey key: String) {
+    public func setURL(url: NSURL?, forKey key: String) {
         self[key] = url
     }
     
@@ -253,13 +253,13 @@ extension ProxyPreferences: PreferencesType {
     public func arrayForKey(key: String) -> [AnyObject]? {
         return self.proxiable.arrayForKey(key)
     }
-    public func dictionaryForKey(key: String) -> [NSObject : AnyObject]? {
+    public func dictionaryForKey(key: String) -> [String : AnyObject]? {
         return self.proxiable.dictionaryForKey(key)
     }
     public func dataForKey(key: String) -> NSData? {
         return self.proxiable.dataForKey(key)
     }
-    public func stringArrayForKey(key: String) -> [AnyObject]? {
+    public func stringArrayForKey(key: String) -> [String]? {
         return self.proxiable.stringArrayForKey(key)
     }
     public func integerForKey(key: String) -> Int {
@@ -337,7 +337,7 @@ extension MutableProxyPreferences: MutablePreferencesType {
     public func setBool(value: Bool, forKey key: String){
         self.mutable.setBool(value, forKey: key)
     }
-    public func setURL(url: NSURL, forKey key: String){
+    public func setURL(url: NSURL?, forKey key: String){
         self.mutable.setURL(url, forKey: key)
     }
     public func setObjectToArchive(value: AnyObject?, forKey key: String) {
@@ -381,14 +381,14 @@ public class PreferencesAdapter: PreferencesType {
     public func arrayForKey(key: String) -> [AnyObject]? {
         return self.objectForKey(key) as? [AnyObject]
     }
-    public func dictionaryForKey(key: String) -> [NSObject : AnyObject]? {
-        return self.objectForKey(key) as? [NSObject : AnyObject]
+    public func dictionaryForKey(key: String) -> [String : AnyObject]? {
+        return self.objectForKey(key) as? [String : AnyObject]
     }
     public func dataForKey(key: String) -> NSData? {
         return self.objectForKey(key) as? NSData
     }
-    public func stringArrayForKey(key: String) -> [AnyObject]? {
-        return self.objectForKey(key) as? [AnyObject]
+    public func stringArrayForKey(key: String) -> [String]? {
+        return self.objectForKey(key) as? [String]
     }
     public func integerForKey(key: String) -> Int {
         return self.objectForKey(key) as? Int ?? 0
@@ -491,7 +491,7 @@ extension MutableKVCPreferences: MutablePreferencesType {
     public func setBool(value: Bool, forKey key: String){
         self.setObject(NSNumber(bool: value), forKey: key)
     }
-    public func setURL(url: NSURL, forKey key: String){
+    public func setURL(url: NSURL?, forKey key: String){
         self.setObject(url, forKey: key)
     }
     public func setObjectToArchive(value: AnyObject?, forKey key: String) {

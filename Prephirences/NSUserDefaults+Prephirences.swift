@@ -41,7 +41,7 @@ extension NSUserDefaults: MutablePreferencesType {
     }
 
     public func dictionary() -> [String : AnyObject] {
-        return self.dictionaryRepresentation() as! [String:AnyObject]
+        return self.dictionaryRepresentation()
     }
     public func hasObjectForKey(key: String) -> Bool {
         return objectForKey(key) != nil

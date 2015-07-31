@@ -33,14 +33,14 @@ import Foundation
 extension NSUbiquitousKeyValueStore : MutablePreferencesType {
 
     public func dictionary() -> [String : AnyObject] {
-        return self.dictionaryRepresentation as! [String:AnyObject]
+        return self.dictionaryRepresentation
     }
     public func hasObjectForKey(key: String) -> Bool {
         return objectForKey(key) != nil
     }
     public func clearAll() {
-        for(key,value) in self.dictionaryRepresentation {
-            removeObjectForKey(key as! String)
+        for(key,_) in self.dictionaryRepresentation {
+            removeObjectForKey(key as String)
         }
     }
     
@@ -50,7 +50,7 @@ extension NSUbiquitousKeyValueStore : MutablePreferencesType {
         }
     }
     
-    public func stringArrayForKey(key: String) -> [AnyObject]? {
+    public func stringArrayForKey(key: String) -> [String]? {
         return arrayForKey(key) as? [String]
     }
     
@@ -75,30 +75,43 @@ extension NSUbiquitousKeyValueStore : MutablePreferencesType {
     public func URLForKey(key: String) -> NSURL? {
         if let bookData = self.dataForKey(key) {
             var isStale : ObjCBool = false
-            var error : NSErrorPointer = nil
+            let error : NSErrorPointer = nil
             #if os(OSX)
             let options = NSURLBookmarkResolutionOptions.WithSecurityScope
             #elseif os(iOS)
             let options = NSURLBookmarkResolutionOptions.WithoutUI
             #endif
             
-            if let url = NSURL(byResolvingBookmarkData: bookData, options: options, relativeToURL: nil, bookmarkDataIsStale: &isStale, error: error) {
+            do {
+                let url = try NSURL(byResolvingBookmarkData: bookData, options: options, relativeToURL: nil, bookmarkDataIsStale: &isStale)
                 if error == nil {
                     return url
                 }
+            } catch let error1 as NSError {
+                error.memory = error1
             }
         }
         return nil
     }
     
-    public func setURL(url: NSURL, forKey key: String) {
-        #if os(OSX)
-            let options = NSURLBookmarkCreationOptions.WithSecurityScope | NSURLBookmarkCreationOptions.SecurityScopeAllowOnlyReadAccess
-        #elseif os(iOS)
-            let options = NSURLBookmarkCreationOptions.allZeros
-        #endif
-        let data = url.bookmarkDataWithOptions(options, includingResourceValuesForKeys:nil, relativeToURL:nil, error:nil)
-        setData(data, forKey: key)
+    public func setURL(url: NSURL?, forKey key: String) {
+        if let urlToSet = url {
+            #if os(OSX)
+                let options = NSURLBookmarkCreationOptions.WithSecurityScope | NSURLBookmarkCreationOptions.SecurityScopeAllowOnlyReadAccess
+                #elseif os(iOS)
+                let options = NSURLBookmarkCreationOptions()
+            #endif
+            let data: NSData?
+            do {
+                data = try urlToSet.bookmarkDataWithOptions(options, includingResourceValuesForKeys:nil, relativeToURL:nil)
+            } catch _ {
+                data = nil
+            }
+            setData(data, forKey: key)
+        }
+        else {
+            removeObjectForKey(key)
+        }
     }
     
     // MARK: archive

@@ -36,9 +36,9 @@ public protocol PreferencesType {
     
     func stringForKey(key: String) -> String?
     func arrayForKey(key: String) -> [AnyObject]?
-    func dictionaryForKey(key: String) -> [NSObject : AnyObject]?
+    func dictionaryForKey(key: String) -> [String : AnyObject]?
     func dataForKey(key: String) -> NSData?
-    func stringArrayForKey(key: String) -> [AnyObject]?
+    func stringArrayForKey(key: String) -> [String]?
     func integerForKey(key: String) -> Int
     func floatForKey(key: String) -> Float
     func doubleForKey(key: String) -> Double
@@ -63,7 +63,7 @@ public protocol MutablePreferencesType: PreferencesType {
     func setFloat(value: Float, forKey key: String)
     func setDouble(value: Double, forKey key: String)
     func setBool(value: Bool, forKey key: String)
-    func setURL(url: NSURL, forKey key: String)
+    func setURL(url: NSURL?, forKey key: String)
 
     func setObjectToArchive(value: AnyObject?, forKey key: String)
     

@@ -34,24 +34,24 @@ class PrephirencesiOSTests: XCTestCase {
     
     func printPreferences(preferences: PreferencesType) {
         for (key,value) in preferences.dictionary() {
-            println("\(key)=\(value)")
+            print("\(key)=\(value)")
         }
     }
     
     func printDictionaryPreferences(dictionaryPreferences: DictionaryPreferences) {
         printPreferences(dictionaryPreferences)
         for (key,value) in dictionaryPreferences {
-            println("\(key)=\(value)")
+            print("\(key)=\(value)")
         }
     }
     
     func testFromDictionary() {
-        var preferences = DictionaryPreferences(dictionary: [mykey: myvalue, "key2": "value2"])
+        let preferences = DictionaryPreferences(dictionary: [mykey: myvalue, "key2": "value2"])
         printDictionaryPreferences(preferences)
     }
     
     func testFromDictionaryLiteral() {
-        var preferences: DictionaryPreferences = [mykey: myvalue, "key2": "value2"]
+        let preferences: DictionaryPreferences = [mykey: myvalue, "key2": "value2"]
         printDictionaryPreferences(preferences)
     }
     
@@ -67,7 +67,7 @@ class PrephirencesiOSTests: XCTestCase {
         if let filePath = NSBundle(forClass: self.dynamicType).pathForResource("Test", ofType: "plist") {
             if  let preference = DictionaryPreferences(filePath: filePath) {
                     for (key,value) in preference.dictionary() {
-                        println("\(key)=\(value)")
+                        print("\(key)=\(value)")
                     }
                     
             } else {
@@ -80,7 +80,7 @@ class PrephirencesiOSTests: XCTestCase {
         
         if  let  preference = DictionaryPreferences(filename: "Test", ofType: "plist", bundle: NSBundle(forClass: self.dynamicType)) {
             for (key,value) in preference.dictionary() {
-                println("\(key)=\(value)")
+                print("\(key)=\(value)")
             }
             
         } else {
@@ -160,14 +160,14 @@ class PrephirencesiOSTests: XCTestCase {
         
         switch(intPref) {
         case 1: XCTFail("not equal in switch")
-        case 10: println("ok")
+        case 10: print("ok")
         default: XCTFail("not equal in switch")
         }
         
         switch(intPref) {
         case 0...9: XCTFail("not equal in switch")
         case 11...999: XCTFail("not equal in switch")
-        case 9...11: println("ok")
+        case 9...11: print("ok")
         default: XCTFail("not equal in switch")
         }
         
@@ -205,7 +205,7 @@ class PrephirencesiOSTests: XCTestCase {
         XCTAssert(boolPref.value! == true)
         
         switch(boolPref) {
-        case true: println("ok")
+        case true: print("ok")
         case false: XCTFail("not true")
         default: XCTFail("nil")
         }

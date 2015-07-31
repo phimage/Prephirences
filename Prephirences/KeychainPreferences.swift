@@ -168,7 +168,7 @@ public class KeychainPreferences: PreferencesAdapter, MutablePreferencesType {
         }
 
         var result: AnyObject?
-        var status = withUnsafeMutablePointer(&result) {
+        let status = withUnsafeMutablePointer(&result) {
             SecItemCopyMatching(query as CFDictionaryRef, UnsafeMutablePointer($0))
         }
         
@@ -246,7 +246,7 @@ public class KeychainPreferences: PreferencesAdapter, MutablePreferencesType {
     public func setBool(value: Bool, forKey key: String){
         self.setObject(NSNumber(bool: value), forKey: key)
     }
-    public func setURL(url: NSURL, forKey key: String){
+    public func setURL(url: NSURL?, forKey key: String){
         self.setObject(url, forKey: key)
     }
     public func setObjectToArchive(value: AnyObject?, forKey key: String) {
@@ -300,7 +300,7 @@ public class KeychainPreferences: PreferencesAdapter, MutablePreferencesType {
 }
 
 // MARK: kSecAttrAccessible
-public enum SecurityAttributeAccessible: Printable {
+public enum SecurityAttributeAccessible: CustomStringConvertible {
     case AccessibleWhenUnlocked, AccessibleWhenUnlockedThisDeviceOnly,  AccessibleAfterFirstUnlock, AccessibleAfterFirstUnlockThisDeviceOnly, AccessibleAlways,  AccessibleWhenPasscodeSetThisDeviceOnly,  AccessibleAlwaysThisDeviceOnly
     
     public static var defaultOption: SecurityAttributeAccessible {  return .AccessibleWhenUnlocked }
@@ -328,7 +328,7 @@ public enum SecurityAttributeAccessible: Printable {
 }
 
 // MARK: kSecClass
-public enum SecurityClass: Printable {
+public enum SecurityClass: CustomStringConvertible {
     case GenericPassword /*, InternetPassword, Certificate, Key, Identity*/
     
     public static var defaultOption: SecurityClass {  return .GenericPassword }
