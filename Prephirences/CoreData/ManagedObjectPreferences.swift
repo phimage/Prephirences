@@ -43,7 +43,7 @@ public class ManageObjectPreferences : PreferencesAdapter {
     
     internal override func keys() -> [String] {
         let attr = self.object.entity.attributesByName
-        return attr.keys.array
+        return Array(attr.keys)
     }
     
 }

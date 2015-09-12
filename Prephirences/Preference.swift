@@ -167,18 +167,18 @@ associativity right
 precedence 90
 assignment
 }
-public func &&=<T where T:LogicalOperationsType, T:Initializable> (inout preference: MutablePreference<T>, @autoclosure right:  () -> T) {
+public func &&=<T where T:LogicalOperationsType, T:Initializable> (inout preference: MutablePreference<T>, @autoclosure right:  () throws -> T) rethrows {
     let c = preference.value ?? T()
-    preference.value = c && right
+    try preference.value = c && right
 }
 infix operator ||= {
 associativity right
 precedence 90
 assignment
 }
-public func ||=<T where T:LogicalOperationsType, T:Initializable> (inout preference: MutablePreference<T>, @autoclosure right:  () -> T) {
+public func ||=<T where T:LogicalOperationsType, T:Initializable> (inout preference: MutablePreference<T>, @autoclosure right:  () throws -> T) rethrows {
     let c = preference.value ?? T()
-    preference.value = c || right
+    try preference.value = c || right
 }
 
 public func !=<T where T:LogicalOperationsType> (inout preference: MutablePreference<T>, @autoclosure right:  () -> T) {
@@ -204,8 +204,8 @@ public func ~=<T where T: BitwiseOperationsType>(inout preference: MutablePrefer
 
 
 // MARK: Make type implement protocols
-// TODO extract a math framework which defines this following protocols
-// OR IntegerArithmeticType ?
+// TODO extract a math framework which defines this following protocols : see https://github.com/phimage/Arithmosophi
+// OR use IntegerArithmeticType ?
 
 public protocol Initializable {
     init() // get a zero
@@ -248,10 +248,12 @@ extension UInt: Addable, Substractable, Multiplicable, Dividable, Modulable{}
 
 public protocol LogicalOperationsType {
     
-    func && (left: Self, @autoclosure right:  () -> Self) -> Self // AND
-    func || (left: Self, @autoclosure right:  () -> Self) -> Self // OR
+    func && (left: Self, @autoclosure right:  () throws -> Self) rethrows -> Self // AND
+    func || (left: Self, @autoclosure right:  () throws -> Self) rethrows -> Self // OR
     prefix func ! (left: Self) -> Self // NOT
 }
+
+//@rethrows public func ||<T : BooleanType>(lhs: T, @autoclosure rhs: () throws -> Bool) rethrows -> Bool
 
 extension Bool: Initializable, LogicalOperationsType {}
 

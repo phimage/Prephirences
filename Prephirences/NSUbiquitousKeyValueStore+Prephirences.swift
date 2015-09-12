@@ -97,7 +97,7 @@ extension NSUbiquitousKeyValueStore : MutablePreferencesType {
     public func setURL(url: NSURL?, forKey key: String) {
         if let urlToSet = url {
             #if os(OSX)
-                let options = NSURLBookmarkCreationOptions.WithSecurityScope | NSURLBookmarkCreationOptions.SecurityScopeAllowOnlyReadAccess
+                let options = NSURLBookmarkCreationOptions.WithSecurityScope.union(.SecurityScopeAllowOnlyReadAccess)
                 #elseif os(iOS)
                 let options = NSURLBookmarkCreationOptions()
             #endif

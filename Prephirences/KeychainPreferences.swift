@@ -354,5 +354,5 @@ public enum SecurityClass: CustomStringConvertible {
 
 // MARK: private
 private func toString(value: CFStringRef) -> String {
-    return (value as? String) ?? ""
+    return (value as String) ?? ""
 }

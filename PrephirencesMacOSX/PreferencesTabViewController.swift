@@ -49,7 +49,7 @@ public class PreferencesTabViewController: NSTabViewController {
         self.transitionOptions = NSViewControllerTransitionOptions.None
     }
 
-    override public func tabView(tabView: NSTabView, willSelectTabViewItem tabViewItem: NSTabViewItem) {
+    override public func tabView(tabView: NSTabView, willSelectTabViewItem tabViewItem: NSTabViewItem?) {
         // remove listener on previous selected tab view
         if let selectedTabViewItem = self.selectedTabViewItem as? NSTabViewItem,
             viewController = selectedTabViewItem.viewController as? PreferencesTabViewItemControllerType where observe {
@@ -60,14 +60,14 @@ public class PreferencesTabViewController: NSTabViewController {
         super.tabView(tabView, willSelectTabViewItem: tabViewItem)
 
         // get size and listen to change on futur selected tab view item
-        if let view = tabViewItem.view {
+        if let view = tabViewItem?.view {
             let currentSize = view.frame.size // Expect size from storyboard constraints or previous size
 
-            if let viewController = tabViewItem.viewController as? PreferencesTabViewItemControllerType {
+            if let viewController = tabViewItem?.viewController as? PreferencesTabViewItemControllerType {
                 cacheSize[view] = getPreferencesTabViewSize(viewController, currentSize)
  
                 // Observe kPreferencesTabViewSize
-                let options = NSKeyValueObservingOptions.New | NSKeyValueObservingOptions.Old
+                let options = NSKeyValueObservingOptions.New.union(.Old)
                 (viewController as! NSViewController).addObserver(self, forKeyPath: kPreferencesTabViewSize, options: options, context: nil)
                 observe = true
             }
@@ -77,15 +77,15 @@ public class PreferencesTabViewController: NSTabViewController {
         }
     }
 
-    override public func tabView(tabView: NSTabView, didSelectTabViewItem tabViewItem: NSTabViewItem) {
+    override public func tabView(tabView: NSTabView, didSelectTabViewItem tabViewItem: NSTabViewItem?) {
         super.tabView(tabView, didSelectTabViewItem: tabViewItem)
-        if let view = tabViewItem.view, window = self.view.window, contentSize = cacheSize[view] {
+        if let view = tabViewItem?.view, window = self.view.window, contentSize = cacheSize[view] {
             self.setFrameSize(contentSize, forWindow: window)
         }
     }
 
-    public override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
-        if keyPath == kPreferencesTabViewSize {
+    public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        if let kp = keyPath where kp == kPreferencesTabViewSize {
             if let window = self.view.window, viewController = object as? PreferencesTabViewItemControllerType,
                 view = (viewController as? NSViewController)?.view, currentSize = cacheSize[view]  {
                     let contentSize = self.getPreferencesTabViewSize(viewController, currentSize)
@@ -102,7 +102,7 @@ public class PreferencesTabViewController: NSTabViewController {
     }
 
     override public func removeTabViewItem(tabViewItem: NSTabViewItem) {
-        if let view = tabViewItem.view {
+        if let _ = tabViewItem.view {
             if let viewController = tabViewItem.viewController as? PreferencesTabViewItemControllerType {
                 tabViewItem.removeObserver(viewController as! NSViewController, forKeyPath: kPreferencesTabViewSize)
             }
