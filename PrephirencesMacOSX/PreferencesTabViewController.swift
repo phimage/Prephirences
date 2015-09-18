@@ -36,6 +36,7 @@ import Cocoa
 public let kPreferencesTabViewSize = "preferencesTabViewSize"
 
 /* Controller which resize parent window according to tab view items, useful for preferences */
+@available(OSX 10.10, *)
 public class PreferencesTabViewController: NSTabViewController {
     private var observe = false
     

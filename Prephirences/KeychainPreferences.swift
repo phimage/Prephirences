@@ -317,11 +317,19 @@ public enum SecurityAttributeAccessible: CustomStringConvertible {
             return toString(kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly)
         case .AccessibleAlways:
             return toString(kSecAttrAccessibleAlways)
-        case .AccessibleWhenPasscodeSetThisDeviceOnly:
-            return toString(kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly)
         case .AccessibleAlwaysThisDeviceOnly:
             return toString(kSecAttrAccessibleAlwaysThisDeviceOnly)
+        case .AccessibleWhenPasscodeSetThisDeviceOnly:
+            #if os(iOS)
+                return toString(kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly)
+            #elseif os(OSX)
+                if #available(OSX 10.10, *) {
+                    return toString(kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly)
+                }
+                return ""
+            #endif
         }
+      
     }
 
     public var description: String { return rawValue }
