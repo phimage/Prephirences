@@ -135,6 +135,8 @@ class PrephirencesiOSTests: XCTestCase {
         var intPref: MutablePreference<Int> = Prephirences.preferenceForKey("int", userDefaults)
         intPref.value = nil
         
+        intPref = userDefaults <| "int"
+        
         intPref++
         XCTAssert(intPref.value! == 1)
         intPref--

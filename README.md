@@ -92,7 +92,8 @@ mutableFromDico -= "myKey"
 
 ### Apply operators to one preference ###
 ```swift
-var intPref: MutablePreference<Int> = Prephirences.preferenceForKey("intKey", aPrefs)
+var intPref: MutablePreference<Int> = aPrefs.preferenceForKey("intKey")
+var intPref: MutablePreference<Int> = aPrefs <| "intKey"
 
 intPref++
 intPref--
@@ -108,7 +109,7 @@ switch(intPref) {
    default: println("unkwown")
 }
 
-var boolPref: MutablePreference<Bool> = Prephirences.preferenceForKey("boolKey", aPrefs)
+var boolPref: MutablePreference<Bool> = aPrefs <| "boolKey")
 
 boolPref &= false
 boolPref |= true

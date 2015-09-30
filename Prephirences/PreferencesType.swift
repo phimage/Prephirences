@@ -47,7 +47,7 @@ public protocol PreferencesType {
 
     func unarchiveObjectForKey(key: String) -> AnyObject?
     
-    // func preferenceForKey<T>(key: String) -> Preference<T>
+    func preferenceForKey<T>(key: String) -> Preference<T>
 
     func dictionary() -> [String : AnyObject]
 }
@@ -70,7 +70,28 @@ public protocol MutablePreferencesType: PreferencesType {
     func clearAll()
     func setObjectsForKeysWithDictionary(dictionary: [String : AnyObject])
 
-    // func preferenceForKey<T>(key: String) -> MutablePreference<T>
+    func preferenceForKey<T>(key: String) -> MutablePreference<T>
+    
+    func immutableProxy() -> PreferencesType
+}
+
+// MARK: default implementation
+public extension PreferencesType {
+
+    public func preferenceForKey<T>(key: String) -> Preference<T> {
+        return Preference<T>(preferences: self, key: key)
+    }
+}
+
+public extension MutablePreferencesType {
+
+    public func preferenceForKey<T>(key: String) -> MutablePreference<T> {
+        return MutablePreference<T>(preferences: self, key: key)
+    }
+    
+    public func immutableProxy() -> PreferencesType {
+        return Prephirences.immutableProxy(self)
+    }
 }
 
 // MARK: usefull functions
@@ -79,19 +100,29 @@ internal func +=<K, V> (inout left: [K : V], right: [K : V]) { for (k, v) in rig
 
 
 // MARK: operators
-public func += (inout left: MutablePreferencesType, right: PreferencesType) {
+public func += <L:MutablePreferencesType, R:PreferencesType> (inout left: L, right: R) {
     for (k, v) in right.dictionary() { left[k] = v }
 }
 
-public func += (inout left: MutablePreferencesType, right: Dictionary<String,AnyObject>) {
+public func += <L:MutablePreferencesType> (inout left: L, right: Dictionary<String,AnyObject>) {
     for (k, v) in right { left[k] = v }
 }
 
-public func += (inout left: MutablePreferencesType, right: (String, AnyObject)...) {
+public func += <L:MutablePreferencesType> (inout left: L, right: (String, AnyObject)...) {
     for (k, v) in right { left[k] = v }
 }
 
-public func -= (inout left: MutablePreferencesType, right: String) {
+public func -= <L:MutablePreferencesType> (inout left: L, right: String) {
     left.removeObjectForKey(right)
+}
+
+infix operator <|  { associativity left precedence 150 }
+
+public func <|<P:PreferencesType, T>(preferences: P, key: String) -> Preference<T> {
+    return preferences.preferenceForKey(key)
+}
+
+public func <|<P:MutablePreferencesType, T>(preferences: P, key: String) -> MutablePreference<T> {
+    return preferences.preferenceForKey(key)
 }
 
