@@ -75,7 +75,6 @@ extension NSUbiquitousKeyValueStore : MutablePreferencesType {
     public func URLForKey(key: String) -> NSURL? {
         if let bookData = self.dataForKey(key) {
             var isStale : ObjCBool = false
-            let error : NSErrorPointer = nil
             #if os(OSX)
             let options = NSURLBookmarkResolutionOptions.WithSecurityScope
             #elseif os(iOS)
@@ -84,12 +83,8 @@ extension NSUbiquitousKeyValueStore : MutablePreferencesType {
             
             do {
                 let url = try NSURL(byResolvingBookmarkData: bookData, options: options, relativeToURL: nil, bookmarkDataIsStale: &isStale)
-                if error == nil {
-                    return url
-                }
-            } catch let error1 as NSError {
-                error.memory = error1
-            }
+                return url
+            } catch { }
         }
         return nil
     }
