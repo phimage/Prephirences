@@ -32,6 +32,7 @@ You can 'merge' multiples preferences and work with them transparently (see [Com
   - [Proxying preferences with prefix](#proxying-preferences-with-prefix)
   - [Composing](#composing)
   - [Managing preferences instances](#managing-preferences-instances)
+  - [Remote preferences](#remote-preferences)
 - [Setup](#setup)
   - [Using xcode project](#using-xcode-project)
   - [Using cocoapods](#using-cocoapods)
@@ -229,6 +230,11 @@ Then you can access it anywhere
 if let pref = Prephirences.instanceForKey("myKey") {..}
 if let pref = Prephirences.instances()["myKey"] {..}
 ```
+
+## Remote preferences ##
+By using remote preferences you can remotely control the behavior of your app.
+
+If you use [Alamofire](https://github.com/Alamofire/Alamofire), [Alamofire-Prephirences](https://github.com/phimage/Alamofire-Prephirences) will help you to load preferences from remote JSON or Plist
 
 # Setup #
 
