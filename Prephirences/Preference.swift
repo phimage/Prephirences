@@ -235,7 +235,6 @@ extension Array: Initializable, Addable {}
 extension Int: Initializable, Addable, Negatable, Substractable, Multiplicable, Dividable, Modulable {}
 extension Float: Initializable, Addable, Negatable, Substractable, Multiplicable, Dividable, Modulable {}
 extension Double: Initializable, Addable, Negatable, Substractable, Multiplicable, Dividable, Modulable {}
-extension CGFloat: Initializable, Addable, Negatable, Substractable, Multiplicable, Dividable, Modulable {}
 extension UInt8: Addable, Substractable, Multiplicable, Dividable, Modulable {}
 extension Int8: Initializable, Addable, Negatable, Substractable, Multiplicable, Dividable, Modulable {}
 extension UInt16: Addable, Substractable, Multiplicable, Dividable, Modulable {}
@@ -246,6 +245,11 @@ extension UInt64: Addable, Substractable, Multiplicable, Dividable, Modulable {}
 extension Int64: Initializable, Addable, Negatable, Substractable, Multiplicable, Dividable, Modulable {}
 extension UInt: Addable, Substractable, Multiplicable, Dividable, Modulable{}
 
+#if os(iOS) || os(watchOS) || os(tvOS)
+import UIKit // import CoreGraphics
+#endif
+extension CoreGraphics.CGFloat: Initializable, Addable, Negatable, Substractable, Multiplicable, Dividable, Modulable {}
+    
 public protocol LogicalOperationsType {
     
     func && (left: Self, @autoclosure right:  () throws -> Self) rethrows -> Self // AND
