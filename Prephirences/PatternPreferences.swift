@@ -53,6 +53,7 @@ public class CompositePreferences: PreferencesType , ArrayLiteralConvertible {
     // MARK: PreferencesType
     public subscript(key: String) -> AnyObject? {
         get {
+            // first return win
             for prefs in array {
                 if let value: AnyObject = prefs.objectForKey(key){
                     return value
@@ -104,10 +105,6 @@ public class CompositePreferences: PreferencesType , ArrayLiteralConvertible {
         return self[key] as? NSURL
     }
     
-    public func unarchiveObjectForKey(key: String) -> AnyObject? {
-        return Prephirences.unarchiveObject(self, forKey: key)
-    }
-    
     public func dictionary() -> [String : AnyObject] {
         var dico = [String : AnyObject]()
         for prefs in array.reverse() {
@@ -132,6 +129,7 @@ public class MutableCompositePreferences: CompositePreferences, MutablePreferenc
     
     override public subscript(key: String) -> AnyObject? {
         get {
+            // first return win
             for prefs in array {
                 if let value: AnyObject = prefs.objectForKey(key){
                     return value
@@ -171,10 +169,6 @@ public class MutableCompositePreferences: CompositePreferences, MutablePreferenc
     }
     public func setURL(url: NSURL?, forKey key: String) {
         self[key] = url
-    }
-    
-    public func setObjectToArchive(value: AnyObject?, forKey key: String) {
-        Prephirences.archiveObject(value, preferences: self, forKey: key)
     }
     
     public func setObjectsForKeysWithDictionary(dictionary: [String : AnyObject]){
@@ -352,62 +346,16 @@ extension MutableProxyPreferences: MutablePreferencesType {
 }
 
 // MARK: adapter generic
+// Allow to implement 'dictionary' using the new 'keys'
 // Subclasses must implement objectForKey & keys
-public class PreferencesAdapter: PreferencesType {
+public protocol PreferencesAdapter: PreferencesType {
 
-    internal init() {
-        // abstract
-    }
-    
-    public func objectForKey(key: String) -> AnyObject? {
-        fatalError("Not implemented. Must be overriden")
-    }
-    
-    internal func keys() -> [String] {
-        fatalError("Not implemented. Must be overriden")
-    }
-    
-    public subscript(key: String) -> AnyObject? {
-        get {
-            return self.objectForKey(key)
-        }
-    }
-    public func hasObjectForKey(key: String) -> Bool {
-        return self.objectForKey(key) != nil
-    }
-    public func stringForKey(key: String) -> String? {
-        return self.objectForKey(key) as? String
-    }
-    public func arrayForKey(key: String) -> [AnyObject]? {
-        return self.objectForKey(key) as? [AnyObject]
-    }
-    public func dictionaryForKey(key: String) -> [String : AnyObject]? {
-        return self.objectForKey(key) as? [String : AnyObject]
-    }
-    public func dataForKey(key: String) -> NSData? {
-        return self.objectForKey(key) as? NSData
-    }
-    public func stringArrayForKey(key: String) -> [String]? {
-        return self.objectForKey(key) as? [String]
-    }
-    public func integerForKey(key: String) -> Int {
-        return self.objectForKey(key) as? Int ?? 0
-    }
-    public func floatForKey(key: String) -> Float {
-        return self.objectForKey(key) as? Float ?? 0
-    }
-    public func doubleForKey(key: String) -> Double {
-        return self.objectForKey(key) as? Double ?? 0
-    }
-    public func boolForKey(key: String) -> Bool {
-        return self.objectForKey(key) as? Bool ?? false
-    }
-    public func URLForKey(key: String) -> NSURL? {
-        return self.objectForKey(key) as? NSURL
-    }
-    public func unarchiveObjectForKey(key: String) -> AnyObject? {
-        return Prephirences.unarchiveObject(self, forKey: key)
-    }
+    func keys() -> [String]
+
+}
+
+extension PreferencesAdapter {
+
     public func dictionary() -> [String : AnyObject] {
         var dico:Dictionary<String, AnyObject> = [:]
         for name in self.keys() {
@@ -417,7 +365,6 @@ public class PreferencesAdapter: PreferencesType {
         }
         return dico
     }
-
 }
 
 
@@ -428,14 +375,13 @@ public class KVCPreferences: PreferencesAdapter {
     
     public init(_ object: NSObject) {
         self.object = object
-        super.init()
     }
     
-    public override func objectForKey(key: String) -> AnyObject? {
+    public func objectForKey(key: String) -> AnyObject? {
         return self.object.valueForKey(key)
     }
     
-    internal override func keys() -> [String] {
+    public func keys() -> [String] {
         var names: [String] = []
         var count: UInt32 = 0
         // FIXME: not recursive?
@@ -457,7 +403,7 @@ public class MutableKVCPreferences: KVCPreferences {
         super.init(object)
     }
     
-    override public subscript(key: String) -> AnyObject? {
+    public subscript(key: String) -> AnyObject? {
         get {
              return self.objectForKey(key)
         }
@@ -491,18 +437,8 @@ extension MutableKVCPreferences: MutablePreferencesType {
     public func setBool(value: Bool, forKey key: String){
         self.setObject(NSNumber(bool: value), forKey: key)
     }
-    public func setURL(url: NSURL?, forKey key: String){
-        self.setObject(url, forKey: key)
-    }
-    public func setObjectToArchive(value: AnyObject?, forKey key: String) {
-        Prephirences.archiveObject(value, preferences: self, forKey: key)
-    }
     public func clearAll(){
        // not implemented, maybe add protocol to set defaults attributes values
     }
-    public func setObjectsForKeysWithDictionary(dictionary: [String : AnyObject]){
-        for (key,value) in dictionary {
-            setObject(value, forKey: key )
-        }
-    }
+
 }

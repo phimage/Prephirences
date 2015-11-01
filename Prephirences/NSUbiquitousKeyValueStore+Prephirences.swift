@@ -35,20 +35,6 @@ extension NSUbiquitousKeyValueStore : MutablePreferencesType {
     public func dictionary() -> [String : AnyObject] {
         return self.dictionaryRepresentation
     }
-    public func hasObjectForKey(key: String) -> Bool {
-        return objectForKey(key) != nil
-    }
-    public func clearAll() {
-        for(key,_) in self.dictionaryRepresentation {
-            removeObjectForKey(key as String)
-        }
-    }
-    
-    public func setObjectsForKeysWithDictionary(dictionary: [String:AnyObject]) {
-        for (key, value) in dictionary {
-            self.setObject(value, forKey: key)
-        }
-    }
     
     public func stringArrayForKey(key: String) -> [String]? {
         return arrayForKey(key) as? [String]
@@ -77,7 +63,7 @@ extension NSUbiquitousKeyValueStore : MutablePreferencesType {
             var isStale : ObjCBool = false
             #if os(OSX)
             let options = NSURLBookmarkResolutionOptions.WithSecurityScope
-            #elseif os(iOS)
+            #elseif os(iOS) || os(watchOS) || os(tvOS)
             let options = NSURLBookmarkResolutionOptions.WithoutUI
             #endif
             
@@ -93,7 +79,7 @@ extension NSUbiquitousKeyValueStore : MutablePreferencesType {
         if let urlToSet = url {
             #if os(OSX)
                 let options = NSURLBookmarkCreationOptions.WithSecurityScope.union(.SecurityScopeAllowOnlyReadAccess)
-                #elseif os(iOS)
+                #elseif os(iOS) || os(watchOS) || os(tvOS)
                 let options = NSURLBookmarkCreationOptions()
             #endif
             let data: NSData?
@@ -108,30 +94,5 @@ extension NSUbiquitousKeyValueStore : MutablePreferencesType {
             removeObjectForKey(key)
         }
     }
-    
-    // MARK: archive
-    public func unarchiveObjectForKey(key: String) -> AnyObject? {
-        return Prephirences.unarchiveObject(self, forKey: key)
-    }
-    public func setObjectToArchive(value: AnyObject?, forKey key: String) {
-        Prephirences.archiveObject(value, preferences: self, forKey: key)
-    }
-}
 
-//MARK: subscript access
-extension NSUbiquitousKeyValueStore {
-    
-    public subscript(key: String) -> AnyObject? {
-        get {
-            return self.objectForKey(key)
-        }
-        set {
-            if newValue == nil {
-                removeObjectForKey(key)
-            } else {
-                setObject(newValue, forKey: key)
-            }
-        }
-    }
-    
 }

@@ -7,6 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		07FC41611BE66517005F195C /* PrephirencesWatchos.h in Headers */ = {isa = PBXBuildFile; fileRef = 07FC41601BE66517005F195C /* PrephirencesWatchos.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		07FC41661BE6656C005F195C /* PreferencesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114D01AE7D15D00A09DD9 /* PreferencesType.swift */; };
+		07FC41671BE6656C005F195C /* DictionaryPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114D21AE7D1F200A09DD9 /* DictionaryPreferences.swift */; };
+		07FC41681BE6656C005F195C /* PatternPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114D41AE7D32800A09DD9 /* PatternPreferences.swift */; };
+		07FC41691BE6656C005F195C /* Plist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EBB8431B15DE4D0075187B /* Plist.swift */; };
+		07FC416A1BE6656C005F195C /* NSUserDefaults+Prephirences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114CE1AE7D15000A09DD9 /* NSUserDefaults+Prephirences.swift */; };
+		07FC416B1BE6656C005F195C /* NSUbiquitousKeyValueStore+Prephirences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F32531AED289400195CDA /* NSUbiquitousKeyValueStore+Prephirences.swift */; };
+		07FC416C1BE6656C005F195C /* KeychainPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF51891B259C3900C4FF98 /* KeychainPreferences.swift */; };
+		07FC416D1BE6656C005F195C /* Prephirences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B3ED2B1B17165C00D807DA /* Prephirences.swift */; };
+		07FC416E1BE6656C005F195C /* Preference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B838411B284C15009D5B74 /* Preference.swift */; };
+		07FC416F1BE6656C005F195C /* NSUserDefaults+Adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F32501AED1E3B00195CDA /* NSUserDefaults+Adds.swift */; };
+		07FC41701BE6656C005F195C /* ManagedObjectPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F324C1AED144500195CDA /* ManagedObjectPreferences.swift */; };
+		07FC41721BE66A30005F195C /* PreferencesOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FC41711BE66A30005F195C /* PreferencesOperators.swift */; };
+		07FC41731BE66A30005F195C /* PreferencesOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FC41711BE66A30005F195C /* PreferencesOperators.swift */; };
+		07FC41741BE66A30005F195C /* PreferencesOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FC41711BE66A30005F195C /* PreferencesOperators.swift */; };
+		07FC417D1BE670BF005F195C /* PrephirencesTvOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 07FC417C1BE670BF005F195C /* PrephirencesTvOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		07FC41821BE670D6005F195C /* PreferencesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114D01AE7D15D00A09DD9 /* PreferencesType.swift */; };
+		07FC41831BE670D6005F195C /* DictionaryPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114D21AE7D1F200A09DD9 /* DictionaryPreferences.swift */; };
+		07FC41841BE670D6005F195C /* PatternPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114D41AE7D32800A09DD9 /* PatternPreferences.swift */; };
+		07FC41851BE670D6005F195C /* Plist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EBB8431B15DE4D0075187B /* Plist.swift */; };
+		07FC41861BE670D6005F195C /* NSUserDefaults+Prephirences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114CE1AE7D15000A09DD9 /* NSUserDefaults+Prephirences.swift */; };
+		07FC41871BE670D6005F195C /* NSUbiquitousKeyValueStore+Prephirences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F32531AED289400195CDA /* NSUbiquitousKeyValueStore+Prephirences.swift */; };
+		07FC41881BE670D6005F195C /* KeychainPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF51891B259C3900C4FF98 /* KeychainPreferences.swift */; };
+		07FC41891BE670D6005F195C /* Prephirences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B3ED2B1B17165C00D807DA /* Prephirences.swift */; };
+		07FC418A1BE670D6005F195C /* Preference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B838411B284C15009D5B74 /* Preference.swift */; };
+		07FC418B1BE670D6005F195C /* PreferencesOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FC41711BE66A30005F195C /* PreferencesOperators.swift */; };
+		07FC418C1BE670D6005F195C /* NSUserDefaults+Adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F32501AED1E3B00195CDA /* NSUserDefaults+Adds.swift */; };
+		07FC418D1BE670D6005F195C /* ManagedObjectPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F324C1AED144500195CDA /* ManagedObjectPreferences.swift */; };
 		C41E78EA1B1B48B9009CB458 /* Prephirences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B3ED2B1B17165C00D807DA /* Prephirences.swift */; };
 		C42114E01AE7D84900A09DD9 /* PrephirencesiOS.h in Headers */ = {isa = PBXBuildFile; fileRef = C42114DF1AE7D84900A09DD9 /* PrephirencesiOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C42114F41AE7D86D00A09DD9 /* PreferencesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114D01AE7D15D00A09DD9 /* PreferencesType.swift */; };
@@ -24,7 +52,7 @@
 		C47F324E1AED144500195CDA /* ManagedObjectPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F324C1AED144500195CDA /* ManagedObjectPreferences.swift */; };
 		C47F32511AED1E3B00195CDA /* NSUserDefaults+Adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F32501AED1E3B00195CDA /* NSUserDefaults+Adds.swift */; };
 		C47F32521AED1E3B00195CDA /* NSUserDefaults+Adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F32501AED1E3B00195CDA /* NSUserDefaults+Adds.swift */; };
-		C4A3F3151BA44DC700F40DB6 /* Test.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4A3F3141BA44DC700F40DB6 /* Test.plist */; settings = {ASSET_TAGS = (); }; };
+		C4A3F3151BA44DC700F40DB6 /* Test.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4A3F3141BA44DC700F40DB6 /* Test.plist */; };
 		C4B3ED2C1B17165C00D807DA /* Prephirences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B3ED2B1B17165C00D807DA /* Prephirences.swift */; };
 		C4B838421B284C15009D5B74 /* Preference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B838411B284C15009D5B74 /* Preference.swift */; };
 		C4B838431B287E38009D5B74 /* Preference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B838411B284C15009D5B74 /* Preference.swift */; };
@@ -48,6 +76,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		07FC415E1BE66517005F195C /* PrephirencesWatchos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PrephirencesWatchos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		07FC41601BE66517005F195C /* PrephirencesWatchos.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrephirencesWatchos.h; sourceTree = "<group>"; };
+		07FC41621BE66517005F195C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		07FC41711BE66A30005F195C /* PreferencesOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesOperators.swift; sourceTree = "<group>"; };
+		07FC417A1BE670BF005F195C /* PrephirencesTvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PrephirencesTvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		07FC417C1BE670BF005F195C /* PrephirencesTvOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrephirencesTvOS.h; sourceTree = "<group>"; };
+		07FC417E1BE670BF005F195C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C42114CE1AE7D15000A09DD9 /* NSUserDefaults+Prephirences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUserDefaults+Prephirences.swift"; sourceTree = "<group>"; };
 		C42114D01AE7D15D00A09DD9 /* PreferencesType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesType.swift; sourceTree = "<group>"; };
 		C42114D21AE7D1F200A09DD9 /* DictionaryPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryPreferences.swift; sourceTree = "<group>"; };
@@ -78,6 +113,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		07FC415A1BE66517005F195C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		07FC41761BE670BF005F195C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C42114D71AE7D84900A09DD9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -103,11 +152,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		07FC415F1BE66517005F195C /* PrephirencesWatchos */ = {
+			isa = PBXGroup;
+			children = (
+				07FC41601BE66517005F195C /* PrephirencesWatchos.h */,
+				07FC41621BE66517005F195C /* Info.plist */,
+			);
+			path = PrephirencesWatchos;
+			sourceTree = "<group>";
+		};
+		07FC417B1BE670BF005F195C /* PrephirencesTvOS */ = {
+			isa = PBXGroup;
+			children = (
+				07FC417C1BE670BF005F195C /* PrephirencesTvOS.h */,
+				07FC417E1BE670BF005F195C /* Info.plist */,
+			);
+			path = PrephirencesTvOS;
+			sourceTree = "<group>";
+		};
 		C42114A61AE7D0CB00A09DD9 = {
 			isa = PBXGroup;
 			children = (
 				C42114B21AE7D0CB00A09DD9 /* Prephirences */,
 				C42114DC1AE7D84900A09DD9 /* PrephirencesiOS */,
+				07FC415F1BE66517005F195C /* PrephirencesWatchos */,
+				07FC417B1BE670BF005F195C /* PrephirencesTvOS */,
 				C42114FF1AE7D8E200A09DD9 /* PrephirencesMacOSX */,
 				C45D313B1AE929F10034D1E3 /* Resources */,
 				C4FF650C1B6B7C7300BFE4F4 /* PrephirencesiOSTests */,
@@ -121,6 +190,8 @@
 				C42114DB1AE7D84900A09DD9 /* PrephirencesiOS.framework */,
 				C42114FE1AE7D8E200A09DD9 /* PrephirencesMacOSX.framework */,
 				C4FF650B1B6B7C7300BFE4F4 /* PrephirencesiOSTests.xctest */,
+				07FC415E1BE66517005F195C /* PrephirencesWatchos.framework */,
+				07FC417A1BE670BF005F195C /* PrephirencesTvOS.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -137,6 +208,7 @@
 				C4BF51891B259C3900C4FF98 /* KeychainPreferences.swift */,
 				C4B3ED2B1B17165C00D807DA /* Prephirences.swift */,
 				C4B838411B284C15009D5B74 /* Preference.swift */,
+				07FC41711BE66A30005F195C /* PreferencesOperators.swift */,
 				C47F324F1AED1DD900195CDA /* UserDefaults */,
 				C47F324B1AED142100195CDA /* CoreData */,
 			);
@@ -219,6 +291,22 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		07FC415B1BE66517005F195C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				07FC41611BE66517005F195C /* PrephirencesWatchos.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		07FC41771BE670BF005F195C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				07FC417D1BE670BF005F195C /* PrephirencesTvOS.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C42114D81AE7D84900A09DD9 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -238,6 +326,42 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		07FC415D1BE66517005F195C /* PrephirencesWatchos */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 07FC41651BE66517005F195C /* Build configuration list for PBXNativeTarget "PrephirencesWatchos" */;
+			buildPhases = (
+				07FC41591BE66517005F195C /* Sources */,
+				07FC415A1BE66517005F195C /* Frameworks */,
+				07FC415B1BE66517005F195C /* Headers */,
+				07FC415C1BE66517005F195C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PrephirencesWatchos;
+			productName = PrephirenceWatchos;
+			productReference = 07FC415E1BE66517005F195C /* PrephirencesWatchos.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		07FC41791BE670BF005F195C /* PrephirencesTvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 07FC417F1BE670BF005F195C /* Build configuration list for PBXNativeTarget "PrephirencesTvOS" */;
+			buildPhases = (
+				07FC41751BE670BF005F195C /* Sources */,
+				07FC41761BE670BF005F195C /* Frameworks */,
+				07FC41771BE670BF005F195C /* Headers */,
+				07FC41781BE670BF005F195C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PrephirencesTvOS;
+			productName = PrephirencesTvOS;
+			productReference = 07FC417A1BE670BF005F195C /* PrephirencesTvOS.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		C42114DA1AE7D84900A09DD9 /* PrephirencesiOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C42114EE1AE7D84A00A09DD9 /* Build configuration list for PBXNativeTarget "PrephirencesiOS" */;
@@ -303,6 +427,12 @@
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = phimage;
 				TargetAttributes = {
+					07FC415D1BE66517005F195C = {
+						CreatedOnToolsVersion = 7.1;
+					};
+					07FC41791BE670BF005F195C = {
+						CreatedOnToolsVersion = 7.1;
+					};
 					C42114DA1AE7D84900A09DD9 = {
 						CreatedOnToolsVersion = 6.3;
 					};
@@ -328,12 +458,28 @@
 			targets = (
 				C42114DA1AE7D84900A09DD9 /* PrephirencesiOS */,
 				C42114FD1AE7D8E200A09DD9 /* PrephirencesMacOSX */,
+				07FC415D1BE66517005F195C /* PrephirencesWatchos */,
+				07FC41791BE670BF005F195C /* PrephirencesTvOS */,
 				C4FF650A1B6B7C7300BFE4F4 /* PrephirencesiOSTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		07FC415C1BE66517005F195C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		07FC41781BE670BF005F195C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C42114D91AE7D84900A09DD9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -359,6 +505,44 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		07FC41591BE66517005F195C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				07FC41661BE6656C005F195C /* PreferencesType.swift in Sources */,
+				07FC41671BE6656C005F195C /* DictionaryPreferences.swift in Sources */,
+				07FC41681BE6656C005F195C /* PatternPreferences.swift in Sources */,
+				07FC41691BE6656C005F195C /* Plist.swift in Sources */,
+				07FC416A1BE6656C005F195C /* NSUserDefaults+Prephirences.swift in Sources */,
+				07FC416B1BE6656C005F195C /* NSUbiquitousKeyValueStore+Prephirences.swift in Sources */,
+				07FC416C1BE6656C005F195C /* KeychainPreferences.swift in Sources */,
+				07FC416D1BE6656C005F195C /* Prephirences.swift in Sources */,
+				07FC416E1BE6656C005F195C /* Preference.swift in Sources */,
+				07FC416F1BE6656C005F195C /* NSUserDefaults+Adds.swift in Sources */,
+				07FC41741BE66A30005F195C /* PreferencesOperators.swift in Sources */,
+				07FC41701BE6656C005F195C /* ManagedObjectPreferences.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		07FC41751BE670BF005F195C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				07FC41821BE670D6005F195C /* PreferencesType.swift in Sources */,
+				07FC41831BE670D6005F195C /* DictionaryPreferences.swift in Sources */,
+				07FC41841BE670D6005F195C /* PatternPreferences.swift in Sources */,
+				07FC41851BE670D6005F195C /* Plist.swift in Sources */,
+				07FC41861BE670D6005F195C /* NSUserDefaults+Prephirences.swift in Sources */,
+				07FC41871BE670D6005F195C /* NSUbiquitousKeyValueStore+Prephirences.swift in Sources */,
+				07FC41881BE670D6005F195C /* KeychainPreferences.swift in Sources */,
+				07FC41891BE670D6005F195C /* Prephirences.swift in Sources */,
+				07FC418A1BE670D6005F195C /* Preference.swift in Sources */,
+				07FC418B1BE670D6005F195C /* PreferencesOperators.swift in Sources */,
+				07FC418C1BE670D6005F195C /* NSUserDefaults+Adds.swift in Sources */,
+				07FC418D1BE670D6005F195C /* ManagedObjectPreferences.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C42114D61AE7D84900A09DD9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -373,6 +557,7 @@
 				C47F324D1AED144500195CDA /* ManagedObjectPreferences.swift in Sources */,
 				C4B3ED2C1B17165C00D807DA /* Prephirences.swift in Sources */,
 				C47F32511AED1E3B00195CDA /* NSUserDefaults+Adds.swift in Sources */,
+				07FC41721BE66A30005F195C /* PreferencesOperators.swift in Sources */,
 				C46B4C171AEE432000B95F6B /* NSUbiquitousKeyValueStore+Prephirences.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -387,6 +572,7 @@
 				C4EBB8451B15E1180075187B /* Plist.swift in Sources */,
 				C4F2A6861B147CCD0092017D /* PreferencesTabViewController.swift in Sources */,
 				C42115171AE7D90E00A09DD9 /* PreferencesType.swift in Sources */,
+				07FC41731BE66A30005F195C /* PreferencesOperators.swift in Sources */,
 				C47F324E1AED144500195CDA /* ManagedObjectPreferences.swift in Sources */,
 				C4BF518B1B259C3900C4FF98 /* KeychainPreferences.swift in Sources */,
 				C41E78EA1B1B48B9009CB458 /* Prephirences.swift in Sources */,
@@ -415,6 +601,86 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		07FC41631BE66517005F195C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = PrephirencesWatchos/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.PrephirencesWatchos;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		07FC41641BE66517005F195C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = PrephirencesWatchos/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.PrephirencesWatchos;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		07FC41801BE670BF005F195C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = PrephirencesTvOS/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.PrephirencesTvOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+			};
+			name = Debug;
+		};
+		07FC41811BE670BF005F195C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = PrephirencesTvOS/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.PrephirencesTvOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		C42114C41AE7D0CB00A09DD9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -617,6 +883,23 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		07FC41651BE66517005F195C /* Build configuration list for PBXNativeTarget "PrephirencesWatchos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				07FC41631BE66517005F195C /* Debug */,
+				07FC41641BE66517005F195C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		07FC417F1BE670BF005F195C /* Build configuration list for PBXNativeTarget "PrephirencesTvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				07FC41801BE670BF005F195C /* Debug */,
+				07FC41811BE670BF005F195C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		C42114AA1AE7D0CB00A09DD9 /* Build configuration list for PBXProject "Prephirences" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -35,7 +35,7 @@ public class Plist: MutableDictionaryPreferences {
     var filePath: String
     
     /* Write to file after each modification */
-    public var writeImmediately: Bool = false
+    public var writeImmediatly: Bool = false
     
     
     // MARK: init
@@ -65,6 +65,12 @@ public class Plist: MutableDictionaryPreferences {
         }
         return false
     }
+    
+    private func notifyChange() {
+        if writeImmediatly {
+            write()
+        }
+    }
 
     // MARK: override
     public override subscript(key: String) -> AnyObject? {
@@ -73,17 +79,47 @@ public class Plist: MutableDictionaryPreferences {
         }
         set {
             dico[key] = newValue
-            if writeImmediately {
-                write()
-            }
+            notifyChange()
         }
     }
     
     public override func clearAll() {
         super.clearAll()
-        if writeImmediately {
-            write()
-        }
+        notifyChange()
     }
+    public override func setObject(value: AnyObject?, forKey key: String) {
+        super.setObject(value, forKey: key)
+        notifyChange()
+    }
+    public override func removeObjectForKey(key: String) {
+        super.removeObjectForKey(key)
+        notifyChange()
+    }
+    public override func setInteger(value: Int, forKey key: String){
+        super.setInteger(value, forKey: key)
+        notifyChange()
+    }
+    public override func setFloat(value: Float, forKey key: String){
+        super.setFloat(value, forKey: key)
+        notifyChange()
+    }
+    public override func setDouble(value: Double, forKey key: String) {
+         super.setDouble(value, forKey: key)
+        notifyChange()
+    }
+    public override func setBool(value: Bool, forKey key: String) {
+        super.setBool(value, forKey: key)
+        notifyChange()
+    }
+    public override func setURL(url: NSURL?, forKey key: String) {
+        super.setURL(url, forKey: key)
+        notifyChange()
+    }
+    
+    public override func setObjectsForKeysWithDictionary(dictionary: [String:AnyObject]) {
+        super.setObjectsForKeysWithDictionary(dictionary)
+        notifyChange()
+    }
+
     
 }

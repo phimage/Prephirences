@@ -92,15 +92,16 @@ public class Prephirences {
         }
     }
 
-    // MARK: immutable
+    // MARK: deprecated
+    @available(*, deprecated=1, message="Please use ProxyPreferences(preferences: preferences).")
     public static func immutableProxy(preferences: MutablePreferencesType) -> PreferencesType {
         return ProxyPreferences(preferences: preferences)
     }
-    
-    // MARK: get an instance of preference for a key
+    @available(*, deprecated=1, message="Please use MutablePreference<T>(preferences: preferences, key: key).")
     public static func preferenceForKey<T>(key: String,_ preferences: MutablePreferencesType) -> MutablePreference<T> {
         return MutablePreference<T>(preferences: preferences, key: key)
     }
+    @available(*, deprecated=1, message="Please use Preference<T>(preferences: preferences, key: key).")
     public static func preferenceForKey<T>(key: String,_ preferences: PreferencesType) -> Preference<T> {
         return Preference<T>(preferences: preferences, key: key)
     }

@@ -34,6 +34,8 @@ public protocol PreferencesType {
     func objectForKey(key: String) -> AnyObject?
     func hasObjectForKey(key: String) -> Bool
     
+    func dictionary() -> [String : AnyObject]
+    
     func stringForKey(key: String) -> String?
     func arrayForKey(key: String) -> [AnyObject]?
     func dictionaryForKey(key: String) -> [String : AnyObject]?
@@ -46,10 +48,8 @@ public protocol PreferencesType {
     func URLForKey(key: String) -> NSURL?
 
     func unarchiveObjectForKey(key: String) -> AnyObject?
-    
     func preferenceForKey<T>(key: String) -> Preference<T>
 
-    func dictionary() -> [String : AnyObject]
 }
 
 public protocol MutablePreferencesType: PreferencesType {
@@ -75,9 +75,50 @@ public protocol MutablePreferencesType: PreferencesType {
     func immutableProxy() -> PreferencesType
 }
 
-// MARK: default implementation
+// MARK: default implementations
 public extension PreferencesType {
 
+    subscript(key: String) -> AnyObject? {
+        return objectForKey(key)
+    }
+    public func hasObjectForKey(key: String) -> Bool {
+        return self.objectForKey(key) != nil
+    }
+    public func stringForKey(key: String) -> String? {
+        return self.objectForKey(key) as? String
+    }
+    public func arrayForKey(key: String) -> [AnyObject]? {
+        return self.objectForKey(key) as? [AnyObject]
+    }
+    public func dictionaryForKey(key: String) -> [String : AnyObject]? {
+        return self.objectForKey(key) as? [String : AnyObject]
+    }
+    public func dataForKey(key: String) -> NSData? {
+        return self.objectForKey(key) as? NSData
+    }
+    public func stringArrayForKey(key: String) -> [String]? {
+        return self.objectForKey(key) as? [String]
+    }
+    public func integerForKey(key: String) -> Int {
+        return self.objectForKey(key) as? Int ?? 0
+    }
+    public func floatForKey(key: String) -> Float {
+        return self.objectForKey(key) as? Float ?? 0
+    }
+    public func doubleForKey(key: String) -> Double {
+        return self.objectForKey(key) as? Double ?? 0
+    }
+    public func boolForKey(key: String) -> Bool {
+        return self.objectForKey(key) as? Bool ?? false
+    }
+    public func URLForKey(key: String) -> NSURL? {
+        return self.objectForKey(key) as? NSURL
+    }
+    
+
+    public func unarchiveObjectForKey(key: String) -> AnyObject? {
+        return Prephirences.unarchiveObject(self, forKey: key)
+    }
     public func preferenceForKey<T>(key: String) -> Preference<T> {
         return Preference<T>(preferences: self, key: key)
     }
@@ -85,44 +126,56 @@ public extension PreferencesType {
 
 public extension MutablePreferencesType {
 
+    public subscript(key: String) -> AnyObject? {
+        get {
+            return self.objectForKey(key)
+        }
+        set {
+            if newValue == nil {
+                removeObjectForKey(key)
+            } else {
+                setObject(newValue, forKey: key)
+            }
+        }
+    }
+
     public func preferenceForKey<T>(key: String) -> MutablePreference<T> {
         return MutablePreference<T>(preferences: self, key: key)
     }
     
     public func immutableProxy() -> PreferencesType {
-        return Prephirences.immutableProxy(self)
+        return ProxyPreferences(preferences: self)
     }
+    
+    public func setObjectsForKeysWithDictionary(dictionary: [String : AnyObject]){
+        for (key,value) in dictionary {
+            self.setObject(value, forKey: key )
+        }
+    }
+
+    public func setObjects(objects: [AnyObject], forKeys keys: [String]) {
+        for var keyIndex = 0; keyIndex < keys.count; keyIndex++ {
+            self.setObject(objects[keyIndex], forKey: keys [keyIndex])
+        }
+    }
+
+    public func clearAll() {
+        for(key,_) in self.dictionary() {
+            self.removeObjectForKey(key as String)
+        }
+    }
+
+    public func setObjectToArchive(value: AnyObject?, forKey key: String) {
+        Prephirences.archiveObject(value, preferences: self, forKey: key)
+    }
+    
+    public func setURL(url: NSURL?, forKey key: String){
+        self.setObject(url, forKey: key)
+    }
+    
+
 }
 
 // MARK: usefull functions
 // dictionary append
 internal func +=<K, V> (inout left: [K : V], right: [K : V]) { for (k, v) in right { left[k] = v } }
-
-
-// MARK: operators
-public func += <L:MutablePreferencesType, R:PreferencesType> (inout left: L, right: R) {
-    for (k, v) in right.dictionary() { left[k] = v }
-}
-
-public func += <L:MutablePreferencesType> (inout left: L, right: Dictionary<String,AnyObject>) {
-    for (k, v) in right { left[k] = v }
-}
-
-public func += <L:MutablePreferencesType> (inout left: L, right: (String, AnyObject)...) {
-    for (k, v) in right { left[k] = v }
-}
-
-public func -= <L:MutablePreferencesType> (inout left: L, right: String) {
-    left.removeObjectForKey(right)
-}
-
-infix operator <|  { associativity left precedence 150 }
-
-public func <|<P:PreferencesType, T>(preferences: P, key: String) -> Preference<T> {
-    return preferences.preferenceForKey(key)
-}
-
-public func <|<P:MutablePreferencesType, T>(preferences: P, key: String) -> MutablePreference<T> {
-    return preferences.preferenceForKey(key)
-}
-

@@ -26,29 +26,11 @@ SOFTWARE.
 */
 
 import Foundation
-#if os(iOS)
+#if os(iOS) || os(watchOS) || os(tvOS)
     import UIKit
-#endif
-#if os(OSX)
+#elseif os(OSX)
     import Cocoa
 #endif
-
-// MARK: utility methods
-public extension NSUserDefaults {
-    
-    public func setObjects(objects: [AnyObject], forKeys keys: [String]) {
-        for var keyIndex = 0; keyIndex < keys.count; keyIndex++ {
-            self.setObject(objects[keyIndex], forKey: keys [keyIndex])
-        }
-    }
-
-    public func copyDefaults(defaults: NSUserDefaults) {
-        let dict = defaults.dictionaryRepresentation()
-        for (key, value) in dict {
-            setObject(value, forKey: key)
-        }
-    }
-}
 
 // MARK: additionnal types
 public extension NSUserDefaults {
@@ -56,7 +38,7 @@ public extension NSUserDefaults {
     // MARK: color
     #if os(OSX)
     typealias Color = NSColor
-    #elseif os(iOS)
+    #elseif os(iOS) || os(watchOS) || os(tvOS)
     typealias Color = UIColor
     #endif
     

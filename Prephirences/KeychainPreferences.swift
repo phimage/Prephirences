@@ -59,7 +59,6 @@ public class KeychainPreferences: PreferencesAdapter, MutablePreferencesType {
     }
     
     public init(service: String) {
-        super.init()
         self.service = service
     }
 
@@ -72,7 +71,7 @@ public class KeychainPreferences: PreferencesAdapter, MutablePreferencesType {
     public var lastStatus: OSStatus?
     
     // MARK: Prephirences
-    override public subscript(key: String) -> AnyObject? {
+    public subscript(key: String) -> AnyObject? {
         get {
             return self.objectForKey(key)
         }
@@ -81,26 +80,22 @@ public class KeychainPreferences: PreferencesAdapter, MutablePreferencesType {
         }
     }
 
-    public override func stringForKey(key: String) -> String? {
+    public func stringForKey(key: String) -> String? {
         if let data = dataForKey(key), currentString = NSString(data: data, encoding: NSUTF8StringEncoding) as? String {
             return currentString
         }
         return nil
     }
     
-    public override func objectForKey(key: String) -> AnyObject? {
+    public func objectForKey(key: String) -> AnyObject? {
         // XXX not able to know if must decoded or not here...
         if let object: AnyObject = unarchiveObjectForKey(key){
             return object
         }
         return nil
     }
-    
-    public override func unarchiveObjectForKey(key: String) -> AnyObject? {
-        return super.unarchiveObjectForKey(key)
-    }
 
-    public override func dataForKey(key: String) -> NSData? {
+    public func dataForKey(key: String) -> NSData? {
         var query: [String: AnyObject] = [
             Constants.klass       : klass.rawValue,
             Constants.account     : key,
@@ -125,7 +120,7 @@ public class KeychainPreferences: PreferencesAdapter, MutablePreferencesType {
         return nil
     }
     
-    internal override func keys() -> [String] {
+    public func keys() -> [String] {
         var query: [String: AnyObject] = [
             Constants.klass       : klass.rawValue,
             Constants.returnData  : kCFBooleanTrue,
@@ -154,7 +149,7 @@ public class KeychainPreferences: PreferencesAdapter, MutablePreferencesType {
         return []
     }
     
-    public override func dictionary() -> [String : AnyObject] {
+    public func dictionary() -> [String : AnyObject] {
         var query: [String: AnyObject] = [
             Constants.klass       : klass.rawValue,
             Constants.returnData  : kCFBooleanTrue, //  #if os(iOS) ?
@@ -320,7 +315,7 @@ public enum SecurityAttributeAccessible: CustomStringConvertible {
         case .AccessibleAlwaysThisDeviceOnly:
             return toString(kSecAttrAccessibleAlwaysThisDeviceOnly)
         case .AccessibleWhenPasscodeSetThisDeviceOnly:
-            #if os(iOS)
+            #if os(iOS) || os(watchOS) || os(tvOS)
                 return toString(kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly)
             #elseif os(OSX)
                 if #available(OSX 10.10, *) {

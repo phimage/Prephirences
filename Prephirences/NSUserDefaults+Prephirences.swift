@@ -31,37 +31,12 @@ import Foundation
 
 */
 extension NSUserDefaults: MutablePreferencesType {
-    // other way is to encapsulate NSUserDefaults in new object NSUserDefaultsPrefs: MutablePreferencesType
-
-    public func unarchiveObjectForKey(key: String) -> AnyObject? {
-        return Prephirences.unarchiveObject(self, forKey: key)
-    }
-    public func setObjectToArchive(value: AnyObject?, forKey key: String) {
-        Prephirences.archiveObject(value, preferences: self, forKey: key)
-    }
 
     public func dictionary() -> [String : AnyObject] {
         return self.dictionaryRepresentation()
     }
-    public func hasObjectForKey(key: String) -> Bool {
-        return objectForKey(key) != nil
-    }
-    public func clearAll() {
-        if let bI = NSBundle.mainBundle().bundleIdentifier {
-            self.removePersistentDomainForName(bI)
-        }
-    }
     
-    public func setObjectsForKeysWithDictionary(dictionary: [String:AnyObject]) {
-        for (key, value) in dictionary {
-            self.setObject(value, forKey: key)
-        }
-    }
-}
-
-//MARK: subscript access
-extension NSUserDefaults {
-    
+    //subscript access
     public subscript(key: String) -> AnyObject? {
         get {
             return self.objectForKey(key)
@@ -72,7 +47,24 @@ extension NSUserDefaults {
             } else {
                 setObject(newValue, forKey: key)
             }
+            switch newValue {
+            case let v as Int: setInteger(v, forKey: key)
+            case let v as Float: setFloat(v, forKey: key)
+            case let v as Double: setDouble(v, forKey: key)
+            case let v as Bool: setBool(v, forKey: key)
+            case let v as NSURL: setURL(v, forKey: key)
+            case nil: removeObjectForKey(key)
+            default: setObject(newValue, forKey: key)
+            }
         }
     }
-    
+
+    #if !USER_DEFAULTS_NO_CLEAR_USING_BUNDLE
+    // http://stackoverflow.com/questions/29536336/how-to-clear-all-nsuserdefaults-values-in-objective-c
+    public func clearAll() {
+        if let bI = NSBundle.mainBundle().bundleIdentifier {
+            self.removePersistentDomainForName(bI)
+        }
+    }
+    #endif
 }

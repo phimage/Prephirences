@@ -37,11 +37,11 @@ public class ManageObjectPreferences : PreferencesAdapter {
         self.entityName = NSStringFromClass(object.classForCoder)
     }
     
-    public override func objectForKey(key: String) -> AnyObject? {
+    public func objectForKey(key: String) -> AnyObject? {
         return self.object.valueForKey(key)
     }
     
-    internal override func keys() -> [String] {
+    public func keys() -> [String] {
         let attr = self.object.entity.attributesByName
         return Array(attr.keys)
     }
@@ -54,7 +54,7 @@ public class MutableManageObjectPreferences: ManageObjectPreferences {
         super.init(object)
     }
     
-    override public subscript(key: String) -> AnyObject? {
+    public subscript(key: String) -> AnyObject? {
         get {
             return self.objectForKey(key)
         }
@@ -96,10 +96,5 @@ extension MutableManageObjectPreferences: MutablePreferencesType {
     }
     public func clearAll(){
         // not implemented, maybe add protocol to set defaults attributes values
-    }
-    public func setObjectsForKeysWithDictionary(dictionary: [String : AnyObject]){
-        for (key,value) in dictionary {
-            setObject(value, forKey: key )
-        }
     }
 }
