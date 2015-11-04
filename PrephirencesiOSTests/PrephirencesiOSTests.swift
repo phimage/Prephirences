@@ -132,8 +132,9 @@ class PrephirencesiOSTests: XCTestCase {
     func testPreference() {
         let userDefaults = NSUserDefaults.standardUserDefaults()
  
-        var intPref: MutablePreference<Int> = Prephirences.preferenceForKey("int", userDefaults)
+        var intPref: MutablePreference<Int> = userDefaults <| "int"
         intPref.value = nil
+        intPref.value = 0
         
         intPref = userDefaults <| "int"
         
@@ -174,7 +175,7 @@ class PrephirencesiOSTests: XCTestCase {
         }
         
         
-        var boolPref: MutablePreference<Bool> = Prephirences.preferenceForKey("bool", userDefaults)
+        var boolPref: MutablePreference<Bool> = userDefaults.preferenceForKey("bool")
         boolPref.value = nil
         
         boolPref &&= false
@@ -212,12 +213,69 @@ class PrephirencesiOSTests: XCTestCase {
         default: XCTFail("nil")
         }
         
-        var stringPref: MutablePreference<String> = Prephirences.preferenceForKey("string", userDefaults)
+        let intFromBoolPref : MutablePreference<Int> = boolPref.transform{ value in
+            return (value ?? false) ? 1:0
+        }
+        XCTAssert(intFromBoolPref.value! == 1)
+        
+
+        
+        var stringPref: MutablePreference<String> = userDefaults.preferenceForKey("string")
         stringPref.value = "pref"
         
         stringPref += "erence"
         XCTAssert(stringPref.value! == "preference")
-  
+
+        stringPref.apply { value in
+            return value?.uppercaseString
+        }
+        
+        XCTAssert(stringPref.value! == "preference".uppercaseString)
+    }
+    
+    
+    func testArchive() {
+        
+        var preferences: MutableDictionaryPreferences = [mykey: myvalue, "key2": "value2"]
+        
+        let value = UIColor.blueColor()
+        let key = "color"
+        preferences[key, .Archive] = value
+        
+        
+        guard let unarchived = preferences[key, .Archive] as? UIColor else {
+            XCTFail("Cannot unarchive \(key)")
+            return
+        }
+        
+        XCTAssertEqual(value, unarchived)
+        
+        guard let _ = preferences[key, .None] as? NSData else {
+            XCTFail("Cannot get data for \(key)")
+            return
+        }
+        
+        guard let _ = preferences[key] as? NSData else {
+            XCTFail("Cannot get data for \(key)")
+            return
+        }
+        
+        let colorPref: MutablePreference<UIColor> = preferences <| key
+        colorPref.transformation = .Archive
+        
+        guard let _ = colorPref.value else {
+            XCTFail("Cannot unarchive \(key)")
+            return
+        }
+        
+        let value2 = UIColor.redColor()
+        colorPref.value = value2
+        
+        guard let unarchived2 = preferences[key, .Archive] as? UIColor else {
+            XCTFail("Cannot unarchive \(key)")
+            return
+        }
+        XCTAssertEqual(value2, unarchived2)
         
     }
     

@@ -9,6 +9,16 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>PrephirencesTvOS.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+		<key>PrephirencesWatchos.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
 		<key>PrephirencesiOS.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -22,6 +32,16 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>07FC415D1BE66517005F195C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>07FC41791BE670BF005F195C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>C42114AF1AE7D0CB00A09DD9</key>
 		<dict>
 			<key>primary</key>

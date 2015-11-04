@@ -22,6 +22,7 @@ You can 'merge' multiples preferences and work with them transparently (see [Com
   - [Creating](#creating)
   - [Accessing](#accessing)
   - [Modifying](#modifying)
+  - [Archiving](#archiving)
   - [Some implementations](#some-implementations)
     - [NSUserDefaults](#nsuserdefaults)
     - [NSUbiquitousKeyValueStore](#nsubiquitouskeyvaluestore)
@@ -70,7 +71,7 @@ var myValue = fromDicoLiteral.boolForKey("myKey")
 
 ## Modifying ##
 
-Modifiable preferences implement protocol [MutablePreferencesTypes](/Prephirences/PreferencesType.swift)
+Modifiable preferences implement the protocol [MutablePreferencesTypes](/Prephirences/PreferencesType.swift)
 
 The simplest implementation is [MutableDictionaryPreferences](/Prephirences/DictionaryPreferences.swift)
 
@@ -80,18 +81,19 @@ var mutableFromDico: MutableDictionaryPreferences = ["myKey": "myValue"]
 mutableFromDico["newKey"] = "newValue"
 mutableFromDico.setObject("myValue", forKey: "newKey")
 mutableFromDico.setBool(true, forKey: "newKey")
-
+...
 ```
-You can append dictionary or other `PreferencesType`
+You can append dictionary or other `PreferencesType` using operators
 ```swift
 mutableFromDico += ["newKey": "newValue", "otherKey": true]
 ```
-You can remove one preference
+You can also remove one preference
 ```swift
 mutableFromDico -= "myKey"
 ```
 
 ### Apply operators to one preference ###
+You can extract a `MutablePreference` from any `MutablePreferencesTypes` and apply operators according to its value type
 ```swift
 var intPref: MutablePreference<Int> = aPrefs.preferenceForKey("intKey")
 var intPref: MutablePreference<Int> = aPrefs <| "intKey"
@@ -117,6 +119,47 @@ boolPref |= true
 boolPref != true
 
 ```
+You can also use some methods to change value
+```swift
+var stringPref: MutablePreference<String> = userDefaults <| "stringKey"
+stringPref.apply { value in
+  return value?.uppercaseString
+}
+```
+or transform the value type using closures
+```swift
+let intFromBoolPref : MutablePreference<Int> = boolPref.transform { value in
+  return (value ?? false) ? 1:0
+}
+```
+## Archiving and transformation ##
+Archiving is particularly useful with `NSUserDefaults` because `NSUserDefaults` can't store all type of objects.
+The following functions could help by transforming the value into an other type
+
+You can archive into `NSData` using this two methods
+```swift
+userDefaults.setObjectToArchive(UIColor.blueColor(), forKey: "colorKey")
+userDefaults["colorKey", .Archive] = UIColor.blueColor()
+```
+and unarchive using
+```swift
+if let color = userDefaults.unarchiveObjectForKey("colorKey") as? UIColor {..}
+if let color = userDefaults["colorKey", .Archive]  as? UIColor {..}
+```
+If you extract one preference, use `transformation` property to setup archive mode
+```swift
+var colorPref: MutablePreference<UIColor> = userDefaults <| "colorKey"
+colorPref.transformation = .Archive
+colorPref.value = UIColor.redColor()
+if let color = colorPref.value as? UIColor {..}
+```
+You can also apply for all objects type an [`NSValueTransformer`](https://developer.apple.com/library/prerelease/ios/documentation/Cocoa/Reference/Foundation/Classes/NSValueTransformer_Class/index.html), to transform into JSON for instance
+```swift
+userDefaults["colorKey", myValueTransformerToJson] = myComplexObject
+
+if let object = userDefaults["colorKey", myValueTransformerToJson] {...}
+```
+:warning: `allowsReverseTransformation` must return `true`
 
 ## Some implementations ##
 ### NSUserDefaults ###
@@ -132,6 +175,8 @@ if let myValue = userDefaults["mykey"] as? Bool {..}
 NSUserDefaults implement also `MutablePreferencesType` and can be modified with same methods
 ```swift
 userDefaults["mykey"] = "myvalue"
+// with type to archive
+userDefaults["mykey", .Archive] = UIColor.blueColor()
 ```
 
 ### NSUbiquitousKeyValueStore ###
@@ -178,7 +223,7 @@ keychain.accessibility = .AccessibleAfterFirstUnlock
 ```swift
 keychain.accessGroup = "AKEY.shared"
 ```
- 
+
 
 
 
@@ -213,7 +258,7 @@ You can access or modify this composite preferences like any PreferencesType.
 The main goal is to define read-only preferences for your app (in code or files) and some mutable preferences (like `NSUserDefaults`, `NSUbiquitousKeyValueStore`). You can then access to one preference value without care about the origin
 
 ## Managing preferences instances ##
-If you want to use Prephirences into a framework or want to get a `Preferences` without adding dependencies between classes, you can register any `PreferencesType` into `Prephirences` 
+If you want to use Prephirences into a framework or want to get a `Preferences` without adding dependencies between classes, you can register any `PreferencesType` into `Prephirences`
 
 as shared instance
 ```swift
@@ -240,7 +285,7 @@ If you use [Alamofire](https://github.com/Alamofire/Alamofire), [Alamofire-Preph
 
 ## Using [cocoapods](http://cocoapods.org/) ##
 
-Add `pod 'Prephirences'` to your `Podfile` and run `pod install`. 
+Add `pod 'Prephirences'` to your `Podfile` and run `pod install`.
 
 *Add `use_frameworks!` to the end of the `Podfile`.*
 

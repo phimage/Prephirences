@@ -28,13 +28,13 @@ SOFTWARE.
 import Foundation
 
 public protocol PreferencesType {
-
-    subscript(key: String) -> AnyObject? {get}
-
     func objectForKey(key: String) -> AnyObject?
+    func dictionary() -> [String : AnyObject]
+
+    // optional methods
+    subscript(key: String) -> AnyObject? {get}
     func hasObjectForKey(key: String) -> Bool
     
-    func dictionary() -> [String : AnyObject]
     
     func stringForKey(key: String) -> String?
     func arrayForKey(key: String) -> [AnyObject]?
@@ -75,7 +75,7 @@ public protocol MutablePreferencesType: PreferencesType {
     func immutableProxy() -> PreferencesType
 }
 
-// MARK: default implementations
+// MARK: - default implementations
 public extension PreferencesType {
 
     subscript(key: String) -> AnyObject? {
@@ -122,6 +122,7 @@ public extension PreferencesType {
     public func preferenceForKey<T>(key: String) -> Preference<T> {
         return Preference<T>(preferences: self, key: key)
     }
+
 }
 
 public extension MutablePreferencesType {
@@ -172,10 +173,91 @@ public extension MutablePreferencesType {
     public func setURL(url: NSURL?, forKey key: String){
         self.setObject(url, forKey: key)
     }
-    
 
 }
 
-// MARK: usefull functions
+
+
+// MARK: - transformation, archive
+
+public enum TransformationKey {
+    case Archive
+    case None
+}
+
+public extension PreferencesType {
+
+    public subscript(key: String, valueTransformer: NSValueTransformer) -> AnyObject? {
+        return  valueTransformer.reverseTransformedValue(objectForKey(key))
+    }
+
+    public subscript(key: String, closure: (AnyObject?) -> AnyObject?) -> AnyObject? {
+        return closure(objectForKey(key))
+    }
+    
+    public subscript(key: String, transformation: TransformationKey) -> AnyObject? {
+        switch(transformation) {
+        case .Archive :
+            return unarchiveObjectForKey(key)
+        case .None :
+            return objectForKey(key)
+        }
+    }
+}
+
+
+public extension MutablePreferencesType {
+
+    public subscript(key: String, transformation: TransformationKey) -> AnyObject? {
+        get {
+            switch(transformation) {
+            case .Archive :
+                return unarchiveObjectForKey(key)
+            case .None :
+                return objectForKey(key)
+            }
+        }
+        set {
+            if newValue == nil {
+                removeObjectForKey(key)
+            }
+            else {
+                switch(transformation) {
+                case .Archive :
+                    setObjectToArchive(newValue, forKey: key)
+                    break
+                case .None :
+                     setObject(newValue, forKey: key)
+                     break
+                }
+            }
+        }
+    }
+
+    public subscript(key: String, valueTransformer: NSValueTransformer) -> AnyObject? {
+        get {
+            return valueTransformer.reverseTransformedValue(objectForKey(key))
+        }
+        set {
+            if newValue == nil {
+                removeObjectForKey(key)
+            } else {
+                assert(valueTransformer.classForCoder.allowsReverseTransformation()) // don't store not decodable value
+                let transformedValue = valueTransformer.transformedValue(newValue)
+                if transformedValue == nil {
+                    removeObjectForKey(key)
+                }
+                else {
+                    setObject(transformedValue, forKey: key)
+                }
+            }
+        }
+    }
+
+}
+
+
+
+// MARK: - private
 // dictionary append
 internal func +=<K, V> (inout left: [K : V], right: [K : V]) { for (k, v) in right { left[k] = v } }

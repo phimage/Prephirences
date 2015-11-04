@@ -32,6 +32,7 @@ public class Preference<T> {
 
     var preferences: PreferencesType
     public let key: String
+    public var transformation: TransformationKey = .None
     
     public init(preferences: PreferencesType, key: String) {
         self.preferences = preferences
@@ -40,7 +41,12 @@ public class Preference<T> {
     
     public var value: T? {
         get {
-            return self.preferences.objectForKey(self.key) as? T
+            switch(transformation) {
+            case .Archive :
+                return self.preferences.unarchiveObjectForKey(self.key) as? T
+            case .None :
+                return self.preferences.objectForKey(self.key) as? T
+            }
         }
     }
     
@@ -61,15 +67,37 @@ public class MutablePreference<T>: Preference<T> {
     
     override public var value: T? {
         get {
-            return self.preferences.objectForKey(self.key) as? T
+            switch(transformation) {
+            case .Archive :
+                return self.preferences.unarchiveObjectForKey(self.key) as? T
+            case .None :
+                return self.preferences.objectForKey(self.key) as? T
+            }
         }
         set {
             if let any: AnyObject = newValue as? AnyObject {
-                self.mutablePreferences.setObject(any, forKey: self.key)
+                switch(transformation) {
+                case .Archive :
+                    self.mutablePreferences.setObjectToArchive(any, forKey: self.key)
+                    break
+                case .None :
+                    self.mutablePreferences.setObject(any, forKey: self.key)
+                    break
+                }
             }else {
                 self.mutablePreferences.removeObjectForKey(self.key)
             }
         }
+    }
+
+    public func apply(closure: T? -> T?) {
+        self.value = closure(self.value)
+    }
+    
+    public func transform<U>(closure: T? -> U?) -> MutablePreference<U> {
+        let newPref: MutablePreference<U> = MutablePreference<U>(preferences: self.mutablePreferences, key: key)
+        newPref.value = closure(self.value)
+        return newPref
     }
     
 }
