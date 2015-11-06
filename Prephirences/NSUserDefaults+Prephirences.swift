@@ -48,11 +48,11 @@ extension NSUserDefaults: MutablePreferencesType {
                 setObject(newValue, forKey: key)
             }
             switch newValue {
-            case let v as Int: setInteger(v, forKey: key)
+            /*case let v as Int: setInteger(v, forKey: key) // Double 0.9 will be cast to 0, let use NSNumber...
             case let v as Float: setFloat(v, forKey: key)
             case let v as Double: setDouble(v, forKey: key)
             case let v as Bool: setBool(v, forKey: key)
-            case let v as NSURL: setURL(v, forKey: key)
+            case let v as NSURL: setURL(v, forKey: key)*/
             case nil: removeObjectForKey(key)
             default: setObject(newValue, forKey: key)
             }
