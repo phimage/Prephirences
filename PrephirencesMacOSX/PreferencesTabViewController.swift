@@ -113,7 +113,14 @@ public class PreferencesTabViewController: NSTabViewController {
     func _removeAllToolbarItems(){
         // Maybe fix a bug with toolbar style
     }
-    
+
+    deinit {
+        if let selectedTabViewItem = self.selectedTabViewItem as? NSTabViewItem,
+            viewController = selectedTabViewItem.viewController as? PreferencesTabViewItemControllerType where observe {
+                (viewController as! NSViewController).removeObserver(self, forKeyPath: kPreferencesTabViewSize, context: nil)
+        }
+    }
+
     // MARK: public
 
     public var selectedTabViewItem: AnyObject? {

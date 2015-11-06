@@ -22,7 +22,7 @@ You can 'merge' multiples preferences and work with them transparently (see [Com
   - [Creating](#creating)
   - [Accessing](#accessing)
   - [Modifying](#modifying)
-  - [Archiving](#archiving)
+  - [Archiving and transformation](#archiving-and-transformation)
   - [Some implementations](#some-implementations)
     - [NSUserDefaults](#nsuserdefaults)
     - [NSUbiquitousKeyValueStore](#nsubiquitouskeyvaluestore)
