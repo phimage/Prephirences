@@ -182,6 +182,8 @@ public extension MutablePreferencesType {
 
 public enum TransformationKey {
     case Archive
+    case ValueTransformer(NSValueTransformer)
+    case ClosureTuple((transform: AnyObject? -> AnyObject?, revert: AnyObject? -> AnyObject?))
     case None
 }
 
@@ -199,6 +201,10 @@ public extension PreferencesType {
         switch(transformation) {
         case .Archive :
             return unarchiveObjectForKey(key)
+        case .ValueTransformer(let valueTransformer) :
+            return self["key", valueTransformer]
+        case .ClosureTuple(let (_, revert)) :
+            return revert(objectForKey(key))
         case .None :
             return objectForKey(key)
         }
@@ -213,23 +219,41 @@ public extension MutablePreferencesType {
             switch(transformation) {
             case .Archive :
                 return unarchiveObjectForKey(key)
+            case .ValueTransformer(let valueTransformer) :
+                return self["key", valueTransformer]
+            case .ClosureTuple(let (_, revert)) :
+                return revert(objectForKey(key))
             case .None :
                 return objectForKey(key)
             }
         }
         set {
-            if newValue == nil {
-                removeObjectForKey(key)
-            }
-            else {
-                switch(transformation) {
-                case .Archive :
+            switch(transformation) {
+            case .Archive :
+                if newValue == nil {
+                    removeObjectForKey(key)
+                } else {
                     setObjectToArchive(newValue, forKey: key)
-                    break
-                case .None :
-                     setObject(newValue, forKey: key)
-                     break
                 }
+                break
+            case .ValueTransformer(let valueTransformer) :
+                self["key", valueTransformer] = newValue
+                break
+            case .ClosureTuple(let (transform, _)) :
+                let transformedValue = transform(newValue)
+                if transformedValue == nil {
+                    removeObjectForKey(key)
+                } else {
+                    setObject(transformedValue, forKey: key)
+                }
+                break
+            case .None :
+                if newValue == nil {
+                    removeObjectForKey(key)
+                } else {
+                    setObject(newValue, forKey: key)
+                }
+                break
             }
         }
     }
@@ -239,17 +263,13 @@ public extension MutablePreferencesType {
             return valueTransformer.reverseTransformedValue(objectForKey(key))
         }
         set {
-            if newValue == nil {
+            assert(valueTransformer.classForCoder.allowsReverseTransformation()) // don't store not decodable value
+            let transformedValue = valueTransformer.transformedValue(newValue)
+            if transformedValue == nil {
                 removeObjectForKey(key)
-            } else {
-                assert(valueTransformer.classForCoder.allowsReverseTransformation()) // don't store not decodable value
-                let transformedValue = valueTransformer.transformedValue(newValue)
-                if transformedValue == nil {
-                    removeObjectForKey(key)
-                }
-                else {
-                    setObject(transformedValue, forKey: key)
-                }
+            }
+            else {
+                setObject(transformedValue, forKey: key)
             }
         }
     }

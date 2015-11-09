@@ -46,6 +46,10 @@ public class Preference<T> {
                 return self.preferences.unarchiveObjectForKey(self.key) as? T
             case .None :
                 return self.preferences.objectForKey(self.key) as? T
+            case .ValueTransformer(let valueTransformer) :
+                return valueTransformer.reverseTransformedValue(self.preferences.objectForKey(self.key)) as? T
+            case .ClosureTuple(let (_, revert)) :
+                return revert(self.preferences.objectForKey(self.key)) as? T
             }
         }
     }
@@ -72,24 +76,50 @@ public class MutablePreference<T>: Preference<T> {
                 return self.preferences.unarchiveObjectForKey(self.key) as? T
             case .None :
                 return self.preferences.objectForKey(self.key) as? T
+            case .ValueTransformer(let valueTransformer) :
+                return valueTransformer.reverseTransformedValue(self.preferences.objectForKey(self.key)) as? T
+            case .ClosureTuple(let (_, revert)) :
+                return revert(self.preferences.objectForKey(self.key)) as? T
             }
         }
         set {
-            if let any: AnyObject = newValue as? AnyObject {
-                switch(transformation) {
-                case .Archive :
+            switch(transformation) {
+            case .Archive :
+                if let any: AnyObject = newValue as? AnyObject {
                     self.mutablePreferences.setObjectToArchive(any, forKey: self.key)
-                    break
-                case .None :
-                    self.mutablePreferences.setObject(any, forKey: self.key)
-                    break
+                } else {
+                    self.mutablePreferences.removeObjectForKey(self.key)
                 }
-            }else {
-                self.mutablePreferences.removeObjectForKey(self.key)
+                break
+            case .None :
+                if let any: AnyObject = newValue as? AnyObject {
+                    self.mutablePreferences.setObject(any, forKey: self.key)
+                } else {
+                    self.mutablePreferences.removeObjectForKey(self.key)
+                }
+                break
+            case .ValueTransformer(let valueTransformer) :
+                let transformedValue = valueTransformer.transformedValue(newValue as? AnyObject)
+                if transformedValue == nil {
+                    self.mutablePreferences.removeObjectForKey(self.key)
+                }
+                else {
+                    self.mutablePreferences.setObject(transformedValue, forKey: self.key)
+                }
+                break
+            case .ClosureTuple(let (transform, _)) :
+                let transformedValue = transform(newValue as? AnyObject)
+                if transformedValue == nil {
+                    self.mutablePreferences.removeObjectForKey(self.key)
+                } else {
+                    self.mutablePreferences.setObject(transformedValue, forKey: self.key)
+                }
+                break
             }
+            
         }
     }
-
+    
     public func apply(closure: T? -> T?) {
         self.value = closure(self.value)
     }

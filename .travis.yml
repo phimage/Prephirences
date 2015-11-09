@@ -12,6 +12,9 @@ env:
 before_install:
   - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
   - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
+  - pip install codecov
+after_success:
+  - codecov
 script:
   - set -o pipefail
   - xcodebuild -version

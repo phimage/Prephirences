@@ -279,4 +279,71 @@ class PrephirencesiOSTests: XCTestCase {
         
     }
     
+    func testClosure() {
+        
+        var preferences: MutableDictionaryPreferences = [mykey: myvalue, "key2": "value2"]
+        
+        let colorDico: [String: UIColor] = ["blue": UIColor.blueColor(), "red": UIColor.redColor()]
+        
+        func transform(obj: AnyObject?) -> AnyObject? {
+            if let color = obj as? UIColor {
+                
+                for (name, c) in colorDico {
+                    if c == color {
+                        return name
+                    }
+                }
+            }
+            return nil
+        }
+        func revert(obj: AnyObject?) -> AnyObject? {
+            if let name = obj as? String {
+                return colorDico[name]
+            }
+            return nil
+        }
+        let tuple = (transform: transform, revert: revert)
+        
+        let value = UIColor.blueColor()
+        let key = "color"
+        preferences[key, .ClosureTuple(tuple)] = value
+        
+        
+        guard let unarchived = preferences[key, .ClosureTuple(tuple)] as? UIColor else {
+            XCTFail("Cannot unarchive \(key)")
+            return
+        }
+        
+        XCTAssertEqual(value, unarchived)
+        
+        guard let _ = preferences[key, .None] as? String else {
+            XCTFail("Cannot get string for \(key)")
+            return
+        }
+        
+        guard let _ = preferences[key] as? String else {
+            XCTFail("Cannot get string for \(key)")
+            return
+        }
+        
+        let colorPref: MutablePreference<UIColor> = preferences <| key
+        colorPref.transformation = .ClosureTuple(tuple)
+        
+        guard let _ = colorPref.value else {
+            XCTFail("Cannot unarchive \(key)")
+            return
+        }
+        
+        let value2 = UIColor.redColor()
+        colorPref.value = value2
+        
+        guard let unarchived2 = preferences[key, .ClosureTuple(tuple)] as? UIColor else {
+            XCTFail("Cannot unarchive \(key)")
+            return
+        }
+        XCTAssertEqual(value2, unarchived2)
+        
+    }
+
+    
 }
