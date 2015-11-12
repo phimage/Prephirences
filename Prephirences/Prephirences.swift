@@ -31,7 +31,7 @@ import Foundation
 public class Prephirences {
 
     /** Shared preferences. Could be replaced by any other preferences */
-    public static var sharedInstance: PreferencesType = MutableDictionaryPreferences()
+    public static var sharedInstance: MutablePreferencesType = MutableDictionaryPreferences()
 
     // MARK: register by key
     private static var _instances: Dictionary<PrephirencesKey,PreferencesType> = Dictionary<PrephirencesKey,PreferencesType>()
