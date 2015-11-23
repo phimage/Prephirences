@@ -13,6 +13,7 @@
 ```swift
 let userDefaults = NSUserDefaults.standardUserDefaults()
 if let enabled = userDefaults["enabled"] as? Bool {..}
+userDefaults["mycolorkey", .Archive] = UIColor.blueColor()
 ```
 
 Preferences could be user preferences `NSUserDefaults`, iCloud stored preferences `NSUbiquitousKeyValueStore`, key chain, file stored preferences (ex: *[plist](http://en.wikipedia.org/wiki/Property_list)*) or your own private application preferences - ie. any object which implement the protocol [PreferencesType](/Prephirences/PreferencesType.swift), which define key value store methods
@@ -28,10 +29,11 @@ You can 'merge' multiples preferences and work with them transparently (see [Com
   - [Some implementations](#some-implementations)
     - [NSUserDefaults](#nsuserdefaults)
     - [NSUbiquitousKeyValueStore](#nsubiquitouskeyvaluestore)
-    - [Key Value Coding](#kvc)
+    - [Key Value Coding](#key-value-coding)
     - [Core Data](#core-data)
     - [Plist](#plist)
     - [Keychain](#keychain)
+  - [Custom](#custom)
   - [Proxying preferences with prefix](#proxying-preferences-with-prefix)
   - [Composing](#composing)
   - [Managing preferences instances](#managing-preferences-instances)
@@ -184,12 +186,30 @@ userDefaults["mykey", .Archive] = UIColor.blueColor()
 ### NSUbiquitousKeyValueStore ###
 To store in iCloud, `NSUbiquitousKeyValueStore` implement also `PreferencesType`
 
-### KVC ###
+### Key Value Coding ###
+#### Foundation classes
 You can wrap an object respond to implicit protocol [NSKeyValueCoding](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/KeyValueCoding/Articles/KeyValueCoding.html) in `KVCPreferences` or `MutableKVCPreferences`
 ```swift
 let kvcPref = MutableKVCPreferences(myObject)
 ```
 Be sure to affect the correct object type
+
+
+#### Swift classes
+Using `ReflectingPreferences` you can easily access to a struct or swift class. Just add extension.
+```swift
+struct PreferenceStruct {
+    var color: String = "red"
+    var age: Int
+    let enabled: Bool = true
+}
+extension PreferenceStruct: ReflectingPreferences {}
+```
+You can then use all functions from `PreferencesType`
+```
+var pref = PreferenceStruct(color: "red", age: 33)
+if pref["color"] as? String { .. }
+```
 
 ### Core Data ###
 You can wrap on `NSManageObject` in `ManageObjectPreferences` or `MutableManageObjectPreferences`
@@ -226,7 +246,22 @@ keychain.accessibility = .AccessibleAfterFirstUnlock
 keychain.accessGroup = "AKEY.shared"
 ```
 
+## Custom ##
+Create a custom object that conform to `PreferencesType` is easy.
 
+```swift
+extension MyCustomPreferences: PreferencesType {
+    func objectForKey(key: String) -> AnyObject? {
+        // return an object according to key
+    }
+    func dictionary() -> [String : AnyObject] {
+        // return a full dictionary of key value
+    }
+}
+```
+Only two functions are mandatory, others are automatically mapped but can be overrided for performance or readability.
+
+If you structure give a list of keys instead of a full dictionary, you can instead conform to `PreferencesAdapter` and implement `func keys() -> [String]`
 
 
 ## Proxying preferences with prefix ##

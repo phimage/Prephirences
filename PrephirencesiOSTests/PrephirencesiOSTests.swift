@@ -344,6 +344,28 @@ class PrephirencesiOSTests: XCTestCase {
         XCTAssertEqual(value2, unarchived2)
         
     }
+    
+    
+    func testReflectingPreferences(){
+        var pref = PrefStruc()
+
+        XCTAssertEqual(pref.color, pref["color"] as? String)
+        XCTAssertEqual(pref.age, pref["age"] as? Int)
+        XCTAssertEqual(pref.enabled, pref["enabled"] as? Bool)
+        
+        pref.color = "blue"
+        XCTAssertEqual(pref.color, pref["color"] as? String)
+
+    }
 
     
 }
+
+struct PrefStruc {
+    var color = "red"
+    let age = 33
+    let enabled = false
+}
+
+extension PrefStruc: ReflectingPreferences {}
+

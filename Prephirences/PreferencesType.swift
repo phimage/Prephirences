@@ -84,6 +84,7 @@ public extension PreferencesType {
     public func hasObjectForKey(key: String) -> Bool {
         return self.objectForKey(key) != nil
     }
+
     public func stringForKey(key: String) -> String? {
         return self.objectForKey(key) as? String
     }
