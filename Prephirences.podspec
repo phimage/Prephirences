@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
 
   # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   s.name         = "Prephirences"
-  s.version      = "2.0.3"
+  s.version      = "2.0.4"
   s.summary      = "A Swift library to manage preferences"
   s.description  = <<-DESC
                    Prephirences is a Swift library that provides useful protocols and methods to manage preferences.
@@ -27,7 +27,7 @@ Pod::Spec.new do |s|
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 
-  s.default_subspec = 'Core'
+  s.default_subspecs = 'Core', 'Keys'
 
   s.subspec "Core" do  |sp|
     sp.source_files = "Prephirences/*.swift"
@@ -43,9 +43,15 @@ Pod::Spec.new do |s|
     sp.dependency 'Prephirences/Core'
   end
 
+  s.subspec "Keys" do  |sp|
+    sp.source_files = ['Prephirences/Keys/*.swift']
+    sp.dependency 'Prephirences/Core'
+  end
+
   s.subspec "All" do  |sp|
     sp.dependency 'Prephirences/CoreData'
     sp.dependency 'Prephirences/UserDefaults'
+    sp.dependency 'Prephirences/Keys'
   end
 
   s.subspec "Cocoa" do  |sp|

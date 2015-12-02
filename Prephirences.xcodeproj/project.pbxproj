@@ -69,8 +69,16 @@
 		C4EBB8441B15DE4D0075187B /* Plist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EBB8431B15DE4D0075187B /* Plist.swift */; };
 		C4EBB8451B15E1180075187B /* Plist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EBB8431B15DE4D0075187B /* Plist.swift */; };
 		C4F2A6861B147CCD0092017D /* PreferencesTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F2A6851B147CCD0092017D /* PreferencesTabViewController.swift */; };
-		C4FF650E1B6B7C7300BFE4F4 /* PrephirencesiOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FF650D1B6B7C7300BFE4F4 /* PrephirencesiOSTests.swift */; };
-		C4FF65101B6B7C7300BFE4F4 /* PrephirencesiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C42114DB1AE7D84900A09DD9 /* PrephirencesiOS.framework */; };
+		C4FA9B181C0F155F009CF439 /* PropertyListKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FA9B171C0F155F009CF439 /* PropertyListKeys.swift */; };
+		C4FA9B191C0F155F009CF439 /* PropertyListKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FA9B171C0F155F009CF439 /* PropertyListKeys.swift */; };
+		C4FA9B1A1C0F155F009CF439 /* PropertyListKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FA9B171C0F155F009CF439 /* PropertyListKeys.swift */; };
+		C4FA9B1B1C0F155F009CF439 /* PropertyListKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FA9B171C0F155F009CF439 /* PropertyListKeys.swift */; };
+		C4FA9B1D1C0F1730009CF439 /* NSBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FA9B1C1C0F1730009CF439 /* NSBundle.swift */; };
+		C4FA9B1E1C0F1730009CF439 /* NSBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FA9B1C1C0F1730009CF439 /* NSBundle.swift */; };
+		C4FA9B1F1C0F1730009CF439 /* NSBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FA9B1C1C0F1730009CF439 /* NSBundle.swift */; };
+		C4FA9B201C0F1730009CF439 /* NSBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FA9B1C1C0F1730009CF439 /* NSBundle.swift */; };
+		C4FF650E1B6B7C7300BFE4F4 /* PrephirencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FF650D1B6B7C7300BFE4F4 /* PrephirencesTests.swift */; };
+		C4FF65101B6B7C7300BFE4F4 /* Prephirences.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C42114DB1AE7D84900A09DD9 /* Prephirences.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,11 +92,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		07FC415E1BE66517005F195C /* PrephirencesWatchos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PrephirencesWatchos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		07FC415E1BE66517005F195C /* Prephirences.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Prephirences.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		07FC41601BE66517005F195C /* PrephirencesWatchos.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrephirencesWatchos.h; sourceTree = "<group>"; };
 		07FC41621BE66517005F195C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		07FC41711BE66A30005F195C /* PreferencesOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesOperators.swift; sourceTree = "<group>"; };
-		07FC417A1BE670BF005F195C /* PrephirencesTvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PrephirencesTvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		07FC417A1BE670BF005F195C /* Prephirences.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Prephirences.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		07FC417C1BE670BF005F195C /* PrephirencesTvOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrephirencesTvOS.h; sourceTree = "<group>"; };
 		07FC417E1BE670BF005F195C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C413F2B01BEB6753002816BE /* PreferencesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesController.swift; sourceTree = "<group>"; };
@@ -96,10 +104,10 @@
 		C42114D01AE7D15D00A09DD9 /* PreferencesType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesType.swift; sourceTree = "<group>"; };
 		C42114D21AE7D1F200A09DD9 /* DictionaryPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryPreferences.swift; sourceTree = "<group>"; };
 		C42114D41AE7D32800A09DD9 /* PatternPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatternPreferences.swift; sourceTree = "<group>"; };
-		C42114DB1AE7D84900A09DD9 /* PrephirencesiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PrephirencesiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C42114DB1AE7D84900A09DD9 /* Prephirences.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Prephirences.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C42114DE1AE7D84900A09DD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C42114DF1AE7D84900A09DD9 /* PrephirencesiOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrephirencesiOS.h; sourceTree = "<group>"; };
-		C42114FE1AE7D8E200A09DD9 /* PrephirencesMacOSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PrephirencesMacOSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C42114FE1AE7D8E200A09DD9 /* Prephirences.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Prephirences.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C42115011AE7D8E200A09DD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C42115021AE7D8E200A09DD9 /* PrephirencesMacOSX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrephirencesMacOSX.h; sourceTree = "<group>"; };
 		C421151B1AE7D97900A09DD9 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -116,8 +124,10 @@
 		C4BF51891B259C3900C4FF98 /* KeychainPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainPreferences.swift; sourceTree = "<group>"; };
 		C4EBB8431B15DE4D0075187B /* Plist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plist.swift; sourceTree = "<group>"; };
 		C4F2A6851B147CCD0092017D /* PreferencesTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesTabViewController.swift; sourceTree = "<group>"; };
+		C4FA9B171C0F155F009CF439 /* PropertyListKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyListKeys.swift; sourceTree = "<group>"; };
+		C4FA9B1C1C0F1730009CF439 /* NSBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSBundle.swift; sourceTree = "<group>"; };
 		C4FF650B1B6B7C7300BFE4F4 /* PrephirencesiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PrephirencesiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C4FF650D1B6B7C7300BFE4F4 /* PrephirencesiOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrephirencesiOSTests.swift; sourceTree = "<group>"; };
+		C4FF650D1B6B7C7300BFE4F4 /* PrephirencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrephirencesTests.swift; sourceTree = "<group>"; };
 		C4FF650F1B6B7C7300BFE4F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -154,7 +164,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4FF65101B6B7C7300BFE4F4 /* PrephirencesiOS.framework in Frameworks */,
+				C4FF65101B6B7C7300BFE4F4 /* Prephirences.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,7 +198,7 @@
 				07FC417B1BE670BF005F195C /* PrephirencesTvOS */,
 				C42114FF1AE7D8E200A09DD9 /* PrephirencesMacOSX */,
 				C45D313B1AE929F10034D1E3 /* Resources */,
-				C4FF650C1B6B7C7300BFE4F4 /* PrephirencesiOSTests */,
+				C4FF650C1B6B7C7300BFE4F4 /* PrephirencesTests */,
 				C42114B11AE7D0CB00A09DD9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -196,11 +206,11 @@
 		C42114B11AE7D0CB00A09DD9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C42114DB1AE7D84900A09DD9 /* PrephirencesiOS.framework */,
-				C42114FE1AE7D8E200A09DD9 /* PrephirencesMacOSX.framework */,
+				C42114DB1AE7D84900A09DD9 /* Prephirences.framework */,
+				C42114FE1AE7D8E200A09DD9 /* Prephirences.framework */,
 				C4FF650B1B6B7C7300BFE4F4 /* PrephirencesiOSTests.xctest */,
-				07FC415E1BE66517005F195C /* PrephirencesWatchos.framework */,
-				07FC417A1BE670BF005F195C /* PrephirencesTvOS.framework */,
+				07FC415E1BE66517005F195C /* Prephirences.framework */,
+				07FC417A1BE670BF005F195C /* Prephirences.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -216,10 +226,12 @@
 				C47F32531AED289400195CDA /* NSUbiquitousKeyValueStore+Prephirences.swift */,
 				C4BF51891B259C3900C4FF98 /* KeychainPreferences.swift */,
 				C477D9D71C03237F00486C13 /* ReflectingPreferences.swift */,
+				C4FA9B1C1C0F1730009CF439 /* NSBundle.swift */,
 				C4B3ED2B1B17165C00D807DA /* Prephirences.swift */,
 				C4B838411B284C15009D5B74 /* Preference.swift */,
 				07FC41711BE66A30005F195C /* PreferencesOperators.swift */,
 				C413F2B01BEB6753002816BE /* PreferencesController.swift */,
+				C4FA9B161C0F1551009CF439 /* Keys */,
 				C47F324F1AED1DD900195CDA /* UserDefaults */,
 				C47F324B1AED142100195CDA /* CoreData */,
 			);
@@ -288,13 +300,22 @@
 			path = UserDefaults;
 			sourceTree = "<group>";
 		};
-		C4FF650C1B6B7C7300BFE4F4 /* PrephirencesiOSTests */ = {
+		C4FA9B161C0F1551009CF439 /* Keys */ = {
 			isa = PBXGroup;
 			children = (
-				C4FF650D1B6B7C7300BFE4F4 /* PrephirencesiOSTests.swift */,
+				C4FA9B171C0F155F009CF439 /* PropertyListKeys.swift */,
+			);
+			path = Keys;
+			sourceTree = "<group>";
+		};
+		C4FF650C1B6B7C7300BFE4F4 /* PrephirencesTests */ = {
+			isa = PBXGroup;
+			children = (
+				C4FF650D1B6B7C7300BFE4F4 /* PrephirencesTests.swift */,
 				C4FF650F1B6B7C7300BFE4F4 /* Info.plist */,
 				C4A3F3141BA44DC700F40DB6 /* Test.plist */,
 			);
+			name = PrephirencesTests;
 			path = PrephirencesiOSTests;
 			sourceTree = "<group>";
 		};
@@ -351,7 +372,7 @@
 			);
 			name = PrephirencesWatchos;
 			productName = PrephirenceWatchos;
-			productReference = 07FC415E1BE66517005F195C /* PrephirencesWatchos.framework */;
+			productReference = 07FC415E1BE66517005F195C /* Prephirences.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		07FC41791BE670BF005F195C /* PrephirencesTvOS */ = {
@@ -369,7 +390,7 @@
 			);
 			name = PrephirencesTvOS;
 			productName = PrephirencesTvOS;
-			productReference = 07FC417A1BE670BF005F195C /* PrephirencesTvOS.framework */;
+			productReference = 07FC417A1BE670BF005F195C /* Prephirences.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		C42114DA1AE7D84900A09DD9 /* PrephirencesiOS */ = {
@@ -387,7 +408,7 @@
 			);
 			name = PrephirencesiOS;
 			productName = PrephirenceiOS;
-			productReference = C42114DB1AE7D84900A09DD9 /* PrephirencesiOS.framework */;
+			productReference = C42114DB1AE7D84900A09DD9 /* Prephirences.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		C42114FD1AE7D8E200A09DD9 /* PrephirencesMacOSX */ = {
@@ -405,7 +426,7 @@
 			);
 			name = PrephirencesMacOSX;
 			productName = PrephirenceMacOSX;
-			productReference = C42114FE1AE7D8E200A09DD9 /* PrephirencesMacOSX.framework */;
+			productReference = C42114FE1AE7D8E200A09DD9 /* Prephirences.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		C4FF650A1B6B7C7300BFE4F4 /* PrephirencesiOSTests */ = {
@@ -523,6 +544,7 @@
 				07FC41671BE6656C005F195C /* DictionaryPreferences.swift in Sources */,
 				07FC41681BE6656C005F195C /* PatternPreferences.swift in Sources */,
 				07FC41691BE6656C005F195C /* Plist.swift in Sources */,
+				C4FA9B1F1C0F1730009CF439 /* NSBundle.swift in Sources */,
 				07FC416A1BE6656C005F195C /* NSUserDefaults+Prephirences.swift in Sources */,
 				07FC416B1BE6656C005F195C /* NSUbiquitousKeyValueStore+Prephirences.swift in Sources */,
 				07FC416C1BE6656C005F195C /* KeychainPreferences.swift in Sources */,
@@ -530,6 +552,7 @@
 				07FC416D1BE6656C005F195C /* Prephirences.swift in Sources */,
 				07FC416E1BE6656C005F195C /* Preference.swift in Sources */,
 				07FC416F1BE6656C005F195C /* NSUserDefaults+Adds.swift in Sources */,
+				C4FA9B1A1C0F155F009CF439 /* PropertyListKeys.swift in Sources */,
 				07FC41741BE66A30005F195C /* PreferencesOperators.swift in Sources */,
 				C413F2B51BEB7CF6002816BE /* PreferencesController.swift in Sources */,
 				07FC41701BE6656C005F195C /* ManagedObjectPreferences.swift in Sources */,
@@ -544,6 +567,7 @@
 				07FC41831BE670D6005F195C /* DictionaryPreferences.swift in Sources */,
 				07FC41841BE670D6005F195C /* PatternPreferences.swift in Sources */,
 				07FC41851BE670D6005F195C /* Plist.swift in Sources */,
+				C4FA9B201C0F1730009CF439 /* NSBundle.swift in Sources */,
 				07FC41861BE670D6005F195C /* NSUserDefaults+Prephirences.swift in Sources */,
 				07FC41871BE670D6005F195C /* NSUbiquitousKeyValueStore+Prephirences.swift in Sources */,
 				07FC41881BE670D6005F195C /* KeychainPreferences.swift in Sources */,
@@ -551,6 +575,7 @@
 				07FC41891BE670D6005F195C /* Prephirences.swift in Sources */,
 				07FC418A1BE670D6005F195C /* Preference.swift in Sources */,
 				07FC418B1BE670D6005F195C /* PreferencesOperators.swift in Sources */,
+				C4FA9B1B1C0F155F009CF439 /* PropertyListKeys.swift in Sources */,
 				07FC418C1BE670D6005F195C /* NSUserDefaults+Adds.swift in Sources */,
 				C413F2B61BEB7CF6002816BE /* PreferencesController.swift in Sources */,
 				07FC418D1BE670D6005F195C /* ManagedObjectPreferences.swift in Sources */,
@@ -565,6 +590,7 @@
 				C42114F51AE7D86F00A09DD9 /* DictionaryPreferences.swift in Sources */,
 				C4EBB8441B15DE4D0075187B /* Plist.swift in Sources */,
 				C42114F71AE7D87600A09DD9 /* NSUserDefaults+Prephirences.swift in Sources */,
+				C4FA9B1D1C0F1730009CF439 /* NSBundle.swift in Sources */,
 				C4BF518A1B259C3900C4FF98 /* KeychainPreferences.swift in Sources */,
 				C4B838421B284C15009D5B74 /* Preference.swift in Sources */,
 				C42114F41AE7D86D00A09DD9 /* PreferencesType.swift in Sources */,
@@ -572,6 +598,7 @@
 				C47F324D1AED144500195CDA /* ManagedObjectPreferences.swift in Sources */,
 				C4B3ED2C1B17165C00D807DA /* Prephirences.swift in Sources */,
 				C47F32511AED1E3B00195CDA /* NSUserDefaults+Adds.swift in Sources */,
+				C4FA9B181C0F155F009CF439 /* PropertyListKeys.swift in Sources */,
 				07FC41721BE66A30005F195C /* PreferencesOperators.swift in Sources */,
 				C413F2B71BEB7CF6002816BE /* PreferencesController.swift in Sources */,
 				C46B4C171AEE432000B95F6B /* NSUbiquitousKeyValueStore+Prephirences.swift in Sources */,
@@ -586,7 +613,9 @@
 				C42115181AE7D91100A09DD9 /* DictionaryPreferences.swift in Sources */,
 				C421151A1AE7D91600A09DD9 /* NSUserDefaults+Prephirences.swift in Sources */,
 				C4EBB8451B15E1180075187B /* Plist.swift in Sources */,
+				C4FA9B1E1C0F1730009CF439 /* NSBundle.swift in Sources */,
 				C4F2A6861B147CCD0092017D /* PreferencesTabViewController.swift in Sources */,
+				C4FA9B191C0F155F009CF439 /* PropertyListKeys.swift in Sources */,
 				C42115171AE7D90E00A09DD9 /* PreferencesType.swift in Sources */,
 				C477D9D91C03237F00486C13 /* ReflectingPreferences.swift in Sources */,
 				07FC41731BE66A30005F195C /* PreferencesOperators.swift in Sources */,
@@ -604,7 +633,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4FF650E1B6B7C7300BFE4F4 /* PrephirencesiOSTests.swift in Sources */,
+				C4FF650E1B6B7C7300BFE4F4 /* PrephirencesTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -631,7 +660,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.PrephirencesWatchos;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Prephirences;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -651,7 +680,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.PrephirencesWatchos;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Prephirences;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -670,8 +699,8 @@
 				INFOPLIST_FILE = PrephirencesTvOS/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.PrephirencesTvOS;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.Prephirences;
+				PRODUCT_NAME = Prephirences;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -689,8 +718,8 @@
 				INFOPLIST_FILE = PrephirencesTvOS/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.PrephirencesTvOS;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.Prephirences;
+				PRODUCT_NAME = Prephirences;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -802,8 +831,8 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "tv.phimage.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.Prephirences;
+				PRODUCT_NAME = Prephirences;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -823,8 +852,8 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "tv.phimage.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.Prephirences;
+				PRODUCT_NAME = Prephirences;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -848,8 +877,8 @@
 				INFOPLIST_FILE = PrephirencesMacOSX/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "tv.phimage.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.Prephirences;
+				PRODUCT_NAME = Prephirences;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -866,8 +895,8 @@
 				INFOPLIST_FILE = PrephirencesMacOSX/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "tv.phimage.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.Prephirences;
+				PRODUCT_NAME = Prephirences;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;

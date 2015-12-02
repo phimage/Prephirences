@@ -1,12 +1,18 @@
 # Prephirences - Preϕrences
 
-[![Join the chat at https://gitter.im/phimage/Prephirences](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/phimage/Prephirences?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat
-            )](http://mit-license.org) [![Platform](http://img.shields.io/badge/platform-ios_osx-lightgrey.svg?style=flat
-             )](https://developer.apple.com/resources/) [![Language](http://img.shields.io/badge/language-swift-orange.svg?style=flat
-             )](https://developer.apple.com/swift) [![Issues](https://img.shields.io/github/issues/phimage/Prephirences.svg?style=flat
-           )](https://github.com/phimage/Prephirences/issues) [![Cocoapod](http://img.shields.io/cocoapods/v/Prephirences.svg?style=flat)](http://cocoadocs.org/docsets/Prephirences/) [![Build Status](https://travis-ci.org/phimage/Prephirences.svg)](https://travis-ci.org/phimage/Prephirences)
-
+            )](http://mit-license.org)
+[![Platform](http://img.shields.io/badge/platform-ios_osx_tvos-lightgrey.svg?style=flat
+             )](https://developer.apple.com/resources/)
+[![Language](http://img.shields.io/badge/language-swift-orange.svg?style=flat
+             )](https://developer.apple.com/swift)
+[![Issues](https://img.shields.io/github/issues/phimage/Prephirences.svg?style=flat
+           )](https://github.com/phimage/Prephirences/issues)
+[![Cocoapod](http://img.shields.io/cocoapods/v/Prephirences.svg?style=flat)](http://cocoadocs.org/docsets/Prephirences/)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![Build Status](https://travis-ci.org/phimage/Prephirences.svg)](https://travis-ci.org/phimage/Prephirences)
+[![Reference](https://www.versioneye.com/objective-c/prephirences/reference_badge.svg?style=flat)](https://www.versioneye.com/objective-c/prephirences/references)
+[![Join the chat at https://gitter.im/phimage/Prephirences](https://img.shields.io/badge/GITTER-join%20chat-00D06F.svg)](https://gitter.im/phimage/Prephirences?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 [<img align="left" src="logo.png" hspace="20">](#logo) Prephirences is a Swift library that provides useful protocols and convenience methods to manage application preferences, configurations and app-state.
 
@@ -16,9 +22,17 @@ if let enabled = userDefaults["enabled"] as? Bool {..}
 userDefaults["mycolorkey", .Archive] = UIColor.blueColor()
 ```
 
-Preferences could be user preferences `NSUserDefaults`, iCloud stored preferences `NSUbiquitousKeyValueStore`, key chain, file stored preferences (ex: *[plist](http://en.wikipedia.org/wiki/Property_list)*) or your own private application preferences - ie. any object which implement the protocol [PreferencesType](/Prephirences/PreferencesType.swift), which define key value store methods
+Preferences could be
+- User preferences `NSUserDefaults`
+- iCloud stored preferences `NSUbiquitousKeyValueStore`
+- [Keychain](https://en.wikipedia.org/wiki/Keychain_%28software%29) to store credential
+- Application information from `NSBundle`
+- File stored preferences (ex: *[plist](http://en.wikipedia.org/wiki/Property_list)*)
+- or your own private application preferences
 
-You can 'merge' multiples preferences and work with them transparently (see [Composing](#composing))
+ie. any object which implement the simple protocol [PreferencesType](/Prephirences/PreferencesType.swift), which define key value store methods.
+
+You can also combine multiples preferences and work with them transparently (see [Composing](#composing))
 
 ## Contents ##
 - [Usage](#usage)
@@ -28,6 +42,7 @@ You can 'merge' multiples preferences and work with them transparently (see [Com
   - [Archiving and transformation](#archiving-and-transformation)
   - [Some implementations](#some-implementations)
     - [NSUserDefaults](#nsuserdefaults)
+    - [NSBundle](#nsbundle)
     - [NSUbiquitousKeyValueStore](#nsubiquitouskeyvaluestore)
     - [Key Value Coding](#key-value-coding)
     - [Core Data](#core-data)
@@ -39,8 +54,9 @@ You can 'merge' multiples preferences and work with them transparently (see [Com
   - [Managing preferences instances](#managing-preferences-instances)
   - [Remote preferences](#remote-preferences)
 - [Setup](#setup)
+  - [Using Cocoapods](#using-cocoapods)
+  - [Using Carthage](#using-carthage)
   - [Using xcode project](#using-xcode-project)
-  - [Using cocoapods](#using-cocoapods)
 - [Licence](#licence)
 - [Logo](#logo)
 
@@ -183,8 +199,22 @@ userDefaults["mykey"] = "myvalue"
 userDefaults["mykey", .Archive] = UIColor.blueColor()
 ```
 
+### NSBundle ###
+All `NSBundle` implement `PreferencesType`, allowing to access Info.plist file.
+
+For instance the `NSBundle.mainBundle()` contains many useful informations about your application.
+
+Prephirences framework come with some predefined enums described in [apple documentations](https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Introduction/Introduction.html) and defined in `PropertyListKeys.swift`
+
+```swift
+let bundle = NSBundle.mainBundle()
+let applicationName = bundle[.CFBundleName] as? String
+```
+
 ### NSUbiquitousKeyValueStore ###
 To store in iCloud, `NSUbiquitousKeyValueStore` implement also `PreferencesType`
+
+See composing chapter to merge and synchronize iCloud preferences with other preferences.
 
 ### Key Value Coding ###
 #### Foundation classes
@@ -247,7 +277,8 @@ keychain.accessGroup = "AKEY.shared"
 ```
 
 ## Custom ##
-Create a custom object that conform to `PreferencesType` is easy.
+### Preferences
+Create a custom object that conform to `PreferencesType` is very easy.
 
 ```swift
 extension MyCustomPreferences: PreferencesType {
@@ -263,6 +294,28 @@ Only two functions are mandatory, others are automatically mapped but can be ove
 
 If you structure give a list of keys instead of a full dictionary, you can instead conform to `PreferencesAdapter` and implement `func keys() -> [String]`
 
+### Accessing using custom key
+Instead of using `string` or `string` constants, you can use an `enum` to define a list of keys
+
+First create your `enum` with `String` raw value
+```swift
+enum MyEnum: String {
+  case MyFirstKey
+  case MySecondKey
+}
+```
+Then add a subscript for your key
+```swift
+extension PreferencesType {
+    subscript(key: MyEnum) -> AnyObject? {
+        return self[key.rawValue]
+    }
+}
+```
+Finally access your information
+```swift
+if let firstValue = bundle[.MyFirstKey] {..}
+```
 
 ## Proxying preferences with prefix ##
 You can defined a subcategory of preferences prefixed with your own string like that
@@ -287,12 +340,12 @@ let myPreferences: CompositePreferences = [fromDico, fromFile, userDefaults]
 let myPreferences: MutableCompositePreferences = [fromDico, fromFile, userDefaults]
 ```
 
-You can access or modify this composite preferences like any PreferencesType.
+You can access or modify this composite preferences like  any `PreferencesType`.
 
 1. When accessing, first preferences that define a value for a specified key will respond
-2. When modifying, first mutable preferences will be affected by default  (you can set `MutableCompositePreferences` attribute `affectOnlyFirstMutable` to `false` to affect all mutable preferences)
+2. When modifying, first mutable preferences will be affected by default, but you can set `MutableCompositePreferences` attribute `affectOnlyFirstMutable` to `false` to affect all mutable preferences, allowing you for instance to duplicate preferences in iCloud
 
-The main goal is to define read-only preferences for your app (in code or files) and some mutable preferences (like `NSUserDefaults`, `NSUbiquitousKeyValueStore`). You can then access to one preference value without care about the origin
+The main goal is to define read-only preferences for your app (in code or files) and some mutable preferences (like `NSUserDefaults`, `NSUbiquitousKeyValueStore`). You can then access to one preference value without care about the origin.
 
 ## Managing preferences instances ##
 If you want to use Prephirences into a framework or want to get a `Preferences` without adding dependencies between classes, you can register any `PreferencesType` into `Prephirences`
@@ -320,14 +373,35 @@ If you use [Alamofire](https://github.com/Alamofire/Alamofire), [Alamofire-Preph
 
 # Setup #
 
-## Using [cocoapods](http://cocoapods.org/) ##
+## Using Cocoapods ##
+[CocoaPods](https://cocoapods.org/) is a centralized dependency manager for
+Objective-C and Swift. Go [here](https://guides.cocoapods.org/using/index.html)
+to learn more.
 
-Add `pod 'Prephirences'` to your `Podfile` and run `pod install`.
+1. Add the project to your [Podfile](https://guides.cocoapods.org/using/the-podfile.html).
 
-*Add `use_frameworks!` to the end of the `Podfile`.*
+    ```ruby
+    use_frameworks!
+
+    pod 'Prephirences'
+    ```
+
+2. Run `pod install` and open the `.xcworkspace` file to launch Xcode.
 
 ### For core data ###
 Add `pod 'Prephirences/CoreData'`
+
+## Using Carthage ##
+[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager for Objective-C and Swift.
+
+1. Add the project to your [Cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile).
+
+    ```
+    github "phimage/Prephirences"
+    ```
+
+2. Run `carthage update` and follow [the additional steps](https://github.com/Carthage/Carthage#getting-started)
+   in order to add Prephirences to your project.
 
 ## Using xcode project ##
 

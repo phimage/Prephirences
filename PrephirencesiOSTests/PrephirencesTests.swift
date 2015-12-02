@@ -1,6 +1,6 @@
 //
-//  PrephirencesiOSTests.swift
-//  PrephirencesiOSTests
+//  PrephirencesTests.swift
+//  PrephirencesTests
 //
 //  Created by phimage on 05/06/15.
 //  Copyright (c) 2015 phimage. All rights reserved.
@@ -8,16 +8,15 @@
 
 import Foundation
 import XCTest
+import Prephirences
 #if os(iOS)
-    import PrephirencesiOS
     import UIKit
 #endif
 #if os(OSX)
-    import PrephirencesMacOSX
     import AppKit
 #endif
 
-class PrephirencesiOSTests: XCTestCase {
+class PrephirencesTests: XCTestCase {
     
     let mykey = "key"
     let myvalue = "value"
@@ -356,6 +355,14 @@ class PrephirencesiOSTests: XCTestCase {
         pref.color = "blue"
         XCTAssertEqual(pref.color, pref["color"] as? String)
 
+    }
+    
+    func testBundle() {
+        let bundle = NSBundle(forClass: PrephirencesTests.self)
+        
+        let applicationName = bundle[.CFBundleName] as? String
+        
+        XCTAssertNotNil(applicationName)
     }
 
     
