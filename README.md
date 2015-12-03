@@ -36,28 +36,16 @@ You can also combine multiples preferences and work with them transparently (see
 
 ## Contents ##
 - [Usage](#usage)
-  - [Creating](#creating)
-  - [Accessing](#accessing)
-  - [Modifying](#modifying)
-  - [Archiving and transformation](#archiving-and-transformation)
+  - [Creating](#creating) • [Accessing](#accessing) • [Modifying](#modifying) • [Archiving and transformation](#archiving-and-transformation)
   - [Some implementations](#some-implementations)
-    - [NSUserDefaults](#nsuserdefaults)
-    - [NSBundle](#nsbundle)
-    - [NSUbiquitousKeyValueStore](#nsubiquitouskeyvaluestore)
-    - [Key Value Coding](#key-value-coding)
-    - [Core Data](#core-data)
-    - [Plist](#plist)
-    - [Keychain](#keychain)
-  - [Custom](#custom)
+    - [NSUserDefaults](#nsuserdefaults) • [NSBundle](#nsbundle) • [NSUbiquitousKeyValueStore](#nsubiquitouskeyvaluestore) • [Key Value Coding](#key-value-coding) • [Core Data](#core-data) • [Plist](#plist) • [Keychain](#keychain)
+  - [Custom implementations](#custom)
   - [Proxying preferences with prefix](#proxying-preferences-with-prefix)
   - [Composing](#composing)
   - [Managing preferences instances](#managing-preferences-instances)
   - [Remote preferences](#remote-preferences)
 - [Setup](#setup)
-  - [Using Cocoapods](#using-cocoapods)
-  - [Using Carthage](#using-carthage)
-  - [Using xcode project](#using-xcode-project)
-- [Licence](#licence)
+  - [Using Cocoapods](#using-cocoapods) • [Using Carthage](#using-carthage) • [Using xcode project](#using-xcode-project)
 - [Logo](#logo)
 
 # Usage #
@@ -410,5 +398,3 @@ Add `pod 'Prephirences/CoreData'`
 
 # Logo #
 By [kodlian](http://www.kodlian.com/)
-## Why a logo?
-I like to see an image for each of my projects when I browse them with [SourceTree](http://www.sourcetreeapp.com/)
