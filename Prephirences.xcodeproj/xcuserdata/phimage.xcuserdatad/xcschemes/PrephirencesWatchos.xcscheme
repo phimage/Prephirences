@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "07FC415D1BE66517005F195C"
-               BuildableName = "PrephirencesWatchos.framework"
+               BuildableName = "Prephirences.framework"
                BlueprintName = "PrephirencesWatchos"
                ReferencedContainer = "container:Prephirences.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "07FC415D1BE66517005F195C"
-            BuildableName = "PrephirencesWatchos.framework"
+            BuildableName = "Prephirences.framework"
             BlueprintName = "PrephirencesWatchos"
             ReferencedContainer = "container:Prephirences.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "07FC415D1BE66517005F195C"
-            BuildableName = "PrephirencesWatchos.framework"
+            BuildableName = "Prephirences.framework"
             BlueprintName = "PrephirencesWatchos"
             ReferencedContainer = "container:Prephirences.xcodeproj">
          </BuildableReference>

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C42114FD1AE7D8E200A09DD9"
-               BuildableName = "PrephirencesMacOSX.framework"
+               BuildableName = "Prephirences.framework"
                BlueprintName = "PrephirencesMacOSX"
                ReferencedContainer = "container:Prephirences.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C42114FD1AE7D8E200A09DD9"
-            BuildableName = "PrephirencesMacOSX.framework"
+            BuildableName = "Prephirences.framework"
             BlueprintName = "PrephirencesMacOSX"
             ReferencedContainer = "container:Prephirences.xcodeproj">
          </BuildableReference>
@@ -55,7 +55,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C42114FD1AE7D8E200A09DD9"
-            BuildableName = "PrephirencesMacOSX.framework"
+            BuildableName = "Prephirences.framework"
             BlueprintName = "PrephirencesMacOSX"
             ReferencedContainer = "container:Prephirences.xcodeproj">
          </BuildableReference>
@@ -73,7 +73,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C42114FD1AE7D8E200A09DD9"
-            BuildableName = "PrephirencesMacOSX.framework"
+            BuildableName = "Prephirences.framework"
             BlueprintName = "PrephirencesMacOSX"
             ReferencedContainer = "container:Prephirences.xcodeproj">
          </BuildableReference>

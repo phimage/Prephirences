@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C42114DA1AE7D84900A09DD9"
-               BuildableName = "PrephirencesiOS.framework"
+               BuildableName = "Prephirences.framework"
                BlueprintName = "PrephirencesiOS"
                ReferencedContainer = "container:Prephirences.xcodeproj">
             </BuildableReference>
@@ -44,7 +44,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C42114DA1AE7D84900A09DD9"
-            BuildableName = "PrephirencesiOS.framework"
+            BuildableName = "Prephirences.framework"
             BlueprintName = "PrephirencesiOS"
             ReferencedContainer = "container:Prephirences.xcodeproj">
          </BuildableReference>
@@ -66,7 +66,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C42114DA1AE7D84900A09DD9"
-            BuildableName = "PrephirencesiOS.framework"
+            BuildableName = "Prephirences.framework"
             BlueprintName = "PrephirencesiOS"
             ReferencedContainer = "container:Prephirences.xcodeproj">
          </BuildableReference>
@@ -84,7 +84,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C42114DA1AE7D84900A09DD9"
-            BuildableName = "PrephirencesiOS.framework"
+            BuildableName = "Prephirences.framework"
             BlueprintName = "PrephirencesiOS"
             ReferencedContainer = "container:Prephirences.xcodeproj">
          </BuildableReference>
