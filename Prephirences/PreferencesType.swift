@@ -27,11 +27,13 @@ SOFTWARE.
 
 import Foundation
 
+// MARK: - Preferences
 public protocol PreferencesType {
+
     func objectForKey(key: String) -> AnyObject?
     func dictionary() -> [String : AnyObject]
 
-    // optional methods
+    // MARK: Optional methods
     subscript(key: String) -> AnyObject? {get}
     func hasObjectForKey(key: String) -> Bool
     
@@ -39,12 +41,13 @@ public protocol PreferencesType {
     func stringForKey(key: String) -> String?
     func arrayForKey(key: String) -> [AnyObject]?
     func dictionaryForKey(key: String) -> [String : AnyObject]?
-    func dataForKey(key: String) -> NSData?
     func stringArrayForKey(key: String) -> [String]?
     func integerForKey(key: String) -> Int
     func floatForKey(key: String) -> Float
     func doubleForKey(key: String) -> Double
     func boolForKey(key: String) -> Bool
+
+    func dataForKey(key: String) -> NSData?
     func URLForKey(key: String) -> NSURL?
 
     func unarchiveObjectForKey(key: String) -> AnyObject?
@@ -52,13 +55,16 @@ public protocol PreferencesType {
 
 }
 
+// MARK: - Mutable Preferences
 public protocol MutablePreferencesType: PreferencesType {
-
-    subscript(key: String) -> AnyObject? {get set}
 
     func setObject(value: AnyObject?, forKey key: String)
     func removeObjectForKey(key: String)
-    
+
+    // MARK: Optional methods
+
+    subscript(key: String) -> AnyObject? {get set}
+
     func setInteger(value: Int, forKey key: String)
     func setFloat(value: Float, forKey key: String)
     func setDouble(value: Double, forKey key: String)
@@ -75,7 +81,7 @@ public protocol MutablePreferencesType: PreferencesType {
     func immutableProxy() -> PreferencesType
 }
 
-// MARK: - default implementations
+// MARK: - Default implementations for optional methods
 public extension PreferencesType {
 
     subscript(key: String) -> AnyObject? {
@@ -282,3 +288,5 @@ public extension MutablePreferencesType {
 // MARK: - private
 // dictionary append
 internal func +=<K, V> (inout left: [K : V], right: [K : V]) { for (k, v) in right { left[k] = v } }
+
+

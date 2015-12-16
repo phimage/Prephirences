@@ -343,8 +343,7 @@ class PrephirencesTests: XCTestCase {
         XCTAssertEqual(value2, unarchived2)
         
     }
-    
-    
+
     func testReflectingPreferences(){
         var pref = PrefStruc()
 
@@ -355,8 +354,13 @@ class PrephirencesTests: XCTestCase {
         pref.color = "blue"
         XCTAssertEqual(pref.color, pref["color"] as? String)
 
+        let dico = pref.dictionary()
+        XCTAssertEqual(dico.count, 3)
+        for key in ["color","age","enabled"] {
+            XCTAssertNotNil(dico[key])
+        }
     }
-    
+
     func testBundle() {
         let bundle = NSBundle(forClass: PrephirencesTests.self)
         
@@ -365,6 +369,52 @@ class PrephirencesTests: XCTestCase {
         XCTAssertNotNil(applicationName)
     }
 
+    func testNSHTTPCookieStorage() {
+        let storage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
+        let key = "name"
+        let value = "value"
+
+        var cookieProperties = [String: AnyObject]()
+        cookieProperties[NSHTTPCookieName] = key
+        cookieProperties[NSHTTPCookieValue] = value
+        cookieProperties[NSHTTPCookieDomain] = "domain"
+        cookieProperties[NSHTTPCookiePath] = "cookie.path"
+        cookieProperties[NSHTTPCookieVersion] = NSNumber(integer: 1)
+        cookieProperties[NSHTTPCookieExpires] = NSDate().dateByAddingTimeInterval(31536000)
+        guard let newCookie = NSHTTPCookie(properties: cookieProperties) else {
+            XCTFail("failed to create cookie")
+            return
+        }
+
+        storage.setCookie(newCookie)
+
+        let dico = storage.dictionary()
+        XCTAssertFalse(dico.isEmpty)
+
+        XCTAssertEqual(storage[key] as? String, value)
+    }
+
+    func testCollectionPreference () {
+        struct KeyValue {
+            var key: String
+            var value: AnyObject
+        }
+
+        let collection = [
+            KeyValue(key:"key", value: "value"),
+            KeyValue(key:"key2", value: "value2")
+        ]
+
+        let pref = CollectionPreferencesAdapter(collection: collection, mapKey: {$0.key}, mapValue: {$0.value})
+
+        let dico = pref.dictionary()
+        XCTAssertEqual(dico.count, collection.count)
+
+
+        XCTAssertEqual(pref["key"] as? String, "value")
+        XCTAssertEqual(pref["key2"] as? String, "value2")
+        XCTAssertNil(pref["unusedkey"])
+    }
     
 }
 

@@ -1,5 +1,5 @@
 //
-//  ReflectingPreferences.swift
+//  NSHTTPCookieStorage+Prephirences.swift
 //  Prephirences
 /*
 The MIT License (MIT)
@@ -27,30 +27,20 @@ SOFTWARE.
 
 import Foundation
 
-public protocol ReflectingPreferences: PreferencesType {
-}
-
-extension ReflectingPreferences {
+extension NSHTTPCookieStorage: PreferencesType {
 
     public func objectForKey(key: String) -> AnyObject? {
-        let mirror = Mirror(reflecting: self)
-        // guard let style = mirror.displayStyle where style == .Struct || style == .Class else { return nil }
-
-        return mirror.children.find{$0.label == key}?.value as? AnyObject
+        guard let cookies = self.cookies else {
+            return nil
+        }
+        return cookies.find{$0.name == key}?.value as? AnyObject
     }
 
     public func dictionary() -> [String : AnyObject] {
-        let mirror = Mirror(reflecting: self)
-        // guard let style = mirror.displayStyle where style == .Struct || style == .Class else { return [String : AnyObject]() }
-
-        let transform: (Mirror.Child) -> (String,AnyObject)? = { child in
-            if let label = child.label, value = child.value as? AnyObject {
-                return (label, value)
-            }
-            return nil
+        guard let cookies = self.cookies else {
+            return [:]
         }
-
-        return mirror.children.dictionary(transform)
+        return cookies.dictionary{($0.name, $0.value)}
     }
-    
+
 }

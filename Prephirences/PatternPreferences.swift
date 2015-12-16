@@ -442,3 +442,62 @@ extension MutableKVCPreferences: MutablePreferencesType {
     }
 
 }
+
+// MARK: - Collection
+// Adapter for collection to conform to PreferencesType
+// using two closure to get key and value from an object
+public class CollectionPreferencesAdapter<C: CollectionType> {
+
+    let collection: C
+    let mapKey: C.Generator.Element -> String
+    let mapValue: C.Generator.Element -> AnyObject
+
+    public init(collection: C,
+        mapKey: C.Generator.Element -> String,
+        mapValue: C.Generator.Element -> AnyObject
+        ) {
+            self.collection = collection
+            self.mapKey = mapKey
+            self.mapValue = mapValue
+    }
+
+}
+
+extension CollectionPreferencesAdapter: PreferencesType {
+
+    public func objectForKey(key: String) -> AnyObject? {
+        if let object = collection.find({ mapKey($0) == key }){
+            return mapValue(object)
+        }
+        return nil
+    }
+
+    public func dictionary() -> [String : AnyObject] {
+        return collection.dictionary{ ( mapKey($0), mapValue($0) ) }
+    }
+
+}
+
+
+extension CollectionType {
+
+    func mapFilterNil<T>(@noescape transform: (Self.Generator.Element) -> T?) -> [T] {
+        return self.map(transform).filter{ $0 != nil }.map{ $0! }
+    }
+
+    func dictionary<K, V>(@noescape transform: (Self.Generator.Element) throws -> (key: K, value: V)?)
+        rethrows -> Dictionary<K, V>
+    {
+        return try self.reduce([:]) { (var dict, e) in
+            if let (key, value) = try transform(e)
+            {
+                dict[key] = value
+            }
+            return dict
+        }
+    }
+
+    func find(@noescape predicate: (Self.Generator.Element) throws -> Bool) rethrows -> Self.Generator.Element? {
+        return try indexOf(predicate).map({ self[$0] })
+    }
+}
