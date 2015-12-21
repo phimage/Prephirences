@@ -280,7 +280,10 @@ extension MyCustomPreferences: PreferencesType {
 ```
 Only two functions are mandatory, others are automatically mapped but can be overrided for performance or readability.
 
-If you structure give a list of keys instead of a full dictionary, you can instead conform to `PreferencesAdapter` and implement `func keys() -> [String]`
+- In the same way you can implement `MutablePreferencesType` with `setObject` and `removeObjectForKey` methods.
+- If you structure give a list of keys instead of a full dictionary, you can instead conform to `PreferencesAdapter` and implement `func keys() -> [String]`.
+- You have a collection of object with each object could define a key and a value take a look at `CollectionPreferencesAdapter` or see `NSHTTPCookieStorage` implementation.
+
 
 ### Accessing using custom key
 Instead of using `string` or `string` constants, you can use an `enum` to define a list of keys
@@ -304,6 +307,7 @@ Finally access your information
 ```swift
 if let firstValue = bundle[.MyFirstKey] {..}
 ```
+You can do the same with `MutablePreferencesType`
 
 ## Proxying preferences with prefix ##
 You can defined a subcategory of preferences prefixed with your own string like that
