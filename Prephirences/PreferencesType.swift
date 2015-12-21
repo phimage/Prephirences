@@ -147,6 +147,19 @@ public extension MutablePreferencesType {
         }
     }
 
+    func setInteger(value: Int, forKey key: String) {
+        self.setObject(value, forKey: key)
+    }
+    func setFloat(value: Float, forKey key: String) {
+        self.setObject(value, forKey: key)
+    }
+    func setDouble(value: Double, forKey key: String) {
+        self.setObject(value, forKey: key)
+    }
+    func setBool(value: Bool, forKey key: String) {
+        self.setObject(value, forKey: key)
+    }
+
     public func preferenceForKey<T>(key: String) -> MutablePreference<T> {
         return MutablePreference<T>(preferences: self, key: key)
     }
@@ -176,7 +189,7 @@ public extension MutablePreferencesType {
     public func setObjectToArchive(value: AnyObject?, forKey key: String) {
         Prephirences.archiveObject(value, preferences: self, forKey: key)
     }
-    
+
     public func setURL(url: NSURL?, forKey key: String){
         self.setObject(url, forKey: key)
     }

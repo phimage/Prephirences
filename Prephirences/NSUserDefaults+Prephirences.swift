@@ -68,3 +68,34 @@ extension NSUserDefaults: MutablePreferencesType {
     }
     #endif
 }
+
+
+#if os(OSX)
+    import AppKit
+
+    extension NSUserDefaultsController: PreferencesType {
+
+        public func objectForKey(key: String) -> AnyObject? {
+            return self.values.valueForKey(key)
+        }
+
+        public func dictionary() -> [String : AnyObject] {
+            let keys = Array(self.defaults.dictionary().keys)
+            return self.values.dictionaryWithValuesForKeys(keys)
+        }
+
+    }
+
+    extension NSUserDefaultsController: MutablePreferencesType {
+
+        public func setObject(value: AnyObject?, forKey key: String) {
+            return self.values.setValue(value, forKeyPath: key)
+        }
+
+        public func removeObjectForKey(key: String) {
+            self.values.setNilValueForKey(key)
+        }
+    }
+#endif
+
+
