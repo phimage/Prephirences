@@ -44,6 +44,7 @@ You can also combine multiples preferences and work with them transparently (see
   - [Composing](#composing)
   - [Managing preferences instances](#managing-preferences-instances)
   - [Remote preferences](#remote-preferences)
+  - [Encrypt your preferences](#encrypt-your-preferences)
 - [Setup](#setup)
   - [Using Cocoapods](#using-cocoapods) • [Using Carthage](#using-carthage) • [Using xcode project](#using-xcode-project)
 - [Logo](#logo)
@@ -362,6 +363,9 @@ if let pref = Prephirences.instances()["myKey"] {..}
 By using remote preferences you can remotely control the behavior of your app.
 
 If you use [Alamofire](https://github.com/Alamofire/Alamofire), [Alamofire-Prephirences](https://github.com/phimage/Alamofire-Prephirences) will help you to load preferences from remote JSON or Plist
+
+## Encrypt your preferences ##
+You can use framework [CryptoPrephirences](https://github.com/phimage/CryptoPrephirences) to encrypt/decrypt your preferences using cipher from [CryptoSwift](https://github.com/krzyzanowskim/CryptoSwift)
 
 # Setup #
 

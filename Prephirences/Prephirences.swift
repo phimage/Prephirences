@@ -79,22 +79,29 @@ public class Prephirences {
     }
     
     // MARK: archive/unarchive
-    
     public static func unarchiveObject(preferences: PreferencesType, forKey key: String) -> AnyObject? {
         if let data = preferences.dataForKey(key) {
-            return NSKeyedUnarchiver.unarchiveObjectWithData(data)
+            return unarchive(data)
         }
         return nil
     }
     
     public static func archiveObject(value: AnyObject?, preferences: MutablePreferencesType, forKey key: String){
         if let toArchive: AnyObject = value {
-            let data = NSKeyedArchiver.archivedDataWithRootObject(toArchive)
+            let data = archive(toArchive)
             preferences.setObject(data, forKey: key)
         }
         else {
             preferences.removeObjectForKey(key)
         }
+    }
+    
+    public static func unarchive(data: NSData) -> AnyObject? {
+        return NSKeyedUnarchiver.unarchiveObjectWithData(data)
+    }
+    
+    public static func archive(object: AnyObject) -> NSData {
+        return NSKeyedArchiver.archivedDataWithRootObject(object)
     }
 
     // MARK: deprecated
