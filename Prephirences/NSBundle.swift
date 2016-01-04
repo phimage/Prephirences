@@ -35,7 +35,7 @@ extension NSBundle: PreferencesType {
     }
     
     public func dictionary() -> [String : AnyObject] {
-        return NSBundle.mainBundle().infoDictionary ?? [String : AnyObject]()
+        return self.infoDictionary ?? [String : AnyObject]()
     }
     
 }

@@ -38,7 +38,7 @@ You can also combine multiples preferences and work with them transparently (see
 - [Usage](#usage)
   - [Creating](#creating) • [Accessing](#accessing) • [Modifying](#modifying) • [Archiving and transformation](#archiving-and-transformation)
   - [Some implementations](#some-implementations)
-    - [NSUserDefaults](#nsuserdefaults) • [NSBundle](#nsbundle) • [NSUbiquitousKeyValueStore](#nsubiquitouskeyvaluestore) • [Key Value Coding](#key-value-coding) • [Core Data](#core-data) • [Plist](#plist) • [Keychain](#keychain)
+    - [NSUserDefaults](#nsuserdefaults) • [NSBundle](#nsbundle) • [NSUbiquitousKeyValueStore](#nsubiquitouskeyvaluestore) • [Key Value Coding](#key-value-coding) • [Core Data](#core-data) • [Plist](#plist) • [Keychain](#keychain) • [NSCoder](#nscoder)
   - [Custom implementations](#custom)
   - [Proxying preferences with prefix](#proxying-preferences-with-prefix)
   - [Composing](#composing)
@@ -263,6 +263,25 @@ keychain.accessibility = .AccessibleAfterFirstUnlock
 **Sharing Keychain items**
 ```swift
 keychain.accessGroup = "AKEY.shared"
+```
+
+### NSCoder ###
+`NSCoder` is partially supported (`dictionnary` is not available)
+
+When you implementing [NSCoding](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Protocols/NSCoding_Protocol/) you can do
+```swift
+init?(coder decoder: NSCoder) {
+  self.init()
+  self.intVar = decoder["intVarKey"] as? Int ?? 0
+  // or self.intVar = decoder.integerForKey("intVar")
+  self.stringVar = decoder["stringVarKey"] as? String ?? ""
+}
+
+func encodeWithCoder(coder: NSCoder) {
+  coder["intVarKey"] = self.intVar
+  coder["stringVarKey"] = self.stringVar
+}
+
 ```
 
 ## Custom ##
