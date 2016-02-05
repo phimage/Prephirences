@@ -175,7 +175,7 @@ public extension MutablePreferencesType {
     }
 
     public func setObjects(objects: [AnyObject], forKeys keys: [String]) {
-        for var keyIndex = 0; keyIndex < keys.count; keyIndex++ {
+        for keyIndex in 0 ..< keys.count {
             self.setObject(objects[keyIndex], forKey: keys [keyIndex])
         }
     }

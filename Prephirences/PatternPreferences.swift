@@ -386,7 +386,7 @@ public class KVCPreferences: PreferencesAdapter {
         var count: UInt32 = 0
         // FIXME: not recursive?
         let properties = class_copyPropertyList(self.object.classForCoder, &count)
-        for var i = 0; i < Int(count); ++i {
+        for i in 0 ..< Int(count) {
             let property: objc_property_t = properties[i]
             let name: String = String.fromCString(property_getName(property))!
             names.append(name)

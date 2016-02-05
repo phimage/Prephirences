@@ -37,7 +37,7 @@ public func += <L:MutablePreferencesType> (inout left: L, right: Dictionary<Stri
     for (k, v) in right { left[k] = v }
 }
 
-public func += <L:MutablePreferencesType> (inout left: L, right: (String, AnyObject)...) {
+public func +=<L:MutablePreferencesType> (inout left: L, right: [(String, AnyObject)]) {
     for (k, v) in right { left[k] = v }
 }
 
@@ -46,7 +46,7 @@ associativity right
 precedence 90
 }
 
-public func ?= <L:MutablePreferencesType> (inout left: L, right: (String, AnyObject)...) {
+public func ?= <L:MutablePreferencesType> (inout left: L, right: [(String, AnyObject)]) {
     for (k, v) in right {
         if !left.hasObjectForKey(k) {
           left[k] = v
