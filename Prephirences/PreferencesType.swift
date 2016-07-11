@@ -296,7 +296,30 @@ public extension MutablePreferencesType {
 
 }
 
+// MARK: RawRepresentable
 
+public extension PreferencesType {
+    
+    public func unraw<T: RawRepresentable>(key: String) -> T? {
+        if let rawValue = self.objectForKey(key) as? T.RawValue {
+            return T(rawValue: rawValue)
+        }
+        return nil
+    }
+    
+}
+
+public extension MutablePreferencesType {
+    
+    public func raw<T: RawRepresentable/* where T.RawValue: AnyObject*/>(key: String, _ value: T?) {
+        if let value = value, rawValue = value.rawValue as? AnyObject {
+            self.setObject(rawValue, forKey: key)
+        } else {
+            remove(key)
+        }
+    }
+
+}
 
 // MARK: - private
 // dictionary append
