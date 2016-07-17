@@ -485,16 +485,15 @@ extension CollectionType {
         return self.map(transform).filter{ $0 != nil }.map{ $0! }
     }
 
-    func dictionary<K, V>(@noescape transform: (Self.Generator.Element) throws -> (key: K, value: V)?)
-        rethrows -> Dictionary<K, V>
-    {
-        return try self.reduce([:]) { (var dict, e) in
+    func dictionary<K, V>(@noescape transform: (Self.Generator.Element) throws -> (key: K, value: V)?) rethrows -> Dictionary<K, V> {
+        var dict: Dictionary<K, V> = [:]
+        for e in self {
             if let (key, value) = try transform(e)
             {
                 dict[key] = value
             }
-            return dict
         }
+        return dict
     }
 
     func find(@noescape predicate: (Self.Generator.Element) throws -> Bool) rethrows -> Self.Generator.Element? {
