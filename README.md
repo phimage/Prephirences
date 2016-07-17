@@ -36,7 +36,7 @@ You can also combine multiples preferences and work with them transparently (see
 
 ## Contents ##
 - [Usage](#usage)
-  - [Creating](#creating) • [Accessing](#accessing) • [Modifying](#modifying) • [Archiving and transformation](#archiving-and-transformation)
+  - [Creating](#creating) • [Accessing](#accessing) • [Modifying](#modifying) • [Transformation and Archiving](#transformation-and-archiving)
   - [Some implementations](#some-implementations)
     - [NSUserDefaults](#nsuserdefaults) • [NSBundle](#nsbundle) • [NSUbiquitousKeyValueStore](#nsubiquitouskeyvaluestore) • [Key Value Coding](#key-value-coding) • [Core Data](#core-data) • [Plist](#plist) • [Keychain](#keychain) • [NSCoder](#nscoder)
   - [Custom implementations](#custom)
@@ -141,7 +141,37 @@ let intFromBoolPref : MutablePreference<Int> = boolPref.transform { value in
   return (value ?? false) ? 1:0
 }
 ```
-## Archiving and transformation ##
+## Transformation and archiving ##
+Before storing or accessing the value, transformation could be applied, which conform to protocol `PreferenceTransformation`.
+
+This allow to archive, to change type, return default value if nil and many more.
+
+You can get and set value using substrict
+```swift
+userDefaults["aKey", myTransformation] = myObject
+
+if let object = userDefaults["aKey", myTransformation] {...}
+```
+
+If you extract one preference, use `transformation` property to setup the transformation
+```swift
+var aPref: MutablePreference<MyObject> = userDefaults <| "aKey"
+aPref.transformation = myTransformation
+```
+or you can use some utility functions to specify a default value when the stored value match a condition
+
+```swift
+public var intValueMin10: MutablePreference<Int> {
+  get {
+    return userDefaults.preferenceForKey("intKey")
+          .whenNil(use: 100)
+          .ensure(when: lessThan100, use: 100)
+  }
+  set {..}
+}
+```
+
+### Archiving
 Archiving is particularly useful with `NSUserDefaults` because `NSUserDefaults` can't store all type of objects.
 The following functions could help by transforming the value into an other type
 
@@ -158,10 +188,11 @@ if let color = userDefaults["colorKey", .Archive]  as? UIColor {..}
 If you extract one preference, use `transformation` property to setup archive mode
 ```swift
 var colorPref: MutablePreference<UIColor> = userDefaults <| "colorKey"
-colorPref.transformation = .Archive
+colorPref.transformation = TransformationKey.Archive
 colorPref.value = UIColor.redColor()
 if let color = colorPref.value as? UIColor {..}
 ```
+### NSValueTransformer
 You can also apply for all objects type an [`NSValueTransformer`](https://developer.apple.com/library/prerelease/ios/documentation/Cocoa/Reference/Foundation/Classes/NSValueTransformer_Class/index.html), to transform into JSON for instance
 ```swift
 userDefaults["colorKey", myValueTransformerToJson] = myComplexObject
@@ -169,6 +200,18 @@ userDefaults["colorKey", myValueTransformerToJson] = myComplexObject
 if let object = userDefaults["colorKey", myValueTransformerToJson] {...}
 ```
 :warning: `allowsReverseTransformation` must return `true`
+
+### RawRepresentable
+
+For `RawRepresentable` objects like `enum` you can use the computed attribute `preferenceTransformation` as `transformation`
+```swift
+enum PrefEnum: String {
+    case One, Two, Three
+}
+var pref: MutablePreference<PrefEnum> = preferences <| "enumKey"
+pref.transformation = PrefEnum.preferenceTransformation
+pref.value = PrefEnum.Two
+```
 
 ## Some implementations ##
 ### NSUserDefaults ###
@@ -284,7 +327,7 @@ func encodeWithCoder(coder: NSCoder) {
 
 ```
 
-## Custom ##
+## Custom implementations ##
 ### Preferences
 Create a custom object that conform to `PreferencesType` is very easy.
 

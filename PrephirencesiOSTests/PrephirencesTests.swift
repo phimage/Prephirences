@@ -260,7 +260,7 @@ class PrephirencesTests: XCTestCase {
         }
         
         let colorPref: MutablePreference<UIColor> = preferences <| key
-        colorPref.transformation = .Archive
+        colorPref.transformationKey = .Archive
         
         guard let _ = colorPref.value else {
             XCTFail("Cannot unarchive \(key)")
@@ -276,15 +276,21 @@ class PrephirencesTests: XCTestCase {
         }
         XCTAssertEqual(value2, unarchived2)
         
+        
+        let valueDefault = UIColor.yellowColor()
+        let whenNil = colorPref.whenNil(use: valueDefault)
+        colorPref.value = nil
+        XCTAssertEqual(valueDefault, whenNil.value)
+        
     }
     
-    func testClosure() {
+   func testClosure() {
         
         var preferences: MutableDictionaryPreferences = [mykey: myvalue, "key2": "value2"]
         
         let colorDico: [String: UIColor] = ["blue": UIColor.blueColor(), "red": UIColor.redColor()]
         
-        func transform(obj: AnyObject?) -> AnyObject? {
+        func transform(obj: Any?) -> AnyObject? {
             if let color = obj as? UIColor {
                 
                 for (name, c) in colorDico {
@@ -295,20 +301,19 @@ class PrephirencesTests: XCTestCase {
             }
             return nil
         }
-        func revert(obj: AnyObject?) -> AnyObject? {
+        func revert(obj: AnyObject?) -> Any? {
             if let name = obj as? String {
                 return colorDico[name]
             }
             return nil
         }
-        let tuple = (transform: transform, revert: revert)
         
         let value = UIColor.blueColor()
         let key = "color"
-        preferences[key, .ClosureTuple(tuple)] = value
+        preferences[key, .ClosureTuple(transform: transform, revert: revert)] = value
         
         
-        guard let unarchived = preferences[key, .ClosureTuple(tuple)] as? UIColor else {
+        guard let unarchived = preferences[key, .ClosureTuple(transform: transform, revert: revert)] as? UIColor else {
             XCTFail("Cannot unarchive \(key)")
             return
         }
@@ -326,7 +331,7 @@ class PrephirencesTests: XCTestCase {
         }
         
         let colorPref: MutablePreference<UIColor> = preferences <| key
-        colorPref.transformation = .ClosureTuple(tuple)
+        colorPref.transformationKey = .ClosureTuple(transform: transform, revert: revert)
         
         guard let _ = colorPref.value else {
             XCTFail("Cannot unarchive \(key)")
@@ -336,7 +341,7 @@ class PrephirencesTests: XCTestCase {
         let value2 = UIColor.redColor()
         colorPref.value = value2
         
-        guard let unarchived2 = preferences[key, .ClosureTuple(tuple)] as? UIColor else {
+        guard let unarchived2 = preferences[key, .ClosureTuple(transform: transform, revert: revert)] as? UIColor else {
             XCTFail("Cannot unarchive \(key)")
             return
         }
@@ -416,6 +421,50 @@ class PrephirencesTests: XCTestCase {
         XCTAssertNil(pref["unusedkey"])
     }
     
+    func testEnum() {
+        let preferences: MutableDictionaryPreferences = [mykey: myvalue, "key2": "value2"]
+        
+        let key = "enumTest"
+        let pref: MutablePreference<PrefEnum> = preferences <| key
+        pref.value = nil
+        let value = PrefEnum.Two
+        pref.value = value
+        XCTAssertNil(pref.value)
+        
+        pref.transformation = PrefEnum.preferenceTransformation
+        pref.value = value
+        XCTAssertEqual(pref.value, value)
+    }
+
+    func testEnsure() {
+        let cent = 100
+        let modeThan100: Int? -> Bool = {
+            return $0.map { $0 > cent } ?? false
+        }
+        var cptDidSet = 0
+
+        var intPref: MutablePreference<Int> = NSUserDefaults.standardUserDefaults() <| "intEnsure"
+        intPref = intPref.whenNil(use: cent).ensure(when: modeThan100, use: cent).didSet({ (newValue, oldValue) in
+            cptDidSet += 1
+        })
+        
+
+        var modifCpt = 0
+        let value = 80
+        intPref.value = value
+          modifCpt += 1
+        XCTAssertEqual(value, intPref.value)
+        intPref.value = nil
+        modifCpt += 1
+        XCTAssertEqual(intPref.value, cent)
+        intPref.value = cent + 20
+        modifCpt += 1
+        XCTAssertEqual(intPref.value, cent)
+        
+        
+        XCTAssertEqual(cptDidSet, modifCpt)
+    }
+
 }
 
 struct PrefStruc {
@@ -425,4 +474,14 @@ struct PrefStruc {
 }
 
 extension PrefStruc: ReflectingPreferences {}
+
+
+enum PrefEnum0: Int {
+    case One = 1
+    case Two = 2
+    case Three = 3
+}
+enum PrefEnum: String {
+    case One, Two, Three
+}
 

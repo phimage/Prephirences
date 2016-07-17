@@ -103,6 +103,21 @@ public class Prephirences {
     public static func archive(object: AnyObject) -> NSData {
         return NSKeyedArchiver.archivedDataWithRootObject(object)
     }
+    
+    static func isEmpty<T>(value: T?) -> Bool {
+        return value == nil
+    }
+
+    public static func unraw<T where T: RawRepresentable, T.RawValue: AnyObject>(object: T.RawValue?) -> T? {
+        if let rawValue = object {
+            return T(rawValue: rawValue)
+        }
+        return nil
+    }
+    
+    public static func raw<T where T: RawRepresentable, T.RawValue: AnyObject>(value: T?) -> T.RawValue? {
+        return value?.rawValue
+    }
 
     // MARK: deprecated
     @available(*, deprecated=1, message="Please use ProxyPreferences(preferences: preferences).")

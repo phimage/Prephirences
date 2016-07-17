@@ -31,106 +31,129 @@ import Foundation
 public class Preference<T> {
 
     var preferences: PreferencesType
-    public let key: String
-    public var transformation: TransformationKey = .None
-    
-    public init(preferences: PreferencesType, key: String) {
-        self.preferences = preferences
-        self.key = key
-    }
-    
-    public var value: T? {
+    public let key: PreferenceKey
+    public var transformation: PreferenceTransformation
+    public var transformationKey: TransformationKey {
         get {
-            switch(transformation) {
-            case .Archive :
-                return self.preferences.unarchiveObjectForKey(self.key) as? T
-            case .None :
-                return self.preferences.objectForKey(self.key) as? T
-            case .ValueTransformer(let valueTransformer) :
-                return valueTransformer.reverseTransformedValue(self.preferences.objectForKey(self.key)) as? T
-            case .ClosureTuple(let (_, revert)) :
-                return revert(self.preferences.objectForKey(self.key)) as? T
+            if let transformationKey = transformation as? TransformationKey {
+                return transformationKey
             }
+            return .ClosureTuple(transform: transformation.transformedValue, revert: transformation.reverseTransformedValue)
+        }
+        set {
+            self.transformation = newValue
         }
     }
     
+    public init(preferences: PreferencesType, key: PreferenceKey, transformation: PreferenceTransformation = TransformationKey.None) {
+        self.preferences = preferences
+        self.key = key
+        self.transformation = transformation
+    }
+    
+    // Computed property value
+    public var value: T? {
+        get {
+            return self.transformation.get(self.key, from: self.preferences)
+        }
+    }
+    
+    // Return true if value is not nil
     public var hasValue: Bool {
         return self.preferences.hasObjectForKey(self.key)
     }
+    
+    // Return true if value is nil
+    public var isEmpty: Bool {
+        return self.value == nil
+    }
 }
 
+
+// Mutable instance of `Preference`
 public class MutablePreference<T>: Preference<T> {
+
+    public typealias DidSetFunction = (newValue: T?, oldValue: T?) -> Void
+    // Callback to call after each value set/unset
+    public var didSetFunction: DidSetFunction?
+    
     
     var mutablePreferences: MutablePreferencesType {
         return preferences as! MutablePreferencesType
     }
-    
-    public init(preferences: MutablePreferencesType, key: String) {
-        super.init(preferences: preferences, key: key)
+
+    public init(preferences: MutablePreferencesType, key: PreferenceKey, transformation: PreferenceTransformation = TransformationKey.None) {
+        super.init(preferences: preferences, key: key, transformation: transformation)
     }
-    
+
+    // Computed property value
     override public var value: T? {
         get {
-            switch(transformation) {
-            case .Archive :
-                return self.preferences.unarchiveObjectForKey(self.key) as? T
-            case .None :
-                return self.preferences.objectForKey(self.key) as? T
-            case .ValueTransformer(let valueTransformer) :
-                return valueTransformer.reverseTransformedValue(self.preferences.objectForKey(self.key)) as? T
-            case .ClosureTuple(let (_, revert)) :
-                return revert(self.preferences.objectForKey(self.key)) as? T
-            }
+            return self.transformation.get(self.key, from: self.preferences)
         }
         set {
-            switch(transformation) {
-            case .Archive :
-                if let any: AnyObject = newValue as? AnyObject {
-                    self.mutablePreferences.setObjectToArchive(any, forKey: self.key)
-                } else {
-                    self.mutablePreferences.removeObjectForKey(self.key)
-                }
-                break
-            case .None :
-                if let any: AnyObject = newValue as? AnyObject {
-                    self.mutablePreferences.setObject(any, forKey: self.key)
-                } else {
-                    self.mutablePreferences.removeObjectForKey(self.key)
-                }
-                break
-            case .ValueTransformer(let valueTransformer) :
-                let transformedValue = valueTransformer.transformedValue(newValue as? AnyObject)
-                if transformedValue == nil {
-                    self.mutablePreferences.removeObjectForKey(self.key)
-                }
-                else {
-                    self.mutablePreferences.setObject(transformedValue, forKey: self.key)
-                }
-                break
-            case .ClosureTuple(let (transform, _)) :
-                let transformedValue = transform(newValue as? AnyObject)
-                if transformedValue == nil {
-                    self.mutablePreferences.removeObjectForKey(self.key)
-                } else {
-                    self.mutablePreferences.setObject(transformedValue, forKey: self.key)
-                }
-                break
+            notifyDidSet {
+                self.transformation.set(self.key, value: newValue, to: self.mutablePreferences)
             }
-            
         }
     }
-    
+
+    // Remove the default value
+    public func clear() {
+        notifyDidSet {
+            self.mutablePreferences.removeObjectForKey(self.key)
+        }
+    }
+
+    // Add a callback when the value is set in the defaults using the returned instance
+    public func didSet(closure: DidSetFunction) -> MutablePreference<T> {
+        let newPref = MutablePreference<T>(preferences: self.mutablePreferences, key: self.key, transformation: self.transformation)
+        newPref.didSetFunction = closure
+        return newPref
+    }
+
+    // Change current default value using closure
     public func apply(closure: T? -> T?) {
         self.value = closure(self.value)
     }
     
+    // Return a new instance with a different type
     public func transform<U>(closure: T? -> U?) -> MutablePreference<U> {
-        let newPref: MutablePreference<U> = MutablePreference<U>(preferences: self.mutablePreferences, key: key)
+        let newPref = MutablePreference<U>(preferences: self.mutablePreferences, key: self.key, transformation: self.transformation)
         newPref.value = closure(self.value)
         return newPref
     }
     
+    // Use a default value if when closure return true.
+    public func ensure(when when: T? -> Bool, use defaultValue: T) -> MutablePreference<T> {
+        let newPref = MutablePreference<T>(preferences: self.mutablePreferences, key: key)
+        func revert(value: PreferenceObject?) -> Any? {
+            if let t = value as? T {
+                return when(t) ? defaultValue : value
+            } else if value == nil {
+                return when(nil) ? defaultValue : value
+            }
+            return value
+        }
+        let revertKey = TransformationKey.ClosureTuple(transform: nil, revert: revert)
+        newPref.transformation = TransformationKey.compose(self.transformation, with: revertKey)
+        return newPref
+    }
+
+    // set default value if current value is nil
+    public func whenNil(use defaultValue: T) -> MutablePreference<T> {
+        return ensure(when: Prephirences.isEmpty, use: defaultValue)
+    }
+
+    // private
+    private func notifyDidSet(changeValue: () -> Void) {
+        let old = (didSetFunction == nil) ? nil: self.value
+        changeValue()
+        didSetFunction?(newValue: self.value, oldValue: old)
+    }
+
 }
+
 // MARK: - operators
 
 // Assign optional
