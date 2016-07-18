@@ -66,7 +66,7 @@ if let fromFile = DictionaryPreferences(filename: "prefs", ofType: "plist") {..}
 ```
 
 ## Accessing ##
-You can access with all methods defined in `PreferencesType` protocol
+You can access with all methods defined in [PreferencesType](/Prephirences/PreferencesType.swift) protocol
 
 ```swift
 if let myValue = fromDicoLiteral.objectForKey("myKey") {..}
@@ -77,6 +77,17 @@ var myValue = fromDicoLiteral.boolForKey("myKey")
 ..
 
 ```
+
+If you want to access using `RawRepresentable` `enum`.
+```swift
+enum MyKey: PreferenceKey/*String*/ {
+   case Key1, Key2, ...
+}
+if let myValue = fromDicoLiteral.objectForKey(MyKey.Key1) {..}
+var myValue = fromDicoLiteral.boolForKey(MyKey.Key2)
+
+```
+:warning: [RawRepresentableKey](/Prephirences/RawRepresentableKey/RawRepresentable+Prephirences.swift) must be imported, see [setup](#for-rawrepresentable-key).
 
 ## Modifying ##
 
@@ -201,7 +212,7 @@ if let object = userDefaults["colorKey", myValueTransformerToJson] {...}
 ```
 :warning: `allowsReverseTransformation` must return `true`
 
-### RawRepresentable
+### Store RawRepresentable objects
 
 For `RawRepresentable` objects like `enum` you can use the computed attribute `preferenceTransformation` as `transformation`
 ```swift
@@ -448,6 +459,12 @@ to learn more.
 
 ### For core data ###
 Add `pod 'Prephirences/CoreData'`
+
+### For RawRepresentable key ###
+Add `pod 'Prephirences/RawRepresentableKey'`
+
+### For PropertyListKeys ###
+Add `pod 'Prephirences/Keys'`
 
 ## Using Carthage ##
 [Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager for Objective-C and Swift.

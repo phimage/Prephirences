@@ -427,12 +427,19 @@ class PrephirencesTests: XCTestCase {
         let key = "enumTest"
         let pref: MutablePreference<PrefEnum> = preferences <| key
         pref.value = nil
-        let value = PrefEnum.Two
+        var value = PrefEnum.Two
         pref.value = value
         XCTAssertNil(pref.value)
         
         pref.transformation = PrefEnum.preferenceTransformation
         pref.value = value
+        XCTAssertEqual(pref.value, value)
+        
+        let fromPrefs: PrefEnum? = preferences.rawRepresentableForKey(key)
+        XCTAssertEqual(fromPrefs, value)
+        
+        value = PrefEnum.Three
+        preferences.setRawValue(value, forKey: key)
         XCTAssertEqual(pref.value, value)
     }
 
@@ -463,6 +470,21 @@ class PrephirencesTests: XCTestCase {
         
         
         XCTAssertEqual(cptDidSet, modifCpt)
+    }
+    
+    func testEnumKey() {
+        enum TestKey: PreferenceKey {
+            case color, age, enabled
+        }
+        
+        var pref = PrefStruc()
+
+        XCTAssertEqual(pref.color, pref.stringForKey(TestKey.color))
+        XCTAssertEqual(pref.age, pref.integerForKey(TestKey.age))
+        XCTAssertEqual(pref.enabled, pref.boolForKey(TestKey.enabled))
+        
+        pref.color = "blue"
+        XCTAssertEqual(pref.color, pref.objectForKey(TestKey.color) as? String)
     }
 
 }

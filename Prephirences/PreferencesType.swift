@@ -457,8 +457,8 @@ public extension PreferencesType {
 public extension MutablePreferencesType {
 
     // Store a RawRepresentable object
-    public func setRawValue<T: RawRepresentable where T.RawValue: PreferenceObject>(value: T?, forKey key: PreferenceKey) {
-        if let rawValue = value?.rawValue {
+    public func setRawValue<T: RawRepresentable>(value: T?, forKey key: PreferenceKey) {
+        if let rawValue = value?.rawValue as? PreferenceObject {
             self.setObject(rawValue, forKey: key)
         } else {
             self.removeObjectForKey(key)
@@ -466,6 +466,8 @@ public extension MutablePreferencesType {
     }
 
 }
+
+
 
 // MARK: - private
 // dictionary append
