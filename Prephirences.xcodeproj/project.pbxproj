@@ -81,6 +81,10 @@
 		C4EBB8441B15DE4D0075187B /* Plist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EBB8431B15DE4D0075187B /* Plist.swift */; };
 		C4EBB8451B15E1180075187B /* Plist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EBB8431B15DE4D0075187B /* Plist.swift */; };
 		C4F2A6861B147CCD0092017D /* PreferencesTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F2A6851B147CCD0092017D /* PreferencesTabViewController.swift */; };
+		C4F94D161D48B2AD0045D4B6 /* NSUserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F94D151D48B2AD0045D4B6 /* NSUserDefaultsKeys.swift */; };
+		C4F94D171D48B2AD0045D4B6 /* NSUserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F94D151D48B2AD0045D4B6 /* NSUserDefaultsKeys.swift */; };
+		C4F94D181D48B2AD0045D4B6 /* NSUserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F94D151D48B2AD0045D4B6 /* NSUserDefaultsKeys.swift */; };
+		C4F94D191D48B2AD0045D4B6 /* NSUserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F94D151D48B2AD0045D4B6 /* NSUserDefaultsKeys.swift */; };
 		C4FA9B181C0F155F009CF439 /* PropertyListKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FA9B171C0F155F009CF439 /* PropertyListKeys.swift */; };
 		C4FA9B191C0F155F009CF439 /* PropertyListKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FA9B171C0F155F009CF439 /* PropertyListKeys.swift */; };
 		C4FA9B1A1C0F155F009CF439 /* PropertyListKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FA9B171C0F155F009CF439 /* PropertyListKeys.swift */; };
@@ -139,6 +143,7 @@
 		C4D15A191D3CE2780030E8CF /* RawRepresentable+Prephirences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RawRepresentable+Prephirences.swift"; sourceTree = "<group>"; };
 		C4EBB8431B15DE4D0075187B /* Plist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plist.swift; sourceTree = "<group>"; };
 		C4F2A6851B147CCD0092017D /* PreferencesTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesTabViewController.swift; sourceTree = "<group>"; };
+		C4F94D151D48B2AD0045D4B6 /* NSUserDefaultsKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSUserDefaultsKeys.swift; sourceTree = "<group>"; };
 		C4FA9B171C0F155F009CF439 /* PropertyListKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyListKeys.swift; sourceTree = "<group>"; };
 		C4FA9B1C1C0F1730009CF439 /* NSBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSBundle.swift; sourceTree = "<group>"; };
 		C4FF650B1B6B7C7300BFE4F4 /* PrephirencesiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PrephirencesiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -346,6 +351,7 @@
 			isa = PBXGroup;
 			children = (
 				C4FA9B171C0F155F009CF439 /* PropertyListKeys.swift */,
+				C4F94D151D48B2AD0045D4B6 /* NSUserDefaultsKeys.swift */,
 			);
 			path = Keys;
 			sourceTree = "<group>";
@@ -593,6 +599,7 @@
 				07FC416B1BE6656C005F195C /* NSUbiquitousKeyValueStore+Prephirences.swift in Sources */,
 				07FC416C1BE6656C005F195C /* KeychainPreferences.swift in Sources */,
 				C477D9DA1C03237F00486C13 /* ReflectingPreferences.swift in Sources */,
+				C4F94D181D48B2AD0045D4B6 /* NSUserDefaultsKeys.swift in Sources */,
 				07FC416D1BE6656C005F195C /* Prephirences.swift in Sources */,
 				07FC416E1BE6656C005F195C /* Preference.swift in Sources */,
 				07FC416F1BE6656C005F195C /* NSUserDefaults+Adds.swift in Sources */,
@@ -619,6 +626,7 @@
 				07FC41871BE670D6005F195C /* NSUbiquitousKeyValueStore+Prephirences.swift in Sources */,
 				07FC41881BE670D6005F195C /* KeychainPreferences.swift in Sources */,
 				C477D9DB1C03237F00486C13 /* ReflectingPreferences.swift in Sources */,
+				C4F94D191D48B2AD0045D4B6 /* NSUserDefaultsKeys.swift in Sources */,
 				07FC41891BE670D6005F195C /* Prephirences.swift in Sources */,
 				07FC418A1BE670D6005F195C /* Preference.swift in Sources */,
 				07FC418B1BE670D6005F195C /* PreferencesOperators.swift in Sources */,
@@ -645,6 +653,7 @@
 				C4B838421B284C15009D5B74 /* Preference.swift in Sources */,
 				C42114F41AE7D86D00A09DD9 /* PreferencesType.swift in Sources */,
 				C477D9D81C03237F00486C13 /* ReflectingPreferences.swift in Sources */,
+				C4F94D161D48B2AD0045D4B6 /* NSUserDefaultsKeys.swift in Sources */,
 				C47F324D1AED144500195CDA /* ManagedObjectPreferences.swift in Sources */,
 				C4B3ED2C1B17165C00D807DA /* Prephirences.swift in Sources */,
 				C47F32511AED1E3B00195CDA /* NSUserDefaults+Adds.swift in Sources */,
@@ -663,6 +672,7 @@
 				C42115191AE7D91300A09DD9 /* PatternPreferences.swift in Sources */,
 				C42115181AE7D91100A09DD9 /* DictionaryPreferences.swift in Sources */,
 				C44CBDC41C21B32D00902E5C /* NSHTTPCookieStorage+Prephirences.swift in Sources */,
+				C4F94D171D48B2AD0045D4B6 /* NSUserDefaultsKeys.swift in Sources */,
 				C421151A1AE7D91600A09DD9 /* NSUserDefaults+Prephirences.swift in Sources */,
 				C4EBB8451B15E1180075187B /* Plist.swift in Sources */,
 				C4FA9B1E1C0F1730009CF439 /* NSBundle.swift in Sources */,

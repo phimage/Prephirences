@@ -1,0 +1,6 @@
+# Uncomment this line to define a global platform for your project
+use_frameworks!
+
+target 'Example' do
+   pod ‘Prephirences’, :path => '../Prephirences.podspec'
+end
