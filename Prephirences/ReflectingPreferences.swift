@@ -27,6 +27,7 @@ SOFTWARE.
 
 import Foundation
 
+// Protocol to extends to get properties as preferences using Reflection
 public protocol ReflectingPreferences: PreferencesType {
 }
 
@@ -51,6 +52,103 @@ extension ReflectingPreferences {
         }
 
         return mirror.children.dictionary(transform)
+    }
+
+    public var keys: [String] {
+        return Mirror(reflecting: self).children.flatMap { $0.label }
+    }
+
+}
+
+// Protocol to extends to get and set properties as preferences using Reflection
+private protocol MutableReflectingPreferences: ReflectingPreferences, MutablePreferencesType {
+}
+
+private extension MutableReflectingPreferences where Self: NSObject {
+
+    func setObject(value: PreferenceObject?, forKey key: PreferenceKey) {
+        setValue(value, forKey: key)
+        // will fail for a let(read only) variable
+    }
+
+    func removeObjectForKey(key: String) {
+        setValue(nil, forKey: key)
+        // will fail if cannot be nil
+    }
+
+}
+
+
+private extension ReflectingPreferences where Self: NSObject {
+    
+    private func addObserver() {
+        keys.forEach {
+            addObserver(self, forKeyPath: $0, options: .New, context: nil)
+        }
+    }
+    
+    private func removeObserver() {
+        keys.forEach {
+            removeObserver(self, forKeyPath: $0)
+        }
+    }
+    
+    func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>, preferences: MutablePreferencesType, storeKey: (String) -> String = {$0}) {
+        if let keyPath = keyPath {
+            if let value = change?["new"] where !(value is NSNull) {
+                preferences.setObject(value is NSCoding ? NSKeyedArchiver.archivedDataWithRootObject(value) : value, forKey: storeKey(keyPath))
+            }else{
+                preferences.removeObjectForKey(storeKey(keyPath))
+            }
+            preferences.synchronize()
+        }
+    }
+    
+    private func setupProperty(preferences: MutablePreferencesType, storeKey: (String) -> String = {$0}) {
+        keys.forEach {
+            let value = preferences.objectForKey(storeKey($0))
+            if let data = value as? NSData, decodedValue = NSKeyedUnarchiver.unarchiveObjectWithData(data) {
+                setValue(decodedValue, forKey: $0)
+            }else{
+                setValue(value, forKey: $0)
+            }
+        }
+    }
+
+    private func register(preferences: MutablePreferencesType, storeKey: (String) -> String = {$0}) {
+        let dic = keys.reduce([String:AnyObject]()) { (dic, key) -> [String:AnyObject] in
+            var mutableDic = dic
+            mutableDic[storeKey(key)] = valueForKey(key)
+            return mutableDic
+        }
+        preferences.setObjectsForKeysWithDictionary(dic)
+    }
+}
+
+// Extends this class instead of NSObject and properties will be backed into preferences (by default standards NSUserDefaults)
+private class BackedPreferencesObject: NSObject, ReflectingPreferences  {
+    let preferences: MutablePreferencesType
+    
+    
+    private init(preferences: MutablePreferencesType = NSUserDefaults.standardUserDefaults()) {
+        self.preferences = preferences
+        super.init()
+        
+        self.register(self.preferences, storeKey: self.storeKey)
+        self.setupProperty(self.preferences, storeKey: self.storeKey)
+        self.addObserver()
+    }
+    
+    deinit {
+        self.removeObserver()
+    }
+
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        self.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context, preferences: preferences, storeKey: self.storeKey)
+    }
+    
+    private func storeKey(propertyName: String) -> String{
+        return "\(self.dynamicType)_\(propertyName)"
     }
     
 }
