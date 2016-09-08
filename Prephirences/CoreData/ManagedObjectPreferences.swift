@@ -4,7 +4,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2015 Eric Marchand (phimage)
+Copyright (c) 2016 Eric Marchand (phimage)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -28,8 +28,8 @@ SOFTWARE.
 import Foundation
 import CoreData
 
-public class ManageObjectPreferences : PreferencesAdapter {
-    private let object: NSManagedObject
+open class ManageObjectPreferences : PreferencesAdapter {
+    fileprivate let object: NSManagedObject
     var entityName: String
     
     public init(_ object: NSManagedObject) {
@@ -37,62 +37,62 @@ public class ManageObjectPreferences : PreferencesAdapter {
         self.entityName = NSStringFromClass(object.classForCoder)
     }
     
-    public func objectForKey(key: String) -> AnyObject? {
-        return self.object.valueForKey(key)
+    open func object(forKey key: PreferenceKey) -> PreferenceObject? {
+        return self.object.value(forKey: key)
     }
     
-    public func keys() -> [String] {
+    open func keys() -> [String] {
         let attr = self.object.entity.attributesByName
         return Array(attr.keys)
     }
     
 }
 
-public class MutableManageObjectPreferences: ManageObjectPreferences {
+open class MutableManageObjectPreferences: ManageObjectPreferences {
     
     public override init(_ object: NSManagedObject) {
         super.init(object)
     }
     
-    public subscript(key: String) -> AnyObject? {
+    open subscript(key: PreferenceKey) -> PreferenceObject? {
         get {
-            return self.objectForKey(key)
+            return self.object(forKey: key)
         }
         set {
-            self.setObject(newValue, forKey: key)
+            self.set(newValue, forKey: key)
         }
     }
     
 }
 
 extension MutableManageObjectPreferences: MutablePreferencesType {
-    public func setObject(value: AnyObject?, forKey key: String){
-        if (self.object.respondsToSelector(NSSelectorFromString(key))) {
+    public func set(_ value: PreferenceObject?, forKey key: PreferenceKey){
+        if (self.object.responds(to: NSSelectorFromString(key))) {
             self.object.setValue(value, forKey: key)
         }
     }
-    public func removeObjectForKey(key: String){
-        if (self.object.respondsToSelector(NSSelectorFromString(key))) {
+    public func removeObject(forKey key: PreferenceKey){
+        if (self.object.responds(to: NSSelectorFromString(key))) {
             self.object.setValue(nil, forKey: key)
         }
     }
-    public func setInteger(value: Int, forKey key: String){
-        self.setObject(NSNumber(integer: value), forKey: key)
+    public func set(_ value: Int, forKey key: PreferenceKey){
+        self.set(NSNumber(value: value), forKey: key)
     }
-    public func setFloat(value: Float, forKey key: String){
-        self.setObject(NSNumber(float: value), forKey: key)
+    public func set(_ value: Float, forKey key: PreferenceKey){
+        self.set(NSNumber(value: value), forKey: key)
     }
-    public func setDouble(value: Double, forKey key: String){
-        self.setObject(NSNumber(double: value), forKey: key)
+    public func set(_ value: Double, forKey key: PreferenceKey){
+        self.set(NSNumber(value: value), forKey: key)
     }
-    public func setBool(value: Bool, forKey key: String){
-        self.setObject(NSNumber(bool: value), forKey: key)
+    public func set(_ value: Bool, forKey key: PreferenceKey){
+        self.set(NSNumber(value: value), forKey: key)
     }
-    public func setURL(url: NSURL?, forKey key: String){
-        self.setObject(url, forKey: key)
+    public func set(url value: URL?, forKey key: PreferenceKey){
+        self.set(url as AnyObject?, forKey: key)
     }
-    public func setObjectToArchive(value: AnyObject?, forKey key: String) {
-        Prephirences.archiveObject(value, preferences: self, forKey: key)
+    public func setObjectToArchive(_ value: AnyObject?, forKey key: PreferenceKey) {
+        Prephirences.archive(object: value, intoPreferences: self, forKey: key)
     }
     public func clearAll(){
         // not implemented, maybe add protocol to set defaults attributes values

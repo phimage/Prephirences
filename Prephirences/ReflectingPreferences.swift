@@ -4,7 +4,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2015 Eric Marchand (phimage)
+Copyright (c) 2016 Eric Marchand (phimage)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,25 +27,24 @@ SOFTWARE.
 
 import Foundation
 
-public protocol ReflectingPreferences: PreferencesType {
-}
+public protocol ReflectingPreferences: PreferencesType {}
 
 extension ReflectingPreferences {
 
-    public func objectForKey(key: String) -> AnyObject? {
+    public func object(forKey key: PreferenceKey) -> PreferenceObject? {
         let mirror = Mirror(reflecting: self)
         // guard let style = mirror.displayStyle where style == .Struct || style == .Class else { return nil }
 
-        return mirror.children.find{$0.label == key}?.value as? AnyObject
+        return mirror.children.find{$0.label == key}?.value
     }
 
-    public func dictionary() -> [String : AnyObject] {
+    public func dictionary() -> PreferencesDictionary {
         let mirror = Mirror(reflecting: self)
         // guard let style = mirror.displayStyle where style == .Struct || style == .Class else { return [String : AnyObject]() }
 
-        let transform: (Mirror.Child) -> (String,AnyObject)? = { child in
-            if let label = child.label, value = child.value as? AnyObject {
-                return (label, value)
+        let transform: (Mirror.Child) -> (PreferenceKey, PreferenceObject)? = { child in
+            if let label = child.label {
+                return (label, child.value)
             }
             return nil
         }

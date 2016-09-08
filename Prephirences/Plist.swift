@@ -4,7 +4,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2015 Eric Marchand (phimage)
+Copyright (c) 2016 Eric Marchand (phimage)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -28,19 +28,19 @@ SOFTWARE.
 import Foundation
 
 /* Plist represent an editable 'plist' file as preference */
-public class Plist: MutableDictionaryPreferences {
+open class Plist: MutableDictionaryPreferences {
     
     static let Extension = "plist"
     
     var filePath: String
     
     /* Write to file after each modification */
-    public var writeImmediatly: Bool = false
+    open var writeImmediatly: Bool = false
     
     
     // MARK: init
-    public init?(filename: String?, bundle: NSBundle = NSBundle.mainBundle()) {
-       self.filePath = bundle.pathForResource(filename, ofType: Plist.Extension) ?? ""
+    public init?(filename: String?, bundle: Bundle = Bundle.main) {
+       self.filePath = bundle.path(forResource: filename, ofType: Plist.Extension) ?? ""
        super.init(filename: filename, ofType: Plist.Extension, bundle: bundle)
     }
     
@@ -54,11 +54,11 @@ public class Plist: MutableDictionaryPreferences {
     }
 
     // MARK: functions
-    public func write(atomically: Bool = true) -> Bool {
+    open func write(_ atomically: Bool = true) -> Bool {
         return self.writeToFile(self.filePath, atomically: atomically)
     }
     
-    public func read() -> Bool {
+    open func read() -> Bool {
         if let d = NSDictionary(contentsOfFile: self.filePath) as? Dictionary<String,AnyObject> {
             self.dico = d
             return true
@@ -66,14 +66,14 @@ public class Plist: MutableDictionaryPreferences {
         return false
     }
     
-    private func notifyChange() {
+    fileprivate func notifyChange() {
         if writeImmediatly {
-            write()
+            let _ = write()
         }
     }
 
     // MARK: override
-    public override subscript(key: String) -> AnyObject? {
+    open override subscript(key: PreferenceKey) -> PreferenceObject? {
         get {
             return dico[key]
         }
@@ -83,41 +83,41 @@ public class Plist: MutableDictionaryPreferences {
         }
     }
     
-    public override func clearAll() {
+    open override func clearAll() {
         super.clearAll()
         notifyChange()
     }
-    public override func setObject(value: AnyObject?, forKey key: String) {
-        super.setObject(value, forKey: key)
+    open override func set(_ value: PreferenceObject?, forKey key: PreferenceKey) {
+        super.set(value, forKey: key)
         notifyChange()
     }
-    public override func removeObjectForKey(key: String) {
-        super.removeObjectForKey(key)
+    open override func removeObject(forKey key: PreferenceKey) {
+        super.removeObject(forKey: key)
         notifyChange()
     }
-    public override func setInteger(value: Int, forKey key: String){
-        super.setInteger(value, forKey: key)
+    open override func set(_ value: Int, forKey key: PreferenceKey){
+        super.set(value, forKey: key)
         notifyChange()
     }
-    public override func setFloat(value: Float, forKey key: String){
-        super.setFloat(value, forKey: key)
+    open override func set(_ value: Float, forKey key: PreferenceKey){
+        super.set(value, forKey: key)
         notifyChange()
     }
-    public override func setDouble(value: Double, forKey key: String) {
-         super.setDouble(value, forKey: key)
+    open override func set(_ value: Double, forKey key: PreferenceKey) {
+         super.set(value, forKey: key)
         notifyChange()
     }
-    public override func setBool(value: Bool, forKey key: String) {
-        super.setBool(value, forKey: key)
+    open override func set(_ value: Bool, forKey key: PreferenceKey) {
+        super.set(value, forKey: key)
         notifyChange()
     }
-    public override func setURL(url: NSURL?, forKey key: String) {
-        super.setURL(url, forKey: key)
+    open override func set(_ url: URL?, forKey key: PreferenceKey) {
+        super.set(url, forKey: key)
         notifyChange()
     }
     
-    public override func setObjectsForKeysWithDictionary(dictionary: [String:AnyObject]) {
-        super.setObjectsForKeysWithDictionary(dictionary)
+    open override func set(dictionary: PreferencesDictionary) {
+        super.set(dictionary: dictionary)
         notifyChange()
     }
 

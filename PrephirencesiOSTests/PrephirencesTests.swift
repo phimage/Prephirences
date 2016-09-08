@@ -3,7 +3,7 @@
 //  PrephirencesTests
 //
 //  Created by phimage on 05/06/15.
-//  Copyright (c) 2015 phimage. All rights reserved.
+//  Copyright (c) 2016 phimage. All rights reserved.
 //
 
 import Foundation
@@ -31,13 +31,13 @@ class PrephirencesTests: XCTestCase {
         super.tearDown()
     }
     
-    func printPreferences(preferences: PreferencesType) {
+    func printPreferences(_ preferences: PreferencesType) {
         for (key,value) in preferences.dictionary() {
             print("\(key)=\(value)")
         }
     }
     
-    func printDictionaryPreferences(dictionaryPreferences: DictionaryPreferences) {
+    func printDictionaryPreferences(_ dictionaryPreferences: DictionaryPreferences) {
         printPreferences(dictionaryPreferences)
         for (key,value) in dictionaryPreferences {
             print("\(key)=\(value)")
@@ -63,7 +63,7 @@ class PrephirencesTests: XCTestCase {
     }*/
     
     func testFromFile() {
-        if let filePath = NSBundle(forClass: self.dynamicType).pathForResource("Test", ofType: "plist") {
+        if let filePath = Bundle(for: type(of: self)).path(forResource: "Test", ofType: "plist") {
             if  let preference = DictionaryPreferences(filePath: filePath) {
                     for (key,value) in preference.dictionary() {
                         print("\(key)=\(value)")
@@ -77,7 +77,7 @@ class PrephirencesTests: XCTestCase {
         }
         
         
-        if  let  preference = DictionaryPreferences(filename: "Test", ofType: "plist", bundle: NSBundle(forClass: self.dynamicType)) {
+        if  let  preference = DictionaryPreferences(filename: "Test", ofType: "plist", bundle: Bundle(for: type(of: self))) {
             for (key,value) in preference.dictionary() {
                 print("\(key)=\(value)")
             }
@@ -89,7 +89,7 @@ class PrephirencesTests: XCTestCase {
     }
 
     func testUserDefaults() {
-        let userDefaults = NSUserDefaults.standardUserDefaults()
+        let userDefaults = Foundation.UserDefaults.standard
         printPreferences(userDefaults)
         
         
@@ -100,19 +100,19 @@ class PrephirencesTests: XCTestCase {
         XCTAssert(userDefaults[mykey] as? String ?? nil == nil, "not nil affected") // return a proxyPreferences
         
         
-        userDefaults.setObject(myvalue, forKey:mykey)
-        XCTAssert(userDefaults.objectForKey(mykey) as! String == myvalue, "not affected")
-        userDefaults.setObject(nil, forKey:mykey)
-        XCTAssert(userDefaults.objectForKey(mykey) as? String ?? nil == nil, "not nil affected") // return a proxyPreferences
+        userDefaults.set(myvalue, forKey:mykey)
+        XCTAssert(userDefaults.object(forKey: mykey) as! String == myvalue, "not affected")
+        userDefaults.set(nil, forKey:mykey)
+        XCTAssert(userDefaults.object(forKey: mykey) as? String ?? nil == nil, "not nil affected") // return a proxyPreferences
         
-        userDefaults.setObject(myvalue, forKey:mykey)
-        XCTAssert(userDefaults.stringForKey(mykey) == myvalue, "not affected")
-        userDefaults.setObject(nil, forKey:mykey)
-        XCTAssert(userDefaults.stringForKey(mykey) == nil, "not nil affected")
+        userDefaults.set(myvalue, forKey:mykey)
+        XCTAssert(userDefaults.string(forKey: mykey) == myvalue, "not affected")
+        userDefaults.set(nil, forKey:mykey)
+        XCTAssert(userDefaults.string(forKey: mykey) == nil, "not nil affected")
     }
     
     func testUserDefaultsProxy() {
-        let userDefaults = NSUserDefaults.standardUserDefaults()
+        let userDefaults = Foundation.UserDefaults.standard
         
         let appKey = "appname"
         let appDefaults = MutableProxyPreferences(preferences: userDefaults, key: appKey, separator: UserDefaultsKeySeparator)
@@ -129,7 +129,7 @@ class PrephirencesTests: XCTestCase {
     }
     
     func testPreference() {
-        let userDefaults = NSUserDefaults.standardUserDefaults()
+        let userDefaults = Foundation.UserDefaults.standard
  
         var intPref: MutablePreference<Int> = userDefaults <| "int"
         intPref.value = nil
@@ -137,9 +137,9 @@ class PrephirencesTests: XCTestCase {
         
         intPref = userDefaults <| "int"
         
-        intPref++
+        intPref += 1
         XCTAssert(intPref.value! == 1)
-        intPref--
+        intPref -= 1
         XCTAssert(intPref.value! == 0)
         intPref += 30
         XCTAssert(intPref.value! == 30)
@@ -165,7 +165,7 @@ class PrephirencesTests: XCTestCase {
         case 10: print("ok")
         default: XCTFail("not equal in switch")
         }
-        
+
         switch(intPref) {
         case 0...9: XCTFail("not equal in switch")
         case 11...999: XCTFail("not equal in switch")
@@ -174,7 +174,7 @@ class PrephirencesTests: XCTestCase {
         }
         
         
-        var boolPref: MutablePreference<Bool> = userDefaults.preferenceForKey("bool")
+        var boolPref: MutablePreference<Bool> = userDefaults.preference(forKey: "bool")
         boolPref.value = nil
         
         boolPref &&= false
@@ -219,17 +219,17 @@ class PrephirencesTests: XCTestCase {
         
 
         
-        var stringPref: MutablePreference<String> = userDefaults.preferenceForKey("string")
+        var stringPref: MutablePreference<String> = userDefaults.preference(forKey: "string")
         stringPref.value = "pref"
         
         stringPref += "erence"
         XCTAssert(stringPref.value! == "preference")
 
         stringPref.apply { value in
-            return value?.uppercaseString
+            return value?.uppercased()
         }
         
-        XCTAssert(stringPref.value! == "preference".uppercaseString)
+        XCTAssert(stringPref.value! == "preference".uppercased())
     }
     
     
@@ -237,47 +237,47 @@ class PrephirencesTests: XCTestCase {
         
         var preferences: MutableDictionaryPreferences = [mykey: myvalue, "key2": "value2"]
         
-        let value = UIColor.blueColor()
+        let value = UIColor.blue
         let key = "color"
-        preferences[key, .Archive] = value
+        preferences[key, .archive] = value
         
         
-        guard let unarchived = preferences[key, .Archive] as? UIColor else {
+        guard let unarchived = preferences[key, .archive] as? UIColor else {
             XCTFail("Cannot unarchive \(key)")
             return
         }
         
         XCTAssertEqual(value, unarchived)
         
-        guard let _ = preferences[key, .None] as? NSData else {
+        guard let _ = preferences[key, .none] as? Data else {
             XCTFail("Cannot get data for \(key)")
             return
         }
         
-        guard let _ = preferences[key] as? NSData else {
+        guard let _ = preferences[key] as? Data else {
             XCTFail("Cannot get data for \(key)")
             return
         }
         
         let colorPref: MutablePreference<UIColor> = preferences <| key
-        colorPref.transformationKey = .Archive
+        colorPref.transformationKey = .archive
         
         guard let _ = colorPref.value else {
             XCTFail("Cannot unarchive \(key)")
             return
         }
         
-        let value2 = UIColor.redColor()
+        let value2 = UIColor.red
         colorPref.value = value2
         
-        guard let unarchived2 = preferences[key, .Archive] as? UIColor else {
+        guard let unarchived2 = preferences[key, .archive] as? UIColor else {
             XCTFail("Cannot unarchive \(key)")
             return
         }
         XCTAssertEqual(value2, unarchived2)
         
         
-        let valueDefault = UIColor.yellowColor()
+        let valueDefault = UIColor.yellow
         let whenNil = colorPref.whenNil(use: valueDefault)
         colorPref.value = nil
         XCTAssertEqual(valueDefault, whenNil.value)
@@ -288,9 +288,9 @@ class PrephirencesTests: XCTestCase {
         
         var preferences: MutableDictionaryPreferences = [mykey: myvalue, "key2": "value2"]
         
-        let colorDico: [String: UIColor] = ["blue": UIColor.blueColor(), "red": UIColor.redColor()]
+        let colorDico: [String: UIColor] = ["blue": UIColor.blue, "red": UIColor.red]
         
-        func transform(obj: Any?) -> AnyObject? {
+        func transform(_ obj: Any?) -> Any? {
             if let color = obj as? UIColor {
                 
                 for (name, c) in colorDico {
@@ -301,26 +301,26 @@ class PrephirencesTests: XCTestCase {
             }
             return nil
         }
-        func revert(obj: AnyObject?) -> Any? {
+        func revert(_ obj: Any?) -> Any? {
             if let name = obj as? String {
                 return colorDico[name]
             }
             return nil
         }
         
-        let value = UIColor.blueColor()
+        let value = UIColor.blue
         let key = "color"
-        preferences[key, .ClosureTuple(transform: transform, revert: revert)] = value
+        preferences[key, .closureTuple(transform: transform, revert: revert)] = value
         
         
-        guard let unarchived = preferences[key, .ClosureTuple(transform: transform, revert: revert)] as? UIColor else {
+        guard let unarchived = preferences[key, .closureTuple(transform: transform, revert: revert)] as? UIColor else {
             XCTFail("Cannot unarchive \(key)")
             return
         }
         
         XCTAssertEqual(value, unarchived)
         
-        guard let _ = preferences[key, .None] as? String else {
+        guard let _ = preferences[key, .none] as? String else {
             XCTFail("Cannot get string for \(key)")
             return
         }
@@ -331,17 +331,17 @@ class PrephirencesTests: XCTestCase {
         }
         
         let colorPref: MutablePreference<UIColor> = preferences <| key
-        colorPref.transformationKey = .ClosureTuple(transform: transform, revert: revert)
+        colorPref.transformationKey = .closureTuple(transform: transform, revert: revert)
         
         guard let _ = colorPref.value else {
             XCTFail("Cannot unarchive \(key)")
             return
         }
         
-        let value2 = UIColor.redColor()
+        let value2 = UIColor.red
         colorPref.value = value2
         
-        guard let unarchived2 = preferences[key, .ClosureTuple(transform: transform, revert: revert)] as? UIColor else {
+        guard let unarchived2 = preferences[key, .closureTuple(transform: transform, revert: revert)] as? UIColor else {
             XCTFail("Cannot unarchive \(key)")
             return
         }
@@ -367,7 +367,7 @@ class PrephirencesTests: XCTestCase {
     }
 
     func testBundle() {
-        let bundle = NSBundle(forClass: PrephirencesTests.self)
+        let bundle = Bundle(for: PrephirencesTests.self)
         
         let applicationName = bundle[.CFBundleName] as? String
         
@@ -375,18 +375,18 @@ class PrephirencesTests: XCTestCase {
     }
 
     func testNSHTTPCookieStorage() {
-        let storage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
+        let storage = HTTPCookieStorage.shared
         let key = "name"
         let value = "value"
 
-        var cookieProperties = [String: AnyObject]()
-        cookieProperties[NSHTTPCookieName] = key
-        cookieProperties[NSHTTPCookieValue] = value
-        cookieProperties[NSHTTPCookieDomain] = "domain"
-        cookieProperties[NSHTTPCookiePath] = "cookie.path"
-        cookieProperties[NSHTTPCookieVersion] = NSNumber(integer: 1)
-        cookieProperties[NSHTTPCookieExpires] = NSDate().dateByAddingTimeInterval(31536000)
-        guard let newCookie = NSHTTPCookie(properties: cookieProperties) else {
+        var cookieProperties = [HTTPCookiePropertyKey: Any]()
+        cookieProperties[HTTPCookiePropertyKey.name] = key
+        cookieProperties[HTTPCookiePropertyKey.value] = value
+        cookieProperties[HTTPCookiePropertyKey.domain] = "domain"
+        cookieProperties[HTTPCookiePropertyKey.path] = "cookie.path"
+        cookieProperties[HTTPCookiePropertyKey.version] = NSNumber(value: 1)
+        cookieProperties[HTTPCookiePropertyKey.expires] = Date().addingTimeInterval(31536000)
+        guard let newCookie = HTTPCookie(properties: cookieProperties) else {
             XCTFail("failed to create cookie")
             return
         }
@@ -406,8 +406,8 @@ class PrephirencesTests: XCTestCase {
         }
 
         let collection = [
-            KeyValue(key:"key", value: "value"),
-            KeyValue(key:"key2", value: "value2")
+            KeyValue(key:"key", value: "value" as AnyObject),
+            KeyValue(key:"key2", value: "value2" as AnyObject)
         ]
 
         let pref = CollectionPreferencesAdapter(collection: collection, mapKey: {$0.key}, mapValue: {$0.value})
@@ -429,28 +429,27 @@ class PrephirencesTests: XCTestCase {
         pref.value = nil
         var value = PrefEnum.Two
         pref.value = value
-        XCTAssertNil(pref.value)
         
         pref.transformation = PrefEnum.preferenceTransformation
         pref.value = value
         XCTAssertEqual(pref.value, value)
         
-        let fromPrefs: PrefEnum? = preferences.rawRepresentableForKey(key)
+        let fromPrefs: PrefEnum? = preferences.rawRepresentable(forKey: key)
         XCTAssertEqual(fromPrefs, value)
         
         value = PrefEnum.Three
-        preferences.setRawValue(value, forKey: key)
+        preferences.set(rawValue: value, forKey: key)
         XCTAssertEqual(pref.value, value)
     }
 
     func testEnsure() {
         let cent = 100
-        let modeThan100: Int? -> Bool = {
+        let modeThan100: (Int?) -> Bool = {
             return $0.map { $0 > cent } ?? false
         }
         var cptDidSet = 0
 
-        var intPref: MutablePreference<Int> = NSUserDefaults.standardUserDefaults() <| "intEnsure"
+        var intPref: MutablePreference<Int> = Foundation.UserDefaults.standard <| "intEnsure"
         intPref = intPref.whenNil(use: cent).ensure(when: modeThan100, use: cent).didSet({ (newValue, oldValue) in
             cptDidSet += 1
         })
@@ -479,12 +478,12 @@ class PrephirencesTests: XCTestCase {
         
         var pref = PrefStruc()
 
-        XCTAssertEqual(pref.color, pref.stringForKey(TestKey.color))
-        XCTAssertEqual(pref.age, pref.integerForKey(TestKey.age))
-        XCTAssertEqual(pref.enabled, pref.boolForKey(TestKey.enabled))
+        XCTAssertEqual(pref.color, pref.string(forKey: TestKey.color))
+        XCTAssertEqual(pref.age, pref.integer(forKey: TestKey.age))
+        XCTAssertEqual(pref.enabled, pref.bool(forKey: TestKey.enabled))
         
         pref.color = "blue"
-        XCTAssertEqual(pref.color, pref.objectForKey(TestKey.color) as? String)
+        XCTAssertEqual(pref.color, pref.object(forKey: TestKey.color) as? String)
     }
 
 }
@@ -499,9 +498,9 @@ extension PrefStruc: ReflectingPreferences {}
 
 
 enum PrefEnum0: Int {
-    case One = 1
-    case Two = 2
-    case Three = 3
+    case one = 1
+    case two = 2
+    case three = 3
 }
 enum PrefEnum: String {
     case One, Two, Three

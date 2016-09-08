@@ -1,10 +1,10 @@
 //
-//  NSUserDefaultsKeys.swift
+//  UserDefaultsKeys.swift
 //  Prephirences
 /*
  The MIT License (MIT)
  
- Copyright (c) 2015 Eric Marchand (phimage)
+ Copyright (c) 2016 Eric Marchand (phimage)
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,9 @@ import Foundation
 
 // Extension to add common key to NSUserDefaults
 
-public extension NSUserDefaults {
+public extension Foundation.UserDefaults {
     // List of common key used in NSUserDefaults
-    public enum Keys: String {
+    public enum Keys: PreferenceKey {
         case AppleKeyboards // [String]
         case AppleKeyboardsExpanded // Int
         case AddingEmojiKeybordHandled // Int
@@ -48,7 +48,7 @@ public extension NSUserDefaults {
 
 extension MutablePreferencesType {
     // Utility subscript to use with `NSUserDefaults.Keys`
-    public subscript(key: NSUserDefaults.Keys) -> AnyObject? {
+    public subscript(key: UserDefaults.Keys) -> PreferenceObject? {
         get {
             return self[key.rawValue]
         }

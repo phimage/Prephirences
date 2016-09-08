@@ -4,7 +4,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2015 Eric Marchand (phimage)
+Copyright (c) 2016 Eric Marchand (phimage)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,17 +29,17 @@ import Foundation
 
 // MARK: Dictionary Adapter
 // Adapt Dictionary to PreferencesType (with adapter pattern)
-public class DictionaryPreferences: PreferencesType, SequenceType, DictionaryLiteralConvertible {
+open class DictionaryPreferences: PreferencesType, Sequence, ExpressibleByDictionaryLiteral {
 
-    internal var dico : Dictionary<String,AnyObject>
+    internal var dico : PreferencesDictionary
 
     // MARK: init
-    public init(dictionary: Dictionary<String,AnyObject>) {
+    public init(dictionary: PreferencesDictionary) {
         self.dico = dictionary
     }
     
     public init?(filePath: String) {
-        if let d = NSDictionary(contentsOfFile: filePath) as? Dictionary<String,AnyObject> {
+        if let d = NSDictionary(contentsOfFile: filePath) as? PreferencesDictionary {
             self.dico = d
         }
         else {
@@ -48,9 +48,9 @@ public class DictionaryPreferences: PreferencesType, SequenceType, DictionaryLit
         }
     }
 
-    public init?(filename: String?, ofType ext: String?, bundle: NSBundle = NSBundle.mainBundle()) {
-        if let filePath = bundle.pathForResource(filename, ofType: ext) {
-            if let d = NSDictionary(contentsOfFile: filePath) as? Dictionary<String,AnyObject> {
+    public init?(filename: String?, ofType ext: String?, bundle: Bundle = Bundle.main) {
+        if let filePath = bundle.path(forResource: filename, ofType: ext) {
+            if let d = NSDictionary(contentsOfFile: filePath) as? PreferencesDictionary {
                 self.dico = d
             }
             else {
@@ -69,8 +69,8 @@ public class DictionaryPreferences: PreferencesType, SequenceType, DictionaryLit
     }
     
     // MARK: DictionaryLiteralConvertibles
-    public typealias Key = String
-    public typealias Value = AnyObject
+    public typealias Key = PreferenceKey
+    public typealias Value = PreferenceObject
     public typealias Element = (Key, Value)
 
     public required convenience init(dictionaryLiteral elements: Element...) {
@@ -82,19 +82,19 @@ public class DictionaryPreferences: PreferencesType, SequenceType, DictionaryLit
     
     // MARK: SequenceType
 
-    public func generate() -> DictionaryGenerator<Key, Value> {
-        return self.dico.generate()
+    open func makeIterator() -> DictionaryIterator<Key, Value> {
+        return self.dico.makeIterator()
     }
     
     public typealias Index = DictionaryIndex<Key, Value>
     
-    public subscript (position: DictionaryIndex<Key, Value>) -> Element {
+    open subscript (position: DictionaryIndex<Key, Value>) -> Element {
         get {
             return dico[position]
         }
     }
 
-    public subscript(key : Key?) -> Value? {
+    open subscript(key : Key?) -> Value? {
         get {
             if key != nil {
                 return dico[key!]
@@ -104,66 +104,66 @@ public class DictionaryPreferences: PreferencesType, SequenceType, DictionaryLit
     }
     
     // MARK: PreferencesType
-    public subscript(key: String) -> AnyObject? {
+    open subscript(key: String) -> PreferenceObject? {
         get {
             return dico[key]
         }
     }
     
-    public func objectForKey(key: String) -> AnyObject? {
+    open func object(forKey key: PreferenceKey) -> PreferenceObject? {
         return dico[key]
     }
     
-    public func hasObjectForKey(key: String) -> Bool {
+    open func hasObject(forKey key: PreferenceKey) -> Bool {
         return dico[key] != nil
     }
     
-    public func stringForKey(key: String) -> String? {
+    open func string(forKey key: PreferenceKey) -> String? {
         return dico[key] as? String
     }
-    public func arrayForKey(key: String) -> [AnyObject]? {
+    open func array(forKey key: PreferenceKey) -> [PreferenceObject]? {
         return dico[key] as? [AnyObject]
     }
-    public func dictionaryForKey(key: String) -> [String : AnyObject]? {
+    open func dictionary(forKey key: PreferenceKey) -> [String : AnyObject]? {
         return dico[key] as? [String: AnyObject]
     }
-    public func dataForKey(key: String) -> NSData? {
-        return dico[key] as? NSData
+    open func data(forKey key: PreferenceKey) -> Data? {
+        return dico[key] as? Data
     }
-    public func stringArrayForKey(key: String) -> [String]? {
-        return self.arrayForKey(key) as? [String]
+    open func stringArray(forKey key: PreferenceKey) -> [String]? {
+        return self.array(forKey: key) as? [String]
     }
-    public func integerForKey(key: String) -> Int {
+    open func integer(forKey key: PreferenceKey) -> Int {
         return dico[key] as? Int ?? 0
     }
-    public func floatForKey(key: String) -> Float {
+    open func float(forKey key: PreferenceKey) -> Float {
         return dico[key] as? Float ?? 0
     }
-    public func doubleForKey(key: String) -> Double {
+    open func double(forKey key: PreferenceKey) -> Double {
         return dico[key] as? Double ?? 0
     }
-    public func boolForKey(key: String) -> Bool {
+    open func bool(forKey key: PreferenceKey) -> Bool {
         return dico[key] as? Bool ?? false
     }
-    public func URLForKey(key: String) -> NSURL? {
-        return dico[key] as? NSURL
+    open func url(forKey key: PreferenceKey) -> URL? {
+        return dico[key] as? URL
     }
 
-    public func dictionary() -> [String : AnyObject] {
+    open func dictionary() -> PreferencesDictionary {
         return self.dico
     }
     
     // MARK: specifics methods
-    public func writeToFile(path: String, atomically: Bool = true) -> Bool {
-        return (self.dico as NSDictionary).writeToFile(path, atomically: atomically)
+    open func writeToFile(_ path: String, atomically: Bool = true) -> Bool {
+        return (self.dico as NSDictionary).write(toFile: path, atomically: atomically)
     }
 }
 
 // MARK: - Mutable Dictionary Adapter
-public class MutableDictionaryPreferences: DictionaryPreferences, MutablePreferencesType {
-    
+open class MutableDictionaryPreferences: DictionaryPreferences, MutablePreferencesType {
+
     // MARK: MutablePreferencesType
-    public override subscript(key: String) -> AnyObject? {
+    open override subscript(key: PreferenceKey) -> PreferenceObject? {
         get {
             return dico[key]
         }
@@ -172,41 +172,45 @@ public class MutableDictionaryPreferences: DictionaryPreferences, MutablePrefere
         }
     }
     
-    public func setObject(value: AnyObject?, forKey key: String) {
+    open func set(_ value: PreferenceObject?, forKey key: PreferenceKey) {
         dico[key] = value
     }
-    public func removeObjectForKey(key: String) {
+    open func removeObject(forKey key: PreferenceKey) {
         dico[key] = nil
     }
     
-    public func setInteger(value: Int, forKey key: String){
+    open func set(_ value: Int, forKey key: PreferenceKey){
         dico[key] = value
     }
-    public func setFloat(value: Float, forKey key: String){
+    open func set(_ value: Float, forKey key: PreferenceKey){
         dico[key] = value
     }
-    public func setDouble(value: Double, forKey key: String) {
+    open func set(_ value: Double, forKey key: PreferenceKey) {
         dico[key] = value
     }
-    public func setBool(value: Bool, forKey key: String) {
+    open func set(_ value: Bool, forKey key: PreferenceKey) {
         dico[key] = value
     }
-    public func setURL(url: NSURL?, forKey key: String) {
+    open func set(_ url: URL?, forKey key: PreferenceKey) {
         dico[key] = url
     }
-    
-    public func setObjectsForKeysWithDictionary(dictionary: [String:AnyObject]) {
+
+    open func set(dictionary: PreferencesDictionary) {
          dico += dictionary
     }
-    
-    public func clearAll() {
+
+    open func clearAll() {
         dico.removeAll()
     }
     
 }
 
+// MARK: - private
+// dictionary append
+internal func +=<K, V> (left: inout [K : V], right: [K : V]) { for (k, v) in right { left[k] = v } }
+
 // MARK: - Buffered preferences
-public class BufferPreferences: MutableDictionaryPreferences {
+open class BufferPreferences: MutableDictionaryPreferences {
     var buffered: MutablePreferencesType
     
     public init(_ buffered: MutablePreferencesType) {
@@ -220,7 +224,7 @@ public class BufferPreferences: MutableDictionaryPreferences {
 
     // MARK: specifics methods
     func commit() {
-        buffered.setObjectsForKeysWithDictionary(self.dictionary())
+        buffered.set(dictionary: self.dictionary())
     }
     
     func rollback() {

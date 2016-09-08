@@ -32,66 +32,75 @@ import Foundation
 */
 extension NSUbiquitousKeyValueStore : MutablePreferencesType {
 
-    public func dictionary() -> [String : AnyObject] {
+    public func dictionary() -> PreferencesDictionary {
         return self.dictionaryRepresentation
     }
     
-    public func stringArrayForKey(key: String) -> [String]? {
-        return arrayForKey(key) as? [String]
+    public func stringArray(forKey key: PreferenceKey) -> [String]? {
+        return array(forKey: key) as? [String]
     }
     
     // MARK: number
     
-    public func integerForKey(key: String) -> Int {
-        return Int(longLongForKey(key))
+    public func integer(forKey key: PreferenceKey) -> Int {
+        return Int(longLong(forKey: key))
     }
-    public func floatForKey(key: String) -> Float {
-        return Float(doubleForKey(key))
-    }
-
-    public func setInteger(value: Int, forKey key: String){
-        setLongLong(Int64(value), forKey: key)
-    }
-    public func setFloat(value: Float, forKey key: String){
-        setDouble(Double(value), forKey: key)
+    public func float(forKey key: PreferenceKey) -> Float {
+        return Float(double(forKey: key))
     }
 
-    // MARK: url
+    /* SWIFT3 no more compiling, signature conflict
+     public func set(_ value: Int, forKey key: PreferenceKey) {
+     set(Int64(value), forKey: key)
+     }
+     
+     public func set(_ value: Float, forKey key: PreferenceKey) {
+     set(Double(value), forKey: key)
+     }
+     */
+}
+
+
+// MARK: url
+extension NSUbiquitousKeyValueStore {
     
-    public func URLForKey(key: String) -> NSURL? {
-        if let bookData = self.dataForKey(key) {
+    
+    public func url(forKey key: PreferenceKey) -> URL? {
+        if let bookData = self.data(forKey: key) {
             var isStale : ObjCBool = false
             #if os(OSX)
-            let options = NSURLBookmarkResolutionOptions.WithSecurityScope
+            let options = NSURL.BookmarkResolutionOptions.withSecurityScope
             #elseif os(iOS) || os(watchOS) || os(tvOS)
-            let options = NSURLBookmarkResolutionOptions.WithoutUI
+            let options = URL.BookmarkResolutionOptions.withoutUI
             #endif
             
             do {
-                let url = try NSURL(byResolvingBookmarkData: bookData, options: options, relativeToURL: nil, bookmarkDataIsStale: &isStale)
+                let url = try (NSURL(resolvingBookmarkData: bookData, options: options, relativeTo: nil, bookmarkDataIsStale: &isStale) as URL)
+                set(url, forKey: key)
                 return url
             } catch { }
         }
+        
         return nil
     }
-    
-    public func setURL(url: NSURL?, forKey key: String) {
+
+    public func set(_ url: URL?, forKey key: PreferenceKey) {
         if let urlToSet = url {
             #if os(OSX)
-                let options = NSURLBookmarkCreationOptions.WithSecurityScope.union(.SecurityScopeAllowOnlyReadAccess)
+                let options = URL.BookmarkCreationOptions.withSecurityScope.union(.securityScopeAllowOnlyReadAccess)
                 #elseif os(iOS) || os(watchOS) || os(tvOS)
-                let options = NSURLBookmarkCreationOptions()
+                let options = URL.BookmarkCreationOptions()
             #endif
-            let data: NSData?
+            let data: Data?
             do {
-                data = try urlToSet.bookmarkDataWithOptions(options, includingResourceValuesForKeys:nil, relativeToURL:nil)
+                data = try urlToSet.bookmarkData(options: options, includingResourceValuesForKeys:nil, relativeTo:nil)
             } catch _ {
                 data = nil
             }
-            setData(data, forKey: key)
+            set(data, forKey: key)
         }
         else {
-            removeObjectForKey(key)
+            removeObject(forKey: key)
         }
     }
 

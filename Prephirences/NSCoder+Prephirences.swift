@@ -4,7 +4,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2015 Eric Marchand (phimage)
+Copyright (c) 2016 Eric Marchand (phimage)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,48 +29,48 @@ import Foundation
 
 extension NSCoder: PreferencesType {
     
-    public func objectForKey(key: String) -> AnyObject? {
-        return self.decodeObjectForKey(key)
+    public func object(forKey key: PreferenceKey) -> PreferenceObject? {
+        return self.decodeObject(forKey: key)
     }
-    public func hasObjectForKey(key: String) -> Bool {
-        return self.containsValueForKey(key)
+    public func hasObject(forKey key: PreferenceKey) -> Bool {
+        return self.containsValue(forKey: key)
     }
-    public func dictionary() -> [String : AnyObject] {
+    public func dictionary() -> PreferencesDictionary {
         return  [:]
     }
-    public func integerForKey(key: String) -> Int {
-        return self.decodeIntegerForKey(key)
+    public func integer(forKey key: PreferenceKey) -> Int {
+        return self.decodeInteger(forKey: key)
     }
-    public func floatForKey(key: String) -> Float {
-        return self.decodeFloatForKey(key)
+    public func float(forKey key: PreferenceKey) -> Float {
+        return self.decodeFloat(forKey: key)
     }
-    public func doubleForKey(key: String) -> Double {
-        return self.decodeDoubleForKey(key)
+    public func double(forKey key: PreferenceKey) -> Double {
+        return self.decodeDouble(forKey: key)
     }
-    public func boolForKey(key: String) -> Bool {
-        return self.decodeBoolForKey(key)
+    public func bool(forKey key: PreferenceKey) -> Bool {
+        return self.decodeBool(forKey: key)
     }
 }
 
 extension NSCoder: MutablePreferencesType {
-    
-    public func setObject(value: AnyObject?, forKey key: String) {
-        self.encodeObject(value, forKey: key)
+
+    public func set(_ value: PreferenceObject?, forKey key: PreferenceKey) {
+        self.encode(value, forKey: key)
     }
-    public func removeObjectForKey(key: String) {
-        self.encodeObject(nil, forKey: key)
+    public func removeObject(forKey key: PreferenceKey) {
+        self.encode(nil, forKey: key)
     }
-    public func setInteger(value: Int, forKey key: String) {
-        self.encodeInteger(value, forKey: key)
+    /* public func set(_ value: Int, forKey key: PreferenceKey) {
+        self.encode(value, forKey: key)
     }
-    public func setFloat(value: Float, forKey key: String) {
-        self.encodeFloat(value, forKey: key)
+    public func set(_ value: Float, forKey key: PreferenceKey) {
+        self.encode(value, forKey: key)
     }
-    public func setDouble(value: Double, forKey key: String) {
-        self.encodeDouble(value, forKey: key)
+    public func set(_ value: Double, forKey key: PreferenceKey) {
+        self.encode(value, forKey: key)
     }
-    public func setBool(value: Bool, forKey key: String) {
-        self.encodeBool(value, forKey: key)
-    }
+    public func set(_ value: Bool, forKey key: PreferenceKey) {
+        self.encode(value, forKey: key)
+    }*/
 
 }

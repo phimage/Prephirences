@@ -4,7 +4,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2015 Eric Marchand (phimage)
+Copyright (c) 2016 Eric Marchand (phimage)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@ SOFTWARE.
 import Foundation
 
 //MARK: composite pattern
-public class CompositePreferences: PreferencesType , ArrayLiteralConvertible {
+open class CompositePreferences: PreferencesType , ExpressibleByArrayLiteral {
     
     var array: [PreferencesType] = []
     
@@ -51,11 +51,11 @@ public class CompositePreferences: PreferencesType , ArrayLiteralConvertible {
     }
     
     // MARK: PreferencesType
-    public subscript(key: String) -> AnyObject? {
+    open subscript(key: PreferenceKey) -> PreferenceObject? {
         get {
             // first return win
             for prefs in array {
-                if let value: AnyObject = prefs.objectForKey(key){
+                if let value = prefs.object(forKey: key){
                     return value
                 }
             }
@@ -63,60 +63,60 @@ public class CompositePreferences: PreferencesType , ArrayLiteralConvertible {
         }
     }
     
-    public func objectForKey(key: String) -> AnyObject? {
+    open func object(forKey key: PreferenceKey) -> PreferenceObject? {
         return self[key]
     }
 
-    public func hasObjectForKey(key: String) -> Bool {
+    open func hasObject(forKey key: PreferenceKey) -> Bool {
         return self[key] != nil
     }
     
-    public func stringForKey(key: String) -> String? {
+    open func string(forKey key: PreferenceKey) -> String? {
         return self[key] as? String
     }
-    public func arrayForKey(key: String) -> [AnyObject]? {
+    open func array(forKey key: PreferenceKey) -> [PreferenceObject]? {
         return self[key] as? [AnyObject]
     }
-    public func dictionaryForKey(key: String) -> [String : AnyObject]? {
+    open func dictionary(forKey key: PreferenceKey) -> [String : AnyObject]? {
         return self[key] as? [String: AnyObject]
     }
-    public func dataForKey(key: String) -> NSData? {
-        return self[key] as? NSData
+    open func data(forKey key: PreferenceKey) -> Data? {
+        return self[key] as? Data
     }
-    public func stringArrayForKey(key: String) -> [String]? {
-        return self.arrayForKey(key) as? [String]
+    open func stringArray(forKey key: PreferenceKey) -> [String]? {
+        return self.array(forKey: key) as? [String]
     }
-    public func integerForKey(key: String) -> Int {
+    open func integer(forKey key: PreferenceKey) -> Int {
         return self[key] as? Int ?? 0
     }
-    public func floatForKey(key: String) -> Float {
+    open func float(forKey key: PreferenceKey) -> Float {
         return self[key] as? Float ?? 0
     }
-    public func doubleForKey(key: String) -> Double {
+    open func double(forKey key: PreferenceKey) -> Double {
         return self[key] as? Double ?? 0
     }
-    public func boolForKey(key: String) -> Bool {
+    open func bool(forKey key: PreferenceKey) -> Bool {
         if let b = self[key] as? Bool {
             return b
         }
         return false
     }
-    public func URLForKey(key: String) -> NSURL? {
-        return self[key] as? NSURL
+    open func url(forKey key: PreferenceKey) -> URL? {
+        return self[key] as? URL
     }
     
-    public func dictionary() -> [String : AnyObject] {
-        var dico = [String : AnyObject]()
-        for prefs in array.reverse() {
+    open func dictionary() -> PreferencesDictionary {
+        var dico = PreferencesDictionary()
+        for prefs in array.reversed() {
             dico += prefs.dictionary()
         }
         return dico
     }
 }
 
-public class MutableCompositePreferences: CompositePreferences, MutablePreferencesType {
+open class MutableCompositePreferences: CompositePreferences, MutablePreferencesType {
     
-    public var affectOnlyFirstMutable: Bool
+    open var affectOnlyFirstMutable: Bool
 
     public override convenience init(_ array: [PreferencesType]){
         self.init(array, affectOnlyFirstMutable: true)
@@ -127,11 +127,11 @@ public class MutableCompositePreferences: CompositePreferences, MutablePreferenc
         super.init(array)
     }
     
-    override public subscript(key: String) -> AnyObject? {
+    override open subscript(key: PreferenceKey) -> PreferenceObject? {
         get {
             // first return win
             for prefs in array {
-                if let value: AnyObject = prefs.objectForKey(key){
+                if let value = prefs.object(forKey: key){
                     return value
                 }
             }
@@ -140,7 +140,7 @@ public class MutableCompositePreferences: CompositePreferences, MutablePreferenc
         set {
             for prefs in array {
                 if let mutablePrefs = prefs as? MutablePreferencesType {
-                    mutablePrefs.setObject(newValue, forKey: key)
+                    mutablePrefs.set(newValue, forKey: key)
                     if affectOnlyFirstMutable {
                         break
                     }
@@ -149,39 +149,39 @@ public class MutableCompositePreferences: CompositePreferences, MutablePreferenc
         }
     }
     
-    public func setObject(value: AnyObject?, forKey key: String) {
+    open func set(_ value: PreferenceObject?, forKey key: PreferenceKey) {
         self[key] = value
     }
-    public func removeObjectForKey(key: String) {
+    open func removeObject(forKey key: PreferenceKey) {
         self[key] = nil
     }
-    public func setInteger(value: Int, forKey key: String){
+    open func set(_ value: Int, forKey key: PreferenceKey){
         self[key] = value
     }
-    public func setFloat(value: Float, forKey key: String){
+    open func set(_ value: Float, forKey key: PreferenceKey){
         self[key] = value
     }
-    public func setDouble(value: Double, forKey key: String) {
-        setObject(NSNumber(double: value), forKey: key)
+    open func set(_ value: Double, forKey key: PreferenceKey) {
+        set(value, forKey: key)
     }
-    public func setBool(value: Bool, forKey key: String) {
+    open func set(_ value: Bool, forKey key: PreferenceKey) {
         self[key] = value
     }
-    public func setURL(url: NSURL?, forKey key: String) {
+    open func set(_ url: URL?, forKey key: PreferenceKey) {
         self[key] = url
     }
     
-    public func setObjectsForKeysWithDictionary(dictionary: [String : AnyObject]){
+    open func set(dictionary: PreferencesDictionary){
         for prefs in array {
             if let mutablePrefs = prefs as? MutablePreferencesType {
-                mutablePrefs.setObjectsForKeysWithDictionary(dictionary)
+                mutablePrefs.set(dictionary: dictionary)
                 if affectOnlyFirstMutable {
                     break
                 }
             }
         }
     }
-    public  func clearAll() {
+    open  func clearAll() {
         for prefs in array {
             if let mutablePrefs = prefs as? MutablePreferencesType {
                 mutablePrefs.clearAll()
@@ -192,9 +192,9 @@ public class MutableCompositePreferences: CompositePreferences, MutablePreferenc
 }
 
 //MARK: proxy pattern
-public class ProxyPreferences {
-    private let proxiable: PreferencesType
-    private let parentKey: String
+open class ProxyPreferences {
+    fileprivate let proxiable: PreferencesType
+    fileprivate let parentKey: String
     var separator: String?
     
     public convenience init(preferences proxiable: PreferencesType) {
@@ -211,18 +211,18 @@ public class ProxyPreferences {
         self.separator = separator
     }
     
-    private func computeKey(key: String) -> String {
+    fileprivate func computeKey(_ key: String) -> String {
         return self.parentKey + (self.separator ?? "") + key
     }
     
-    private func hasRecursion() -> Bool {
+    fileprivate func hasRecursion() -> Bool {
         return self.separator != nil
     }
     
-    public subscript(key: String) -> AnyObject? {
+    open subscript(key: String) -> PreferenceObject? {
         get {
             let finalKey = computeKey(key)
-            if let value: AnyObject = self.proxiable.objectForKey(finalKey) {
+            if let value = self.proxiable.object(forKey: finalKey) {
                 return value
             }
             if hasRecursion() {
@@ -235,64 +235,65 @@ public class ProxyPreferences {
 }
 
 extension ProxyPreferences: PreferencesType {
-    public func objectForKey(key: String) -> AnyObject? {
-        return self.proxiable.objectForKey(key)
+
+    public func object(forKey key: PreferenceKey) -> PreferenceObject? {
+        return self.proxiable.object(forKey: key)
     }
-    public func hasObjectForKey(key: String) -> Bool {
-        return self.proxiable.hasObjectForKey(key)
+    public func hasObject(forKey key: PreferenceKey) -> Bool {
+        return self.proxiable.hasObject(forKey: key)
     }
-    public func stringForKey(key: String) -> String? {
-        return self.proxiable.stringForKey(key)
+    public func string(forKey key: PreferenceKey) -> String? {
+        return self.proxiable.string(forKey: key)
     }
-    public func arrayForKey(key: String) -> [AnyObject]? {
-        return self.proxiable.arrayForKey(key)
+    public func array(forKey key: PreferenceKey) -> [PreferenceObject]? {
+        return self.proxiable.array(forKey: key)
     }
-    public func dictionaryForKey(key: String) -> [String : AnyObject]? {
-        return self.proxiable.dictionaryForKey(key)
+    public func dictionary(forKey key: PreferenceKey) -> PreferencesDictionary? {
+        return self.proxiable.dictionary(forKey: key)
     }
-    public func dataForKey(key: String) -> NSData? {
-        return self.proxiable.dataForKey(key)
+    public func data(forKey key: PreferenceKey) -> Data? {
+        return self.proxiable.data(forKey: key)
     }
-    public func stringArrayForKey(key: String) -> [String]? {
-        return self.proxiable.stringArrayForKey(key)
+    public func stringArray(forKey key: PreferenceKey) -> [String]? {
+        return self.proxiable.stringArray(forKey: key)
     }
-    public func integerForKey(key: String) -> Int {
-        return self.proxiable.integerForKey(key)
+    public func integer(forKey key: PreferenceKey) -> Int {
+        return self.proxiable.integer(forKey: key)
     }
-    public func floatForKey(key: String) -> Float {
-        return self.proxiable.floatForKey(key)
+    public func float(forKey key: PreferenceKey) -> Float {
+        return self.proxiable.float(forKey: key)
     }
-    public func doubleForKey(key: String) -> Double {
-        return self.proxiable.doubleForKey(key)
+    public func double(forKey key: PreferenceKey) -> Double {
+        return self.proxiable.double(forKey: key)
     }
-    public func boolForKey(key: String) -> Bool {
-        return self.proxiable.boolForKey(key)
+    public func bool(forKey key: PreferenceKey) -> Bool {
+        return self.proxiable.bool(forKey: key)
     }
-    public func URLForKey(key: String) -> NSURL? {
-        return self.proxiable.URLForKey(key)
+    public func url(forKey key: PreferenceKey) -> URL? {
+        return self.proxiable.url(forKey: key)
     }
-    public func unarchiveObjectForKey(key: String) -> AnyObject? {
-        return self.proxiable.unarchiveObjectForKey(key)
+    public func unarchiveObject(forKey key: PreferenceKey) -> PreferenceObject? {
+        return self.proxiable.unarchiveObject(forKey: key)
     }
-    public func dictionary() -> [String : AnyObject] {
+    public func dictionary() -> PreferencesDictionary {
         return self.proxiable.dictionary()
     }
 }
 
-public class MutableProxyPreferences: ProxyPreferences {
+open class MutableProxyPreferences: ProxyPreferences {
     
-    private var mutable: MutablePreferencesType {
+    fileprivate var mutable: MutablePreferencesType {
         return self.proxiable as! MutablePreferencesType
     }
     
-    public init(preferences proxiable: MutablePreferencesType, key parentKey: String, separator: String) {
+    public init(preferences proxiable: MutablePreferencesType, key parentKey: PreferenceKey, separator: String) {
         super.init(preferences: proxiable, key: parentKey, separator: separator)
     }
     
-    override public subscript(key: String) -> AnyObject? {
+    override open subscript(key: PreferenceKey) -> PreferenceObject? {
         get {
             let finalKey = computeKey(key)
-            if let value: AnyObject = self.proxiable.objectForKey(finalKey) {
+            if let value = self.proxiable.object(forKey: finalKey) {
                 return value
             }
             if hasRecursion() {
@@ -303,9 +304,9 @@ public class MutableProxyPreferences: ProxyPreferences {
         set {
             let finalKey = computeKey(key)
             if newValue == nil {
-                self.mutable.removeObjectForKey(finalKey)
+                self.mutable.removeObject(forKey: finalKey)
             } else {
-                self.mutable.setObject(newValue, forKey: finalKey)
+                self.mutable.set(newValue, forKey: finalKey)
             }
         }
     }
@@ -313,36 +314,45 @@ public class MutableProxyPreferences: ProxyPreferences {
 }
 
 extension MutableProxyPreferences: MutablePreferencesType {
-    public func setObject(value: AnyObject?, forKey key: String){
-       self.mutable.setObject(value, forKey: key)
+
+    public func set(_ value: PreferenceObject?, forKey key: PreferenceKey){
+       self.mutable.set(value, forKey: key)
     }
-    public func removeObjectForKey(key: String){
-        self.mutable.removeObjectForKey(key)
+    public func removeObject(forKey key: PreferenceKey){
+        self.mutable.removeObject(forKey: key)
     }
-    public func setInteger(value: Int, forKey key: String){
-         self.mutable.setInteger(value, forKey: key)
+    public func set(_ value: Int, forKey key: PreferenceKey){
+         self.mutable.set(value, forKey: key)
     }
-    public func setFloat(value: Float, forKey key: String){
-        self.mutable.setFloat(value, forKey: key)
+    public func set(_ value: Float, forKey key: PreferenceKey){
+        self.mutable.set(value, forKey: key)
     }
-    public func setDouble(value: Double, forKey key: String){
-        self.mutable.setDouble(value, forKey: key)
+    public func set(_ value: Double, forKey key: PreferenceKey){
+        self.mutable.set(value, forKey: key)
     }
-    public func setBool(value: Bool, forKey key: String){
-        self.mutable.setBool(value, forKey: key)
+    public func set(_ value: Bool, forKey key: PreferenceKey){
+        self.mutable.set(value, forKey: key)
     }
-    public func setURL(url: NSURL?, forKey key: String){
-        self.mutable.setURL(url, forKey: key)
+    public func set(_ url: URL?, forKey key: PreferenceKey){
+        self.mutable.set(url, forKey: key)
     }
-    public func setObjectToArchive(value: AnyObject?, forKey key: String) {
-         self.mutable.setObjectToArchive(value, forKey: key)
+    public func set(objectToArchive value: PreferenceObject?, forKey key: PreferenceKey) {
+        self.mutable.set(objectToArchive: value, forKey: key)
     }
     public func clearAll(){
         self.mutable.clearAll()
     }
-    public func setObjectsForKeysWithDictionary(registrationDictionary: [String : AnyObject]){
-        self.mutable.setObjectsForKeysWithDictionary(registrationDictionary)
+    public func set(dictionary registrationDictionary: PreferencesDictionary){
+        self.mutable.set(dictionary: registrationDictionary)
     }
+}
+
+extension PreferencesType {
+
+    public func immutableProxy() -> PreferencesType {
+        return ProxyPreferences(preferences: self)
+    }
+
 }
 
 // MARK: adapter generic
@@ -356,10 +366,10 @@ public protocol PreferencesAdapter: PreferencesType {
 
 extension PreferencesAdapter {
 
-    public func dictionary() -> [String : AnyObject] {
-        var dico:Dictionary<String, AnyObject> = [:]
+    public func dictionary() -> PreferencesDictionary {
+        var dico: PreferencesDictionary = [:]
         for name in self.keys() {
-            if let value: AnyObject = self.objectForKey(name) {
+            if let value = self.object(forKey: name) {
                 dico[name] = value
             }
         }
@@ -370,25 +380,25 @@ extension PreferencesAdapter {
 
 // MARK : KVC
 // object must informal protocol NSKeyValueCoding
-public class KVCPreferences: PreferencesAdapter {
-    private let object: NSObject
+open class KVCPreferences: PreferencesAdapter {
+    fileprivate let object: NSObject
     
     public init(_ object: NSObject) {
         self.object = object
     }
     
-    public func objectForKey(key: String) -> AnyObject? {
-        return self.object.valueForKey(key)
+    open func object(forKey key: PreferenceKey) -> PreferenceObject? {
+        return self.object.value(forKey: key)
     }
     
-    public func keys() -> [String] {
+    open func keys() -> [String] {
         var names: [String] = []
         var count: UInt32 = 0
         // FIXME: not recursive?
         let properties = class_copyPropertyList(self.object.classForCoder, &count)
         for i in 0 ..< Int(count) {
-            let property: objc_property_t = properties[i]
-            let name: String = String.fromCString(property_getName(property))!
+            let property: objc_property_t = properties![i]!
+            let name: String = String(cString: property_getName(property))
             names.append(name)
         }
         free(properties)
@@ -397,45 +407,45 @@ public class KVCPreferences: PreferencesAdapter {
     
 }
 
-public class MutableKVCPreferences: KVCPreferences {
+open class MutableKVCPreferences: KVCPreferences {
     
     public override init(_ object: NSObject) {
         super.init(object)
     }
     
-    public subscript(key: String) -> AnyObject? {
+    open subscript(key: PreferenceKey) -> PreferenceObject? {
         get {
-             return self.objectForKey(key)
+             return self.object(forKey: key)
         }
         set {
-            self.setObject(newValue, forKey: key)
+            self.set(newValue, forKey: key)
         }
     }
     
 }
 
 extension MutableKVCPreferences: MutablePreferencesType {
-    public func setObject(value: AnyObject?, forKey key: String){
-        if (self.object.respondsToSelector(NSSelectorFromString(key))) {
+    public func set(_ value: PreferenceObject?, forKey key: PreferenceKey){
+        if (self.object.responds(to: NSSelectorFromString(key))) {
             self.object.setValue(value, forKey: key)
         }
     }
-    public func removeObjectForKey(key: String){
-        if (self.object.respondsToSelector(NSSelectorFromString(key))) {
+    public func removeObject(forKey key: PreferenceKey){
+        if (self.object.responds(to: NSSelectorFromString(key))) {
             self.object.setValue(nil, forKey: key)
         }
     }
-    public func setInteger(value: Int, forKey key: String){
-        self.setObject(NSNumber(integer: value), forKey: key)
+    public func set(_ value: Int, forKey key: PreferenceKey){
+        self.set(NSNumber(value: value), forKey: key)
     }
-    public func setFloat(value: Float, forKey key: String){
-        self.setObject(NSNumber(float: value), forKey: key)
+    public func set(_ value: Float, forKey key: PreferenceKey){
+        self.set(NSNumber(value: value), forKey: key)
     }
-    public func setDouble(value: Double, forKey key: String){
-        self.setObject(NSNumber(double: value), forKey: key)
+    public func set(_ value: Double, forKey key: PreferenceKey){
+        self.set(NSNumber(value: value), forKey: key)
     }
-    public func setBool(value: Bool, forKey key: String){
-        self.setObject(NSNumber(bool: value), forKey: key)
+    public func set(_ value: Bool, forKey key: PreferenceKey){
+        self.set(NSNumber(value: value), forKey: key)
     }
     public func clearAll(){
        // not implemented, maybe add protocol to set defaults attributes values
@@ -446,46 +456,46 @@ extension MutableKVCPreferences: MutablePreferencesType {
 // MARK: - Collection
 // Adapter for collection to conform to PreferencesType
 // using two closure to get key and value from an object
-public class CollectionPreferencesAdapter<C: CollectionType> {
+open class CollectionPreferencesAdapter<C: Collection> {
 
     let collection: C
-    let mapKey: C.Generator.Element -> String
-    let mapValue: C.Generator.Element -> AnyObject
+    public typealias MapPreferenceKey = (C.Iterator.Element) -> PreferenceKey
+    public typealias MapPreferenceObject = (C.Iterator.Element) -> PreferenceObject
+    
+    let mapKey: MapPreferenceKey
+    let mapValue: MapPreferenceObject
 
-    public init(collection: C,
-        mapKey: C.Generator.Element -> String,
-        mapValue: C.Generator.Element -> AnyObject
-        ) {
-            self.collection = collection
-            self.mapKey = mapKey
-            self.mapValue = mapValue
+    public init(collection: C, mapKey: MapPreferenceKey, mapValue: MapPreferenceObject) {
+        self.collection = collection
+        self.mapKey = mapKey
+        self.mapValue = mapValue
     }
 
 }
 
 extension CollectionPreferencesAdapter: PreferencesType {
 
-    public func objectForKey(key: String) -> AnyObject? {
+    public func object(forKey key: PreferenceKey) -> PreferenceObject? {
         if let object = collection.find({ mapKey($0) == key }){
             return mapValue(object)
         }
         return nil
     }
 
-    public func dictionary() -> [String : AnyObject] {
+    public func dictionary() -> PreferencesDictionary {
         return collection.dictionary{ ( mapKey($0), mapValue($0) ) }
     }
 
 }
 
 
-extension CollectionType {
+extension Collection {
 
-    func mapFilterNil<T>(@noescape transform: (Self.Generator.Element) -> T?) -> [T] {
+    func mapFilterNil<T>(_ transform: (Self.Iterator.Element) -> T?) -> [T] {
         return self.map(transform).filter{ $0 != nil }.map{ $0! }
     }
 
-    func dictionary<K, V>(@noescape transform: (Self.Generator.Element) throws -> (key: K, value: V)?) rethrows -> Dictionary<K, V> {
+    func dictionary<K, V>(_ transform: (Self.Iterator.Element) throws -> (key: K, value: V)?) rethrows -> Dictionary<K, V> {
         var dict: Dictionary<K, V> = [:]
         for e in self {
             if let (key, value) = try transform(e)
@@ -496,7 +506,7 @@ extension CollectionType {
         return dict
     }
 
-    func find(@noescape predicate: (Self.Generator.Element) throws -> Bool) rethrows -> Self.Generator.Element? {
-        return try indexOf(predicate).map({ self[$0] })
+    func find(_ predicate: (Self.Iterator.Element) throws -> Bool) rethrows -> Self.Iterator.Element? {
+        return try index(where: predicate).map({ self[$0] })
     }
 }

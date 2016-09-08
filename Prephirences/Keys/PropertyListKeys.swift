@@ -4,7 +4,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2015 Eric Marchand (phimage)
+Copyright (c) 2016 Eric Marchand (phimage)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ import Foundation
 //https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Introduction/Introduction.html
 
 // https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html#//apple_ref/doc/uid/TP40009249-SW1
-public enum CoreFoundationKeys: String {
+public enum CoreFoundationKeys: PreferenceKey {
     
     case CFBundleAllowMixedLocalizations
     case CFBundleDevelopmentRegion
@@ -78,7 +78,7 @@ public enum CoreFoundationKeys: String {
 
 extension PreferencesType {
     
-    public subscript(key: CoreFoundationKeys) -> AnyObject? {
+    public subscript(key: CoreFoundationKeys) -> PreferenceObject? {
         return self[key.rawValue]
     }
     
@@ -86,7 +86,7 @@ extension PreferencesType {
 
 #if os(iOS)
     // https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Articles/iPhoneOSKeys.html
-    public enum IOSKeys: String {
+    public enum IOSKeys: PreferenceKey {
         
         case MKDirectionsApplicationSupportedModes
         case NSHealthShareUsageDescription
@@ -116,7 +116,7 @@ extension PreferencesType {
     
     extension PreferencesType {
         
-        public subscript(key: IOSKeys) -> AnyObject? {
+        public subscript(key: IOSKeys) -> PreferenceObject? {
             return self[key.rawValue]
         }
         
@@ -125,7 +125,7 @@ extension PreferencesType {
 
 #if os(watchOS)
     // https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Articles/watchOSKeys.html#//apple_ref/doc/uid/TP40016498-SW1
-    public enum WatchOSKeys: String {
+    public enum WatchOSKeys: PreferenceKey {
         
         case CLKComplicationSupportedFamilies
         case CLKComplicationPrincipalClass
@@ -137,7 +137,7 @@ extension PreferencesType {
     }
     extension PreferencesType {
         
-        public subscript(key: WatchOSKeys) -> AnyObject? {
+        public subscript(key: WatchOSKeys) -> PreferenceObject? {
             return self[key.rawValue]
         }
         
@@ -147,7 +147,7 @@ extension PreferencesType {
 
 #if os(OSX)
     // https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Articles/GeneralPurposeKeys.html#//apple_ref/doc/uid/TP40009253-SW1
-    public enum OSXKeys: String {
+    public enum OSXKeys: PreferenceKey {
         
         case APFileDescriptionKey
         case APDisplayedAsContainer
@@ -160,7 +160,7 @@ extension PreferencesType {
     
     extension PreferencesType {
         
-        public subscript(key: OSXKeys) -> AnyObject? {
+        public subscript(key: OSXKeys) -> PreferenceObject? {
             return self[key.rawValue]
         }
         
@@ -168,7 +168,7 @@ extension PreferencesType {
 #endif
 
 // https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Articles/LaunchServicesKeys.html
-public enum LaunchServicesKeys: String {
+public enum LaunchServicesKeys: PreferenceKey {
     
     case LSMinimumSystemVersion
     
@@ -197,7 +197,7 @@ public enum LaunchServicesKeys: String {
 
 extension PreferencesType {
     
-    public subscript(key: LaunchServicesKeys) -> AnyObject? {
+    public subscript(key: LaunchServicesKeys) -> PreferenceObject? {
         return self[key.rawValue]
     }
     

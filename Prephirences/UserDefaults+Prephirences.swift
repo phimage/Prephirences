@@ -1,10 +1,10 @@
 //
-//  NSUserDefaults+Prephirences.swift
+//  UserDefaults+Prephirences.swift
 //  Prephirences
 /*
 The MIT License (MIT)
 
-Copyright (c) 2015 Eric Marchand (phimage)
+Copyright (c) 2016 Eric Marchand (phimage)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,25 +27,25 @@ SOFTWARE.
 
 import Foundation
 
-/** Prephirences Extends NSUserDefaults
+/** Prephirences Extends UserDefaults
 
 */
-extension NSUserDefaults: MutablePreferencesType {
+extension Foundation.UserDefaults: MutablePreferencesType {
 
-    public func dictionary() -> [String : AnyObject] {
+    public func dictionary() -> [PreferenceKey : PreferenceObject] {
         return self.dictionaryRepresentation()
     }
     
     //subscript access
-    public subscript(key: String) -> AnyObject? {
+    public subscript(key: PreferenceKey) -> PreferenceObject? {
         get {
-            return self.objectForKey(key)
+            return self.object(forKey: key)
         }
         set {
             if newValue == nil {
-                removeObjectForKey(key)
+                removeObject(forKey: key)
             } else {
-                setObject(newValue, forKey: key)
+                set(newValue, forKey: key)
             }
             switch newValue {
             /*case let v as Int: setInteger(v, forKey: key) // Double 0.9 will be cast to 0, let use NSNumber...
@@ -53,8 +53,8 @@ extension NSUserDefaults: MutablePreferencesType {
             case let v as Double: setDouble(v, forKey: key)
             case let v as Bool: setBool(v, forKey: key)
             case let v as NSURL: setURL(v, forKey: key)*/
-            case nil: removeObjectForKey(key)
-            default: setObject(newValue, forKey: key)
+            case nil: removeObject(forKey: key)
+            default: set(newValue, forKey: key)
             }
         }
     }
@@ -62,8 +62,8 @@ extension NSUserDefaults: MutablePreferencesType {
     #if !USER_DEFAULTS_NO_CLEAR_USING_BUNDLE
     // http://stackoverflow.com/questions/29536336/how-to-clear-all-nsuserdefaults-values-in-objective-c
     public func clearAll() {
-        if let bI = NSBundle.mainBundle().bundleIdentifier {
-            self.removePersistentDomainForName(bI)
+        if let bI = Bundle.main.bundleIdentifier {
+            self.removePersistentDomain(forName: bI)
         }
     }
     #endif
@@ -75,25 +75,25 @@ extension NSUserDefaults: MutablePreferencesType {
 
     extension NSUserDefaultsController: PreferencesType {
 
-        public func objectForKey(key: String) -> AnyObject? {
-            return self.values.valueForKey(key)
+        public func object(forKey key: PreferenceKey) -> PreferenceObject? {
+            return (self.values as AnyObject).value(forKey: key)
         }
 
-        public func dictionary() -> [String : AnyObject] {
+        public func dictionary() -> PreferencesDictionary {
             let keys = Array(self.defaults.dictionary().keys)
-            return self.values.dictionaryWithValuesForKeys(keys)
+            return (self.values as AnyObject).dictionaryWithValues(forKeys: keys)
         }
 
     }
 
     extension NSUserDefaultsController: MutablePreferencesType {
 
-        public func setObject(value: AnyObject?, forKey key: String) {
-            return self.values.setValue(value, forKeyPath: key)
+        public func set(_ value: PreferenceObject?, forKey key: PreferenceKey) {
+            (self.values as AnyObject).setValue(value, forKeyPath: key)
         }
 
-        public func removeObjectForKey(key: String) {
-            self.values.setNilValueForKey(key)
+        public func removeObject(forKey key: String) {
+            (self.values as AnyObject).setNilValueForKey(key)
         }
     }
 #endif

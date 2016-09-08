@@ -4,7 +4,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2015 Eric Marchand (phimage)
+Copyright (c) 2016 Eric Marchand (phimage)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -47,18 +47,18 @@ public class PreferencesTabViewController: NSTabViewController {
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-        self.transitionOptions = NSViewControllerTransitionOptions.None
+        self.transitionOptions = []
     }
 
-    override public func tabView(tabView: NSTabView, willSelectTabViewItem tabViewItem: NSTabViewItem?) {
+    override public func tabView(_ tabView: NSTabView, willSelect tabViewItem: NSTabViewItem?) {
         // remove listener on previous selected tab view
         if let selectedTabViewItem = self.selectedTabViewItem as? NSTabViewItem,
-            viewController = selectedTabViewItem.viewController as? PreferencesTabViewItemControllerType where observe {
+            let viewController = selectedTabViewItem.viewController as? PreferencesTabViewItemControllerType, observe {
                 (viewController as! NSViewController).removeObserver(self, forKeyPath: kPreferencesTabViewSize, context: nil)
                 observe = false
         }
         
-        super.tabView(tabView, willSelectTabViewItem: tabViewItem)
+        super.tabView(tabView, willSelect: tabViewItem)
 
         // get size and listen to change on futur selected tab view item
         if let view = tabViewItem?.view {
@@ -68,7 +68,7 @@ public class PreferencesTabViewController: NSTabViewController {
                 cacheSize[view] = getPreferencesTabViewSize(viewController, currentSize)
  
                 // Observe kPreferencesTabViewSize
-                let options = NSKeyValueObservingOptions.New.union(.Old)
+                let options = NSKeyValueObservingOptions.new.union(.old)
                 (viewController as! NSViewController).addObserver(self, forKeyPath: kPreferencesTabViewSize, options: options, context: nil)
                 observe = true
             }
@@ -78,31 +78,31 @@ public class PreferencesTabViewController: NSTabViewController {
         }
     }
 
-    override public func tabView(tabView: NSTabView, didSelectTabViewItem tabViewItem: NSTabViewItem?) {
-        super.tabView(tabView, didSelectTabViewItem: tabViewItem)
-        if let view = tabViewItem?.view, window = self.view.window, contentSize = cacheSize[view] {
-            self.setFrameSize(contentSize, forWindow: window)
+    override public func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
+        super.tabView(tabView, didSelect: tabViewItem)
+        if let view = tabViewItem?.view, let window = self.view.window, let contentSize = cacheSize[view] {
+            self.setFrameSize(size: contentSize, forWindow: window)
         }
     }
-
-    public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-        if let kp = keyPath where kp == kPreferencesTabViewSize {
-            if let window = self.view.window, viewController = object as? PreferencesTabViewItemControllerType,
-                view = (viewController as? NSViewController)?.view, currentSize = cacheSize[view]  {
-                    let contentSize = self.getPreferencesTabViewSize(viewController, currentSize)
-                    cacheSize[view] = contentSize
-                    
-                    dispatch_async(dispatch_get_main_queue()) {
-                        self.setFrameSize(contentSize, forWindow: window)
-                    }
+ 
+    public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if let kp = keyPath, kp == kPreferencesTabViewSize {
+            if let window = self.view.window, let viewController = object as? PreferencesTabViewItemControllerType,
+                let view = (viewController as? NSViewController)?.view, let currentSize = cacheSize[view]  {
+                let contentSize = self.getPreferencesTabViewSize(viewController, currentSize)
+                cacheSize[view] = contentSize
+                
+                DispatchQueue.main.async {
+                    self.setFrameSize(size: contentSize, forWindow: window)
+                }
             }
         }
         else {
-            super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
         }
     }
 
-    override public func removeTabViewItem(tabViewItem: NSTabViewItem) {
+    override public func removeTabViewItem(_ tabViewItem: NSTabViewItem) {
         if let _ = tabViewItem.view {
             if let viewController = tabViewItem.viewController as? PreferencesTabViewItemControllerType {
                 tabViewItem.removeObserver(viewController as! NSViewController, forKeyPath: kPreferencesTabViewSize)
@@ -116,7 +116,7 @@ public class PreferencesTabViewController: NSTabViewController {
 
     deinit {
         if let selectedTabViewItem = self.selectedTabViewItem as? NSTabViewItem,
-            viewController = selectedTabViewItem.viewController as? PreferencesTabViewItemControllerType where observe {
+            let viewController = selectedTabViewItem.viewController as? PreferencesTabViewItemControllerType, observe {
                 (viewController as! NSViewController).removeObserver(self, forKeyPath: kPreferencesTabViewSize, context: nil)
         }
     }
@@ -129,7 +129,7 @@ public class PreferencesTabViewController: NSTabViewController {
 
     // MARK: privates
 
-    private func getPreferencesTabViewSize(viewController: PreferencesTabViewItemControllerType, _ referenceSize: NSSize) -> NSSize {
+    private func getPreferencesTabViewSize(_ viewController: PreferencesTabViewItemControllerType,_ referenceSize: NSSize) -> NSSize {
         var controllerProposedSize = viewController.preferencesTabViewSize
         if controllerProposedSize.width <= 0 { // 0 means keep size
             controllerProposedSize.width = referenceSize.width
@@ -141,7 +141,7 @@ public class PreferencesTabViewController: NSTabViewController {
     }
     
     private func setFrameSize(size: NSSize, forWindow window: NSWindow) {
-        let newWindowSize = window.frameRectForContentRect(NSRect(origin: CGPointZero, size: size)).size
+        let newWindowSize = window.frameRect(forContentRect: NSRect(origin: CGPoint.zero, size: size)).size
         
         var frame = window.frame
         frame.origin.y += frame.size.height

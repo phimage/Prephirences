@@ -4,7 +4,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2015 Eric Marchand (phimage)
+Copyright (c) 2016 Eric Marchand (phimage)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,450 +27,150 @@ SOFTWARE.
 
 import Foundation
 
-public typealias PreferenceObject = AnyObject
+public typealias PreferenceObject = Any
 public typealias PreferenceKey = String
+public typealias PreferencesDictionary = [PreferenceKey: PreferenceObject]
 
 // MARK: - Preferences
 public protocol PreferencesType {
 
-    func objectForKey(key: PreferenceKey) -> PreferenceObject?
-    func dictionary() -> [PreferenceKey : PreferenceObject]
+    func object(forKey key: PreferenceKey) -> PreferenceObject?
+    func dictionary() -> PreferencesDictionary
 
     // MARK: Optional methods
     subscript(key: PreferenceKey) -> PreferenceObject? {get}
-    func hasObjectForKey(key: PreferenceKey) -> Bool
+    func hasObject(forKey: PreferenceKey) -> Bool
     
     
-    func stringForKey(key: PreferenceKey) -> String?
-    func arrayForKey(key: PreferenceKey) -> [PreferenceObject]?
-    func dictionaryForKey(key: PreferenceKey) -> [PreferenceKey : PreferenceObject]?
-    func stringArrayForKey(key: PreferenceKey) -> [String]?
-    func integerForKey(key: PreferenceKey) -> Int
-    func floatForKey(key: PreferenceKey) -> Float
-    func doubleForKey(key: PreferenceKey) -> Double
-    func boolForKey(key: PreferenceKey) -> Bool
+    func string(forKey: PreferenceKey) -> String?
+    func array(forKey: PreferenceKey) -> [PreferenceObject]?
+    func dictionary(forKey: PreferenceKey) -> PreferencesDictionary?
+    func stringArray(forKey: PreferenceKey) -> [String]?
+    func integer(forKey: PreferenceKey) -> Int
+    func float(forKey: PreferenceKey) -> Float
+    func double(forKey: PreferenceKey) -> Double
+    func bool(forKey: PreferenceKey) -> Bool
 
-    func dataForKey(key: PreferenceKey) -> NSData?
-    func URLForKey(key: PreferenceKey) -> NSURL?
+    func data(forKey: PreferenceKey) -> Data?
+    func url(forKey: PreferenceKey) -> URL?
 
-    func unarchiveObjectForKey(key: PreferenceKey) -> PreferenceObject?
-    func preferenceForKey<T>(key: PreferenceKey) -> Preference<T>
+    func unarchiveObject(forKey: PreferenceKey) -> PreferenceObject?
 
 }
 
 // MARK: - Mutable Preferences
 public protocol MutablePreferencesType: PreferencesType {
 
-    func setObject(value: PreferenceObject?, forKey key: PreferenceKey)
-    func removeObjectForKey(key: String)
+    func set(_ value: PreferenceObject?, forKey key: PreferenceKey)
+    func removeObject(forKey key: PreferenceKey)
 
     // MARK: Optional methods
 
-    subscript(key: String) -> PreferenceObject? {get set}
+    subscript(key: PreferenceKey) -> PreferenceObject? {get set}
 
-    func setInteger(value: Int, forKey key: PreferenceKey)
-    func setFloat(value: Float, forKey key: PreferenceKey)
-    func setDouble(value: Double, forKey key: PreferenceKey)
-    func setBool(value: Bool, forKey key: PreferenceKey)
-    func setURL(url: NSURL?, forKey key: PreferenceKey)
+    func set(_ value: Int, forKey key: PreferenceKey)
+    func set(_ value: Float, forKey key: PreferenceKey)
+    func set(_ value: Double, forKey key: PreferenceKey)
+    func set(_ value: Bool, forKey key: PreferenceKey)
+    func set(_ value: URL?, forKey key: PreferenceKey)
 
-    func setObjectToArchive(value: PreferenceObject?, forKey key: String)
+    func set(objectToArchive value: PreferenceObject?, forKey key: PreferenceKey)
     
     func clearAll()
-    func setObjectsForKeysWithDictionary(dictionary: [PreferenceKey : PreferenceObject])
-
-    func preferenceForKey<T>(key: PreferenceKey) -> MutablePreference<T>
-    
-    func immutableProxy() -> PreferencesType
+    func set(dictionary: PreferencesDictionary)
 }
 
 // MARK: - Default implementations for optional methods
 public extension PreferencesType {
 
-    subscript(key: PreferenceKey) -> AnyObject? {
-        return objectForKey(key)
+    subscript(key: PreferenceKey) -> PreferenceObject? {
+        return object(forKey: key)
     }
-    public func hasObjectForKey(key: PreferenceKey) -> Bool {
-        return self.objectForKey(key) != nil
+    public func hasObject(forKey key: PreferenceKey) -> Bool {
+        return self.object(forKey: key) != nil
     }
 
-    public func stringForKey(key: PreferenceKey) -> String? {
-        return self.objectForKey(key) as? String
+    public func string(forKey key: PreferenceKey) -> String? {
+        return self.object(forKey: key) as? String
     }
-    public func arrayForKey(key: PreferenceKey) -> [AnyObject]? {
-        return self.objectForKey(key) as? [AnyObject]
+    public func array(forKey key: PreferenceKey) -> [PreferenceObject]? {
+        return self.object(forKey: key) as? [AnyObject]
     }
-    public func dictionaryForKey(key: PreferenceKey) -> [String : AnyObject]? {
-        return self.objectForKey(key) as? [String : AnyObject]
+    public func dictionary(forKey key: PreferenceKey) -> PreferencesDictionary? {
+        return self.object(forKey: key) as? [String : AnyObject]
     }
-    public func dataForKey(key: PreferenceKey) -> NSData? {
-        return self.objectForKey(key) as? NSData
+    public func data(forKey key: PreferenceKey) -> Data? {
+        return self.object(forKey: key) as? Data
     }
-    public func stringArrayForKey(key: PreferenceKey) -> [String]? {
-        return self.objectForKey(key) as? [String]
+    public func stringArray(forKey key: PreferenceKey) -> [String]? {
+        return self.object(forKey: key) as? [String]
     }
-    public func integerForKey(key: PreferenceKey) -> Int {
-        return self.objectForKey(key) as? Int ?? 0
+    public func integer(forKey key: PreferenceKey) -> Int {
+        return self.object(forKey: key) as? Int ?? 0
     }
-    public func floatForKey(key: PreferenceKey) -> Float {
-        return self.objectForKey(key) as? Float ?? 0
+    public func float(forKey key: PreferenceKey) -> Float {
+        return self.object(forKey: key) as? Float ?? 0
     }
-    public func doubleForKey(key: PreferenceKey) -> Double {
-        return self.objectForKey(key) as? Double ?? 0
+    public func double(forKey key: PreferenceKey) -> Double {
+        return self.object(forKey: key) as? Double ?? 0
     }
-    public func boolForKey(key: PreferenceKey) -> Bool {
-        return self.objectForKey(key) as? Bool ?? false
+    public func bool(forKey key: PreferenceKey) -> Bool {
+        return self.object(forKey: key) as? Bool ?? false
     }
-    public func URLForKey(key: PreferenceKey) -> NSURL? {
-        return self.objectForKey(key) as? NSURL
-    }
-    
-
-    public func unarchiveObjectForKey(key: PreferenceKey) -> AnyObject? {
-        return Prephirences.unarchiveObject(self, forKey: key)
-    }
-    public func preferenceForKey<T>(key: PreferenceKey) -> Preference<T> {
-        return Preference<T>(preferences: self, key: key)
+    public func url(forKey key: PreferenceKey) -> URL? {
+        return self.object(forKey: key) as? URL
     }
 
 }
 
 public extension MutablePreferencesType {
 
-    public subscript(key: PreferenceKey) -> AnyObject? {
+    public subscript(key: PreferenceKey) -> PreferenceObject? {
         get {
-            return self.objectForKey(key)
+            return self.object(forKey: key)
         }
         set {
             if newValue == nil {
-                removeObjectForKey(key)
+                removeObject(forKey: key)
             } else {
-                setObject(newValue, forKey: key)
+                set(newValue, forKey: key)
             }
         }
     }
-
-    func setInteger(value: Int, forKey key: PreferenceKey) {
-        self.setObject(value, forKey: key)
+    
+    public func set(_ value: Int, forKey key: PreferenceKey) {
+        self.set(value as PreferenceObject?, forKey: key)
     }
-    func setFloat(value: Float, forKey key: PreferenceKey) {
-        self.setObject(value, forKey: key)
+    public func set(_ value: Float, forKey key: PreferenceKey) {
+        self.set(value as PreferenceObject?, forKey: key)
     }
-    func setDouble(value: Double, forKey key: PreferenceKey) {
-        self.setObject(value, forKey: key)
+    public func set(_ value: Double, forKey key: PreferenceKey) {
+        self.set(value as PreferenceObject?, forKey: key)
     }
-    func setBool(value: Bool, forKey key: PreferenceKey) {
-        self.setObject(value, forKey: key)
-    }
-
-    public func preferenceForKey<T>(key: PreferenceKey) -> MutablePreference<T> {
-        return MutablePreference<T>(preferences: self, key: key)
+    public func set(_ value: Bool, forKey key: PreferenceKey) {
+        self.set(value as PreferenceObject?, forKey: key)
     }
     
-    public func immutableProxy() -> PreferencesType {
-        return ProxyPreferences(preferences: self)
+    public func set(_ url: URL?, forKey key: PreferenceKey){
+        self.set(url as PreferenceObject?, forKey: key)
     }
-    
-    public func setObjectsForKeysWithDictionary(dictionary: [PreferenceKey : AnyObject]){
+
+    public func set(dictionary: PreferencesDictionary){
         for (key,value) in dictionary {
-            self.setObject(value, forKey: key )
+            self.set(value, forKey: key )
         }
     }
 
-    public func setObjects(objects: [AnyObject], forKeys keys: [PreferenceKey]) {
+    public func set(objects: [PreferenceObject], forKeys keys: [PreferenceKey]) {
         for keyIndex in 0 ..< keys.count {
-            self.setObject(objects[keyIndex], forKey: keys [keyIndex])
+            self.set(objects[keyIndex], forKey: keys [keyIndex])
         }
     }
 
     public func clearAll() {
         for(key,_) in self.dictionary() {
-            self.removeObjectForKey(key as PreferenceKey)
-        }
-    }
-
-    public func setObjectToArchive(value: AnyObject?, forKey key: PreferenceKey) {
-        Prephirences.archiveObject(value, preferences: self, forKey: key)
-    }
-
-    public func setURL(url: NSURL?, forKey key: PreferenceKey){
-        self.setObject(url, forKey: key)
-    }
-
-}
-
-// MARK: - transformation, archive
-
-// Protocol to modify stored and read values
-public protocol PreferenceTransformation {
-    // Transform value when reading it
-    func reverseTransformedValue<T:Any>(value: PreferenceObject?) -> T?
-    // Transform any value before storing it
-    func transformedValue<T:Any>(value: T?) -> PreferenceObject?
-}
-
-public enum TransformationKey {
-    // Default value: do nothing to values
-    case None
-
-    // Archive and unarchive for NSCoding objects
-    case Archive
-
-    // Use closures to transform
-    case ClosureTuple(transform: (Any? -> PreferenceObject?)?, revert: PreferenceObject? -> Any?)
-    
-    // Use RawValue for raw representable objects
-    // case Raw // XXX find a generic way to cast to RawRepresentable
-
-    // Chain multiple transformations
-    case Compose(transformations: [PreferenceTransformation])
-
-    #if !os(Linux)
-    // Apply an NSValueTransformer
-    case ValueTransformer(NSValueTransformer)
-    #endif
-}
-    
-
-extension TransformationKey: Equatable {
-
-    static func compose(transformation: PreferenceTransformation, with transformation2: PreferenceTransformation) -> PreferenceTransformation {
-        // if .None return the other
-        if let key = transformation as? TransformationKey where key == TransformationKey.None {
-            return transformation2
-        } else if let key = transformation2 as? TransformationKey where key == TransformationKey.None {
-            return transformation
-        }
-        // first Compose, just append
-        if let key = transformation as? TransformationKey {
-            switch(key) {
-            case .Compose(let transformations):
-                var newTransformation: [PreferenceTransformation] = transformations
-                newTransformation.append(transformation2)
-                return TransformationKey.Compose(transformations: newTransformation)
-            default:
-                break
-            }
-        }
-        // compose the two transformations
-        return TransformationKey.Compose(transformations: [transformation, transformation2])
-    }
-
-}
-
-public func ==(lhs: TransformationKey, rhs: TransformationKey) -> Bool {
-    switch (lhs, rhs) {
-
-    case (let .Compose(ts1), let .Compose(ts2)):
-        if ts1.isEmpty && ts2.isEmpty {
-            return true
-        }
-        return false
-    case (let .ValueTransformer(t1), let .ValueTransformer((t2))):
-        return t1 == t2
-    case (.Archive, .Archive):
-        return true
-    case (.None, .None):
-        return true
-    /*case (let .ClosureTuple(t1, r1), let .ClosureTuple(t2, r2)):
-        return false*/
-    default:
-        return false
-    }
-}
-
-public extension PreferencesType {
-
-
-    public subscript(key: PreferenceKey, closure: (PreferenceObject?) -> Any?) -> Any? {
-        return closure(objectForKey(key))
-    }
-    
-    public subscript(key: PreferenceKey, transformationKey: TransformationKey) -> Any? {
-        return transformationKey.get(key, from: self)
-    }
-    
-    public subscript(key: PreferenceKey, transformation: PreferenceTransformation) -> Any? {
-        return transformation.get(key, from: self)
-    }
-    
-    #if !os(Linux)
-    public subscript(key: PreferenceKey, valueTransformer: NSValueTransformer) -> AnyObject? {
-        return  valueTransformer.reverseTransformedValue(objectForKey(key))
-    }
-    #endif
-}
-
-public extension MutablePreferencesType {
-
-    public subscript(key: PreferenceKey, transformationKey: TransformationKey) -> Any? {
-        get {
-            return transformationKey.get(key, from: self)
-        }
-        set {
-            transformationKey.set(key, value: newValue, to: self)
-        }
-    }
-    
-    public subscript(key: PreferenceKey, transformation: PreferenceTransformation) -> Any? {
-        get {
-            return transformation.get(key, from: self)
-        }
-        set {
-            transformation.set(key, value: newValue, to: self)
-        }
-    }
-
-    #if !os(Linux)
-    public subscript(key: PreferenceKey, valueTransformer: NSValueTransformer) -> AnyObject? {
-        get {
-            return valueTransformer.reverseTransformedValue(objectForKey(key))
-        }
-        set {
-            assert(valueTransformer.classForCoder.allowsReverseTransformation()) // don't store not decodable value
-            let transformedValue = valueTransformer.transformedValue(newValue)
-            if transformedValue == nil {
-                removeObjectForKey(key)
-            }
-            else {
-                setObject(transformedValue, forKey: key)
-            }
-        }
-    }
-    #endif
-
-}
-
-extension PreferenceTransformation {
-
-    public func get<T: Any>(key: PreferenceKey,from preferences: PreferencesType) -> T? {
-        let value = preferences.objectForKey(key)
-        return reverseTransformedValue(value)
-    }
-
-    public func set<T: Any>(key: PreferenceKey, value newValue: T?, to preferences: MutablePreferencesType) {
-        if  let transformedValue = self.transformedValue(newValue) {
-            preferences.setObject(transformedValue, forKey: key)
-        } else {
-            preferences.removeObjectForKey(key)
+            self.removeObject(forKey: key)
         }
     }
 
 }
-
-
-extension TransformationKey: PreferenceTransformation {
-
-    public func reverseTransformedValue<T: Any>(value: PreferenceObject?) -> T? {
-        switch(self) {
-        case .None :
-            return value as? T
-        case .Archive :
-            if let data = value as? NSData {
-                return Prephirences.unarchive(data) as? T
-            }
-            return nil
-        case .ValueTransformer(let valueTransformer) :
-            return valueTransformer.reverseTransformedValue(value) as? T
-        case .ClosureTuple(let (_, revert)) :
-            return revert(value) as? T
-        case .Compose(transformations: let ts):
-            if ts.isEmpty {
-                return value as? T
-            }
-            var currentValue = value
-            var slice = ts[ts.indices]
-            var tranformation = slice.popFirst()
-            while (tranformation != nil)  {
-                currentValue = tranformation?.reverseTransformedValue(currentValue)
-                tranformation = slice.popFirst()
-            }
-            return currentValue as? T
-        }
-    }
-    
-    public func transformedValue<T:Any>(value: T?) -> PreferenceObject? {
-        switch(self) {
-        case .None :
-            return value as? PreferenceObject
-        case .Archive :
-            if let archivable = value as? NSCoding {
-                return Prephirences.archive(archivable)
-            } else {
-                return nil
-            }
-        case .ValueTransformer(let valueTransformer) :
-           return valueTransformer.transformedValue(value as? AnyObject)
-        case .ClosureTuple(let (transform, _)) :
-            return transform == nil ? value as? PreferenceObject : transform?(value)
-        case .Compose(transformations: let ts) :
-            if ts.isEmpty {
-                return value as? PreferenceObject
-            }
-            var currentValue = value as? PreferenceObject
-            var slice = ts[ts.indices]
-            var tranformation = slice.popLast()
-            while (tranformation != nil)  {
-                currentValue = tranformation?.transformedValue(currentValue)
-                tranformation = slice.popLast()
-            }
-            return currentValue
-        }
-    }
-    
-}
-
-// MARK: RawRepresentable
-
-extension RawRepresentable where Self.RawValue: Any {
-    
-    init?(preferenceObject: PreferenceObject?) {
-        if let rawValue = preferenceObject as? Self.RawValue {
-            self.init(rawValue: rawValue)
-        } else {
-            return nil
-        }
-    }
-    
-    static func rawValueOf(value: Any?) -> PreferenceObject? {
-        return (value as? Self)?.rawValue as? PreferenceObject
-    }
-    
-    // Return a transformation object for prephirences
-    public static var preferenceTransformation: PreferenceTransformation {
-        return TransformationKey.ClosureTuple(transform: Self.rawValueOf, revert: Self.init)
-    }
-}
-
-public extension PreferencesType {
-
-    // Read a RawRepresentable object
-    public func rawRepresentableForKey<T: RawRepresentable>(key: PreferenceKey) -> T? {
-        if let rawValue = self.objectForKey(key) as? T.RawValue {
-            return T(rawValue: rawValue)
-        }
-        return nil
-    }
-
-}
-
-public extension MutablePreferencesType {
-
-    // Store a RawRepresentable object
-    public func setRawValue<T: RawRepresentable>(value: T?, forKey key: PreferenceKey) {
-        if let rawValue = value?.rawValue as? PreferenceObject {
-            self.setObject(rawValue, forKey: key)
-        } else {
-            self.removeObjectForKey(key)
-        }
-    }
-
-}
-
-
-
-// MARK: - private
-// dictionary append
-internal func +=<K, V> (inout left: [K : V], right: [K : V]) { for (k, v) in right { left[k] = v } }
-
-

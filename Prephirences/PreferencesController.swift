@@ -4,7 +4,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2015 Eric Marchand (phimage)
+Copyright (c) 2016 Eric Marchand (phimage)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,23 +29,23 @@ import Foundation
 
 
 @objc(PreferencesKVCHelper)
-public class PreferencesKVCHelper: NSObject { // NSKeyValueCoding
+open class PreferencesKVCHelper: NSObject { // NSKeyValueCoding
 
-    public var preferences: MutablePreferencesType?
+    open var preferences: MutablePreferencesType?
 
     public init(preferences: MutablePreferencesType?){
         self.preferences = preferences
     }
 
     // informal NSKeyValueCoding
-    public override func valueForKey(key: String) -> AnyObject? {
+    open override func value(forKey key: PreferenceKey) -> Any? {
         return preferences?[key]
     }
 
-    public override func setValue(value: AnyObject?, forKey key: String) {
-        self.willChangeValueForKey(key)
+    open override func setValue(_ value: Any?, forKey key: PreferenceKey) {
+        self.willChangeValue(forKey: key)
         preferences?[key] = value
-        self.didChangeValueForKey(key)
+        self.didChangeValue(forKey: key)
     }
 
 }
@@ -58,13 +58,7 @@ public class PreferencesKVCHelper: NSObject { // NSKeyValueCoding
         
         public var values = PreferencesKVCHelper(preferences: nil)
         
-        public class var sharedUserDefaultsController: PreferencesController {
-            struct Static {
-                static var instance = PreferencesController(preferences: NSUserDefaults.standardUserDefaults())
-            }
-            return Static.instance
-        }
- 
+        public static let sharedUserDefaultsController = PreferencesController(preferences: Foundation.UserDefaults.standard)
 
         public override init() {
             super.init()

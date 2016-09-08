@@ -1,10 +1,10 @@
 //
-//  NSBundle.swift
+//  Bundle.swift
 //  Prephirences
 /*
 The MIT License (MIT)
 
-Copyright (c) 2015 Eric Marchand (phimage)
+Copyright (c) 2016 Eric Marchand (phimage)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,15 +27,14 @@ SOFTWARE.
 
 import Foundation
 
-extension NSBundle: PreferencesType {
+extension Foundation.Bundle: PreferencesType {
     
-    
-    public func objectForKey(key: String) -> AnyObject? {
-        return self.objectForInfoDictionaryKey(key)
+    public func object(forKey key: PreferenceKey) -> PreferenceObject? {
+        return self.object(forInfoDictionaryKey: key)
     }
     
-    public func dictionary() -> [String : AnyObject] {
-        return self.infoDictionary ?? [:]
+    public func dictionary() -> PreferencesDictionary {
+        return self.infoDictionary as PreferencesDictionary? ?? [:]
     }
-    
+
 }
