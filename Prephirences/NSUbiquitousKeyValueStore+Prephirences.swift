@@ -49,15 +49,13 @@ extension NSUbiquitousKeyValueStore : MutablePreferencesType {
         return Float(double(forKey: key))
     }
 
-    /* SWIFT3 no more compiling, signature conflict
-     public func set(_ value: Int, forKey key: PreferenceKey) {
-     set(Int64(value), forKey: key)
-     }
-     
-     public func set(_ value: Float, forKey key: PreferenceKey) {
-     set(Double(value), forKey: key)
-     }
-     */
+    @nonobjc public func set(_ value: Int, forKey key: PreferenceKey) {
+        set(Int64(value), forKey: key)
+    }
+    
+    @nonobjc public func set(_ value: Float, forKey key: PreferenceKey) {
+        set(Double(value), forKey: key)
+    }
 }
 
 

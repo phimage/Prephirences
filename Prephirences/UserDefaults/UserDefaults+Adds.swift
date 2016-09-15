@@ -88,7 +88,7 @@ public extension Foundation.UserDefaults {
         return nil
     }
     
-    public func set(_ value: CGRect, forKey key: PreferenceKey) {
+    @nonobjc public func set(_ value: CGRect, forKey key: PreferenceKey) {
         self.set(NSStringFromCGRect(value), forKey: key)
     }
     
@@ -98,9 +98,8 @@ public extension Foundation.UserDefaults {
         }
         return nil
     }
-    
-    //SWIFT3: fix compil issue if no "point"
-    public func set(size value: CGSize, forKey key: PreferenceKey) {
+
+    @nonobjc public func set(_ value: CGSize, forKey key: PreferenceKey) {
         self.set(NSStringFromCGSize(value), forKey: key)
     }
     
@@ -110,9 +109,8 @@ public extension Foundation.UserDefaults {
         }
         return nil
     }
-    
-    //SWIFT3: fix compil issue if no "point"
-    public func set(point value: CGPoint, forKey key: PreferenceKey) {
+
+    @nonobjc public func set(_ value: CGPoint, forKey key: PreferenceKey) {
         self.set(NSStringFromCGPoint(value), forKey: key)
     }
     

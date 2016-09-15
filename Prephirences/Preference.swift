@@ -114,7 +114,7 @@ open class MutablePreference<T>: Preference<T> {
     }
 
     // Add a callback when the value is set in the defaults using the returned instance
-    open func didSet(_ closure: DidSetFunction) -> MutablePreference<T> {
+    open func didSet(_ closure: @escaping DidSetFunction) -> MutablePreference<T> {
         let newPref = MutablePreference<T>(preferences: self.mutablePreferences, key: self.key, transformation: self.transformation)
         newPref.didSetFunction = closure
         return newPref

@@ -465,7 +465,7 @@ open class CollectionPreferencesAdapter<C: Collection> {
     let mapKey: MapPreferenceKey
     let mapValue: MapPreferenceObject
 
-    public init(collection: C, mapKey: MapPreferenceKey, mapValue: MapPreferenceObject) {
+    public init(collection: C, mapKey: @escaping MapPreferenceKey, mapValue: @escaping MapPreferenceObject) {
         self.collection = collection
         self.mapKey = mapKey
         self.mapValue = mapValue
