@@ -136,7 +136,6 @@ public extension Foundation.UserDefaults {
 }
 
 //MARK: Global shortcut
-public let UserDefaults = Foundation.UserDefaults.standard
 public var UserDefaultsKeySeparator = "."
 
 #if os(OSX)
