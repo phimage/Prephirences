@@ -162,7 +162,7 @@ open class MutableCompositePreferences: CompositePreferences, MutablePreferences
         self[key] = value
     }
     open func set(_ value: Double, forKey key: PreferenceKey) {
-        set(value, forKey: key)
+        self[key] = value
     }
     open func set(_ value: Bool, forKey key: PreferenceKey) {
         self[key] = value
