@@ -4,7 +4,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2016 Eric Marchand (phimage)
+Copyright (c) 2017 Eric Marchand (phimage)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -33,14 +33,14 @@ extension HTTPCookieStorage: PreferencesType {
         guard let cookies = self.cookies else {
             return nil
         }
-        return cookies.find{$0.name == key}?.value
+        return cookies.find {$0.name == key}?.value
     }
 
     public func dictionary() -> PreferencesDictionary {
         guard let cookies = self.cookies else {
             return [:]
         }
-        return cookies.dictionary{($0.name, $0.value)}
+        return cookies.dictionary {($0.name, $0.value)}
     }
 
 }

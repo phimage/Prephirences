@@ -4,7 +4,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2016 Eric Marchand (phimage)
+Copyright (c) 2017 Eric Marchand (phimage)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -32,21 +32,20 @@ open class Prephirences {
 
     /** Shared preferences. Could be replaced by any other preferences */
     open static var sharedInstance: PreferencesType = MutableDictionaryPreferences()
-    
+
     // casting shortcut for sharedInstance
     open static var sharedMutableInstance: MutablePreferencesType? {
         return sharedInstance as? MutablePreferencesType
     }
 
     // MARK: register by key
-    fileprivate static var _instances: Dictionary<PrephirencesKey,PreferencesType> = Dictionary<PrephirencesKey,PreferencesType>()
+    fileprivate static var _instances = [PrephirencesKey: PreferencesType]()
 
     /* Get Preferences for PrephirencesKey */
-    fileprivate class func instance(forKey key: PrephirencesKey, orRegister newOne: PreferencesType? = nil) -> PreferencesType?{
+    fileprivate class func instance(forKey key: PrephirencesKey, orRegister newOne: PreferencesType? = nil) -> PreferencesType? {
         if let value = self._instances[key] {
             return value
-        }
-        else if let toRegister = newOne {
+        } else if let toRegister = newOne {
             registerInstance(toRegister, forKey: key)
         }
         return newOne
@@ -61,7 +60,7 @@ open class Prephirences {
     }
 
     /* Get Preferences for key */
-    open class func instance<Key: Hashable>(forKey key: Key, orRegister newOne: PreferencesType? = nil) -> PreferencesType?{
+    open class func instance<Key: Hashable>(forKey key: Key, orRegister newOne: PreferencesType? = nil) -> PreferencesType? {
         return self.instance(forKey: PrephirencesKey(key), orRegister: newOne)
     }
     /* Add Preferences for key */
@@ -77,7 +76,7 @@ open class Prephirences {
     open static func instances<KeyType: Hashable>() -> PrephirencesForType<KeyType> {
         return PrephirencesForType<KeyType>()
     }
-    
+
     static func isEmpty<T>(_ value: T?) -> Bool {
         return value == nil
     }
@@ -88,20 +87,16 @@ open class Prephirences {
         }
         return nil
     }
-    
+
     open static func raw<T>(_ value: T?) -> T.RawValue? where T: RawRepresentable, T.RawValue: PreferenceObject {
         return value?.rawValue
     }
 
 }
 
-
-
-
-
 /* Allow to access or modify Preferences according to key type */
 open class PrephirencesForType<Key: Hashable> {
-    
+
     open subscript(key: PreferenceKey) -> PreferencesType? {
         get {
             return Prephirences.instance(forKey: key)
@@ -109,8 +104,7 @@ open class PrephirencesForType<Key: Hashable> {
         set {
             if let value = newValue {
                 Prephirences.registerInstance(value, forKey: key)
-            }
-            else {
+            } else {
                 let _ = Prephirences.unregisterInstance(forKey: key)
             }
         }
@@ -123,7 +117,7 @@ struct PrephirencesKey: Hashable, Equatable {
     fileprivate let underlying: Any
     fileprivate let hashValueFunc: () -> Int
     fileprivate let equalityFunc: (Any) -> Bool
-    
+
     init<T: Hashable>(_ key: T) {
         underlying = key
         hashValueFunc = { key.hashValue }
@@ -134,16 +128,15 @@ struct PrephirencesKey: Hashable, Equatable {
             return false
         }
     }
-    
+
     var hashValue: Int { return hashValueFunc() }
 }
 
-internal func ==(x: PrephirencesKey, y: PrephirencesKey) -> Bool {
-    return x.equalityFunc(y.underlying)
+internal func == (left: PrephirencesKey, right: PrephirencesKey) -> Bool {
+    return left.equalityFunc(right.underlying)
 }
 
 // MARK: archive/unarchive
-
 
 extension Prephirences {
 
@@ -153,21 +146,20 @@ extension Prephirences {
         }
         return nil
     }
-    
-    open static func archive(object value: PreferenceObject?, intoPreferences preferences: MutablePreferencesType, forKey key: PreferenceKey){
+
+    open static func archive(object value: PreferenceObject?, intoPreferences preferences: MutablePreferencesType, forKey key: PreferenceKey) {
         if let toArchive: PreferenceObject = value {
             let data = archive(toArchive)
             preferences.set(data, forKey: key)
-        }
-        else {
+        } else {
             preferences.removeObject(forKey: key)
         }
     }
-    
+
     open static func unarchive(_ data: Data) -> PreferenceObject? {
         return NSKeyedUnarchiver.unarchiveObject(with: data)
     }
-    
+
     open static func archive(_ object: PreferenceObject) -> Data {
         return NSKeyedArchiver.archivedData(withRootObject: object)
     }
@@ -184,4 +176,3 @@ extension MutablePreferencesType {
         Prephirences.archive(object: value, intoPreferences: self, forKey: key)
     }
 }
-

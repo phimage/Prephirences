@@ -4,7 +4,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2016 Eric Marchand (phimage)
+Copyright (c) 2017 Eric Marchand (phimage)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,13 +27,12 @@ SOFTWARE.
 
 import Foundation
 
-
 @objc(PreferencesKVCHelper)
 open class PreferencesKVCHelper: NSObject { // NSKeyValueCoding
 
     open var preferences: MutablePreferencesType?
 
-    public init(preferences: MutablePreferencesType?){
+    public init(preferences: MutablePreferencesType?) {
         self.preferences = preferences
     }
 
@@ -52,12 +51,12 @@ open class PreferencesKVCHelper: NSObject { // NSKeyValueCoding
 
 #if os(OSX)
     import AppKit
-    
+
     @objc(PreferencesController)
     public class PreferencesController: NSController {
-        
+
         public var values = PreferencesKVCHelper(preferences: nil)
-        
+
         public static let sharedUserDefaultsController = PreferencesController(preferences: Foundation.UserDefaults.standard)
 
         public override init() {
@@ -74,7 +73,7 @@ open class PreferencesKVCHelper: NSObject { // NSKeyValueCoding
         }
 
     }
-    
+
     @objc(UserDefaultsPreferencesControllerProxy)
     public class UserDefaultsPreferencesControllerProxy: NSObject {
         lazy var defaults = PreferencesController.sharedUserDefaultsController

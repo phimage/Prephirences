@@ -4,7 +4,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2016 Eric Marchand (phimage)
+Copyright (c) 2017 Eric Marchand (phimage)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -44,25 +44,23 @@ open class Preference<T> {
             self.transformation = newValue
         }
     }
-    
+
     public init(preferences: PreferencesType, key: PreferenceKey, transformation: PreferenceTransformation = TransformationKey.none) {
         self.preferences = preferences
         self.key = key
         self.transformation = transformation
     }
-    
+
     // Computed property value
     open var value: T? {
-        get {
-            return self.transformation.get(self.key, from: self.preferences)
-        }
+        return self.transformation.get(self.key, from: self.preferences)
     }
-    
+
     // Return true if value is not nil
     open var hasValue: Bool {
         return self.preferences.hasObject(forKey: self.key)
     }
-    
+
     // Return true if value is nil
     open var isEmpty: Bool {
         return self.value == nil
@@ -77,16 +75,15 @@ extension PreferencesType {
 
 }
 
-
 // Mutable instance of `Preference`
 open class MutablePreference<T>: Preference<T> {
 
     public typealias DidSetFunction = (_ newValue: T?, _ oldValue: T?) -> Void
     // Callback to call after each value set/unset
     open var didSetFunction: DidSetFunction?
-    
-    
+
     var mutablePreferences: MutablePreferencesType {
+        // swiftlint:disable:next force_cast
         return preferences as! MutablePreferencesType
     }
 
@@ -124,7 +121,7 @@ open class MutablePreference<T>: Preference<T> {
     open func apply(_ closure: (T?) -> T?) {
         self.value = closure(self.value)
     }
-    
+
     // Return a new instance with a different type
     open func transform<U>(_ closure: (T?) -> U?) -> MutablePreference<U> {
         let newPref = MutablePreference<U>(preferences: self.mutablePreferences, key: self.key, transformation: self.transformation)
@@ -136,7 +133,7 @@ open class MutablePreference<T>: Preference<T> {
         }
         return newPref
     }
-    
+
     // Use a default value if when closure return true.
     open func ensure(when: @escaping (T?) -> Bool, use defaultValue: T) -> MutablePreference<T> {
         let newPref = MutablePreference<T>(preferences: self.mutablePreferences, key: key)

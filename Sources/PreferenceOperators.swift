@@ -3,9 +3,8 @@
 //  Prephirences
 //
 //  Created by phimage on 29/08/16.
-//  Copyright © 2016 phimage. All rights reserved.
+//  Copyright (c) 2017 Eric Marchand (phimage). All rights reserved.
 //
-
 
 #if os(Linux)
     import Glibc
@@ -16,7 +15,6 @@
     import UIKit
 #endif
 #endif
-
 
 // MARK: - operators
 
@@ -32,26 +30,26 @@ public func ?=<T> (preference: MutablePreference<T>, expr: @autoclosure () -> T)
 // MARK: Pattern match
 // infix operator ~=: ComparaisonPrecedence
 public func ~=<T: Equatable> (value: T, preference: Preference<T>) -> Bool {
-    if let pv = preference.value  {
+    if let pv = preference.value {
         return pv ~= value
     }
     return false
 }
 public func ~=<T: Equatable> (preference: Preference<T>, value: T) -> Bool {
-    if let pv = preference.value  {
+    if let pv = preference.value {
         return pv ~= value
     }
     return false
 }
 
-public func ~=<B: Comparable> (value: CountableClosedRange<B>, preference: Preference<B>) -> Bool  {
-    if let pv = preference.value  {
+public func ~=<B: Comparable> (value: CountableClosedRange<B>, preference: Preference<B>) -> Bool {
+    if let pv = preference.value {
         return value ~= pv
     }
     return false
 }
 public func ~=<B: Comparable> (preference: Preference<B>, value: CountableClosedRange<B>) -> Bool {
-    if let pv = preference.value  {
+    if let pv = preference.value {
         return value ~= pv
     }
     return false
@@ -86,7 +84,7 @@ public protocol Initializable {
 extension Int: Initializable {}
 extension Float: Initializable {}
 extension Double: Initializable {}
-extension UInt8: Initializable{}
+extension UInt8: Initializable {}
 extension Int8: Initializable {}
 extension UInt16: Initializable {}
 extension Int16: Initializable {}
@@ -127,25 +125,25 @@ public func %=<T> (preference: inout MutablePreference<T>, modulo : T) where T:I
 }
 
 // MARK: Bitwise Operations
-public func &=<T>(preference: inout MutablePreference<T>, rhs: T) where T: BitwiseOperations, T:Initializable {
+public func &= <T>(preference: inout MutablePreference<T>, rhs: T) where T: BitwiseOperations, T:Initializable {
     let c = preference.value ?? T()
     preference.value = c & rhs
 }
-public func |=<T>(preference: inout MutablePreference<T>, rhs: T) where T: BitwiseOperations, T:Initializable {
+public func |= <T>(preference: inout MutablePreference<T>, rhs: T) where T: BitwiseOperations, T:Initializable {
     let c = preference.value ?? T()
     preference.value = c | rhs
 }
-public func ^=<T>(preference: inout MutablePreference<T>, rhs: T) where T: BitwiseOperations, T:Initializable  {
+public func ^=<T> (preference: inout MutablePreference<T>, rhs: T) where T: BitwiseOperations, T:Initializable {
     let c = preference.value ?? T()
     preference.value = c ^ rhs
 }
-public func ~=<T>(preference: inout MutablePreference<T>, rhs: T) where T: BitwiseOperations {
+public func ~= <T>(preference: inout MutablePreference<T>, rhs: T) where T: BitwiseOperations {
     preference.value = ~rhs
 }
 
 // MARK: Addable
 public protocol Addable {
-    static func + (l: Self, r: Self) -> Self
+    static func + (left: Self, right: Self) -> Self
 }
 extension String: Addable {}
 extension Array: Addable {}
@@ -175,7 +173,8 @@ extension Conjunctive {
         lhs = lhs && rhs
     }
 }
-public func &&<T>(left: MutablePreference<T>, right: Preference<T>) -> T where T: Conjunctive, T:Initializable {
+
+public func && <T>(left: MutablePreference<T>, right: Preference<T>) -> T where T: Conjunctive, T:Initializable {
     let leftV = left.value ?? T()
     let rightV = right.value ?? T()
     return leftV && rightV
@@ -184,7 +183,6 @@ public func &&=<T> (preference: inout MutablePreference<T>, right: @autoclosure 
     let c = preference.value ?? T()
     try preference.value = c && right
 }
-
 
 /// MARK: Disjunctive
 public protocol Disjunctive {
@@ -196,15 +194,14 @@ extension Disjunctive {
         lhs = lhs || rhs
     }
 }
-public func ||=<T>(preference: inout MutablePreference<T>, rhs: @autoclosure () throws -> T) rethrows where T: Disjunctive, T:Initializable  {
+
+public func ||=<T> (preference: inout MutablePreference<T>, rhs: @autoclosure () throws -> T) rethrows where T: Disjunctive, T: Initializable {
     let c = preference.value ?? T()
     try preference.value = c || rhs
 }
-public func ||<T>(left: MutablePreference<T>, right: Preference<T>) -> T where T: Disjunctive, T:Initializable {
+
+public func || <T>(left: MutablePreference<T>, right: Preference<T>) -> T where T: Disjunctive, T:Initializable {
     let leftV = left.value ?? T()
     let rightV = right.value ?? T()
     return leftV || rightV
 }
-
-
-

@@ -4,7 +4,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2016 Eric Marchand (phimage)
+Copyright (c) 2017 Eric Marchand (phimage)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -40,8 +40,7 @@ public protocol PreferencesType {
     // MARK: Optional methods
     subscript(key: PreferenceKey) -> PreferenceObject? {get}
     func hasObject(forKey: PreferenceKey) -> Bool
-    
-    
+
     func string(forKey: PreferenceKey) -> String?
     func array(forKey: PreferenceKey) -> [PreferenceObject]?
     func dictionary(forKey: PreferenceKey) -> PreferencesDictionary?
@@ -75,7 +74,7 @@ public protocol MutablePreferencesType: PreferencesType {
     func set(_ value: URL?, forKey key: PreferenceKey)
 
     func set(objectToArchive value: PreferenceObject?, forKey key: PreferenceKey)
-    
+
     func clearAll()
     func set(dictionary: PreferencesDictionary)
 }
@@ -137,7 +136,7 @@ public extension MutablePreferencesType {
             }
         }
     }
-    
+
     public func set(_ value: Int, forKey key: PreferenceKey) {
         self.set(value as PreferenceObject?, forKey: key)
     }
@@ -150,13 +149,13 @@ public extension MutablePreferencesType {
     public func set(_ value: Bool, forKey key: PreferenceKey) {
         self.set(value as PreferenceObject?, forKey: key)
     }
-    
-    public func set(_ url: URL?, forKey key: PreferenceKey){
+
+    public func set(_ url: URL?, forKey key: PreferenceKey) {
         self.set(url as PreferenceObject?, forKey: key)
     }
 
-    public func set(dictionary: PreferencesDictionary){
-        for (key,value) in dictionary {
+    public func set(dictionary: PreferencesDictionary) {
+        for (key, value) in dictionary {
             self.set(value, forKey: key )
         }
     }
@@ -168,7 +167,7 @@ public extension MutablePreferencesType {
     }
 
     public func clearAll() {
-        for(key,_) in self.dictionary() {
+        for (key, _) in self.dictionary() {
             self.removeObject(forKey: key)
         }
     }

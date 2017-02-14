@@ -4,7 +4,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2016 Eric Marchand (phimage)
+Copyright (c) 2017 Eric Marchand (phimage)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,7 @@ extension ReflectingPreferences {
         let mirror = Mirror(reflecting: self)
         // guard let style = mirror.displayStyle where style == .Struct || style == .Class else { return nil }
 
-        return mirror.children.find{$0.label == key}?.value
+        return mirror.children.find {$0.label == key}?.value
     }
 
     public func dictionary() -> PreferencesDictionary {
@@ -51,5 +51,5 @@ extension ReflectingPreferences {
 
         return mirror.children.dictionary(transform)
     }
-    
+
 }

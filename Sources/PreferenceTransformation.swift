@@ -3,7 +3,7 @@
 //  Prephirences
 //
 //  Created by phimage on 08/09/16.
-//  Copyright © 2016 phimage. All rights reserved.
+//  Copyright (c) 2017 Eric Marchand (phimage). All rights reserved.
 //
 
 import Foundation
@@ -22,28 +22,27 @@ public protocol PreferenceTransformation {
 public enum TransformationKey {
     // Default value: do nothing to values
     case none
-    
+
     // Archive and unarchive for NSCoding objects
     case archive
-    
+
     // Use closures to transform
     case closureTuple(transform: ((PreferenceTransformationObject?) -> PreferenceObject?)?, revert: (PreferenceObject?) -> PreferenceTransformationObject?)
-    
+
     // Use RawValue for raw representable objects
     // case Raw // XXX find a generic way to cast to RawRepresentable
-    
+
     // Chain multiple transformations
     case compose(transformations: [PreferenceTransformation])
-    
+
     #if !os(Linux)
     // Apply an NSValueTransformer
     case valueTransformer(Foundation.ValueTransformer)
     #endif
 }
 
-
 extension TransformationKey {
-    
+
     static func smartCompose(left transformation: PreferenceTransformation, right transformation2: PreferenceTransformation) -> PreferenceTransformation {
         // if .None return the other
         if let key = transformation as? TransformationKey, key == TransformationKey.none {
@@ -53,7 +52,7 @@ extension TransformationKey {
         }
         // first Compose, just append
         if let key = transformation as? TransformationKey {
-            switch(key) {
+            switch key {
             case .compose(let transformations):
                 var newTransformation: [PreferenceTransformation] = transformations
                 newTransformation.append(transformation2)
@@ -65,14 +64,14 @@ extension TransformationKey {
         // compose the two transformations
         return TransformationKey.compose(transformations: [transformation, transformation2])
     }
-    
+
 }
 
 extension TransformationKey: Equatable {}
 
-public func ==(lhs: TransformationKey, rhs: TransformationKey) -> Bool {
+public func == (lhs: TransformationKey, rhs: TransformationKey) -> Bool {
     switch (lhs, rhs) {
-        
+
     case (let .compose(ts1), let .compose(ts2)):
         if ts1.isEmpty && ts2.isEmpty {
             return true
@@ -96,15 +95,15 @@ public extension PreferencesType {
     public subscript(key: PreferenceKey, closure: (PreferenceObject?) -> Any?) -> Any? {
         return closure(object(forKey: key))
     }
-    
+
     public subscript(key: PreferenceKey, transformationKey: TransformationKey) -> Any? {
         return transformationKey.get(key, from: self)
     }
-    
+
     public subscript(key: PreferenceKey, transformation: PreferenceTransformation) -> Any? {
         return transformation.get(key, from: self)
     }
-    
+
     #if !os(Linux)
     public subscript(key: PreferenceKey, valueTransformer: ValueTransformer) -> PreferenceObject? {
         return valueTransformer.reverseTransformedValue(object(forKey: key))
@@ -113,7 +112,7 @@ public extension PreferencesType {
 }
 
 public extension MutablePreferencesType {
-    
+
     public subscript(key: PreferenceKey, transformationKey: TransformationKey) -> Any? {
         get {
             return transformationKey.get(key, from: self)
@@ -122,7 +121,7 @@ public extension MutablePreferencesType {
             transformationKey.set(key, value: newValue, to: self)
         }
     }
-    
+
     public subscript(key: PreferenceKey, transformation: PreferenceTransformation) -> Any? {
         get {
             return transformation.get(key, from: self)
@@ -131,7 +130,7 @@ public extension MutablePreferencesType {
             transformation.set(key, value: newValue, to: self)
         }
     }
-    
+
     #if !os(Linux)
     public subscript(key: PreferenceKey, valueTransformer: ValueTransformer) -> PreferenceObject? {
         get {
@@ -142,26 +141,25 @@ public extension MutablePreferencesType {
             let transformedValue = valueTransformer.transformedValue(newValue)
             if transformedValue == nil {
                 removeObject(forKey: key)
-            }
-            else {
+            } else {
                 set(transformedValue as PreferenceObject?, forKey: key)
             }
         }
     }
     #endif
-    
+
 }
 
 extension PreferenceTransformation {
-    
-    public func get<T: Any>(_ key: PreferenceKey,from preferences: PreferencesType) -> T? {
+
+    public func get<T: Any>(_ key: PreferenceKey, from preferences: PreferencesType) -> T? {
         let value = preferences.object(forKey: key)
         guard let reverted = reverseTransformedValue(value) else {
             return nil
         }
         return reverted as? T
     }
-    
+
     public func set<T: Any>(_ key: PreferenceKey, value newValue: T?, to preferences: MutablePreferencesType) {
         if  let transformedValue = self.transformedValue(newValue) {
             preferences.set(transformedValue, forKey: key)
@@ -169,13 +167,13 @@ extension PreferenceTransformation {
             preferences.removeObject(forKey: key)
         }
     }
-    
+
 }
 
 extension TransformationKey: PreferenceTransformation {
-    
+
     public func reverseTransformedValue<T: Any>(_ value: PreferenceObject?) -> T? {
-        switch(self) {
+        switch self {
         case .none :
             guard let value = value else {
                 return nil
@@ -206,7 +204,7 @@ extension TransformationKey: PreferenceTransformation {
             var currentValue = value
             var slice = ts[ts.indices]
             var tranformation = slice.popFirst()
-            while (tranformation != nil)  {
+            while tranformation != nil {
                 currentValue = tranformation?.reverseTransformedValue(currentValue)
                 tranformation = slice.popFirst()
             }
@@ -216,9 +214,9 @@ extension TransformationKey: PreferenceTransformation {
             return safeValue as? T
         }
     }
-    
-    public func transformedValue<T:PreferenceObject>(_ value: T?) -> PreferenceObject? {
-        switch(self) {
+
+    public func transformedValue<T: PreferenceObject>(_ value: T?) -> PreferenceObject? {
+        switch self {
         case .none :
             return value // as? PreferenceObject
         case .archive :
@@ -238,21 +236,20 @@ extension TransformationKey: PreferenceTransformation {
             var currentValue: PreferenceObject? = value
             var slice = ts[ts.indices]
             var tranformation = slice.popLast()
-            while (tranformation != nil)  {
+            while tranformation != nil {
                 currentValue = tranformation?.transformedValue(currentValue)
                 tranformation = slice.popLast()
             }
             return currentValue
         }
     }
-    
-}
 
+}
 
 // MARK: RawRepresentable
 
 extension RawRepresentable where Self.RawValue: PreferenceObject {
-    
+
     init?(preferenceObject: PreferenceObject?) {
         if let rawValue = preferenceObject as? Self.RawValue {
             self.init(rawValue: rawValue)
@@ -260,11 +257,11 @@ extension RawRepresentable where Self.RawValue: PreferenceObject {
             return nil
         }
     }
-    
+
     static func rawValueOf(_ value: Any?) -> PreferenceObject? {
         return (value as? Self)?.rawValue
     }
-    
+
     // Return a transformation object for prephirences
     public static var preferenceTransformation: PreferenceTransformation {
         return TransformationKey.closureTuple(transform: Self.rawValueOf, revert: Self.init)
@@ -272,7 +269,7 @@ extension RawRepresentable where Self.RawValue: PreferenceObject {
 }
 
 public extension PreferencesType {
-    
+
     // Read a RawRepresentable object
     public func rawRepresentable<T: RawRepresentable>(forKey key: PreferenceKey) -> T? {
         if let rawValue = self.object(forKey: key) as? T.RawValue {
@@ -280,11 +277,11 @@ public extension PreferencesType {
         }
         return nil
     }
-    
+
 }
 
 public extension MutablePreferencesType {
-    
+
     // Store a RawRepresentable object
     public func set<T: RawRepresentable>(rawValue value: T?, forKey key: PreferenceKey) {
         if let rawValue = value?.rawValue {
@@ -293,6 +290,5 @@ public extension MutablePreferencesType {
             self.removeObject(forKey: key)
         }
     }
-    
-}
 
+}

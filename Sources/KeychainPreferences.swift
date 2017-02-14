@@ -4,7 +4,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2016 Eric Marchand (phimage)
+Copyright (c) 2017 Eric Marchand (phimage)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -47,7 +47,7 @@ open class KeychainPreferences: PreferencesAdapter, MutablePreferencesType {
         static var service: String { return toString(kSecAttrService) }
         static var returnAttributes: String { return toString(kSecReturnAttributes) }
     }
-    
+
     public init(service: String) {
         self.service = service
     }
@@ -59,7 +59,7 @@ open class KeychainPreferences: PreferencesAdapter, MutablePreferencesType {
     open var service: String?
 
     open var lastStatus: OSStatus?
-    
+
     // MARK: Prephirences
     open subscript(key: PreferenceKey) -> PreferenceObject? {
         get {
@@ -76,7 +76,7 @@ open class KeychainPreferences: PreferencesAdapter, MutablePreferencesType {
         }
         return nil
     }
-    
+
     open func object(forKey key: PreferenceKey) -> PreferenceObject? {
         // XXX not able to know if must decoded or not here...
         if let object = unarchiveObject(forKey: key) {
@@ -87,43 +87,43 @@ open class KeychainPreferences: PreferencesAdapter, MutablePreferencesType {
 
     open func data(forKey key: PreferenceKey) -> Data? {
         var query: [String: Any] = [
-            Constants.klass       : klass.rawValue as AnyObject,
-            Constants.account     : key as AnyObject,
-            Constants.returnData  : kCFBooleanTrue,
-            Constants.matchLimit  : kSecMatchLimitOne ]
+            Constants.klass: klass.rawValue as AnyObject,
+            Constants.account: key as AnyObject,
+            Constants.returnData: kCFBooleanTrue,
+            Constants.matchLimit: kSecMatchLimitOne ]
         if let accessGroup = self.accessGroup {
             query[Constants.accessGroup] = accessGroup
         }
         if let service = self.service {
             query[Constants.service] = service
         }
-    
+
         var result: AnyObject?
-        
+
         let status = withUnsafeMutablePointer(to: &result) {
             SecItemCopyMatching(query as CFDictionary, UnsafeMutablePointer($0))
         }
-        
+
         if status == errSecSuccess {
             return result as? Data
         }
         return nil
     }
-    
+
     open func keys() -> [String] {
         var query: [String: Any] = [
-            Constants.klass       : klass.rawValue as AnyObject,
-            Constants.returnData  : kCFBooleanTrue,
-            Constants.matchLimit  : kSecMatchLimitAll ]
+            Constants.klass: klass.rawValue as AnyObject,
+            Constants.returnData: kCFBooleanTrue,
+            Constants.matchLimit: kSecMatchLimitAll ]
         if let accessGroup = self.accessGroup {
             query[Constants.accessGroup] = accessGroup
         }
         if let service = self.service {
             query[Constants.service] = service
         }
-        
+
         var result: AnyObject?
-        
+
         let status = withUnsafeMutablePointer(to: &result) {
             SecItemCopyMatching(query as CFDictionary, UnsafeMutablePointer($0))
         }
@@ -133,18 +133,18 @@ open class KeychainPreferences: PreferencesAdapter, MutablePreferencesType {
              if let items = result as? [[String: AnyObject]] {
                 return items.map {
                     return $0[Constants.account] as? String ?? "KeychainPreferencesExclude"
-                    }.filter{return $0 != "KeychainPreferencesExclude"}
+                    }.filter { return $0 != "KeychainPreferencesExclude" }
             }
         }
         return []
     }
-    
+
     open func dictionary() -> PreferencesDictionary {
         var query: [String: Any] = [
-            Constants.klass       : klass.rawValue as AnyObject,
-            Constants.returnData  : kCFBooleanTrue, //  #if os(iOS) ?
-            Constants.returnAttributes : kCFBooleanTrue,
-            Constants.matchLimit  : kSecMatchLimitAll ]
+            Constants.klass: klass.rawValue as AnyObject,
+            Constants.returnData: kCFBooleanTrue, //  #if os(iOS) ?
+            Constants.returnAttributes: kCFBooleanTrue,
+            Constants.matchLimit: kSecMatchLimitAll ]
         if let accessGroup = self.accessGroup {
             query[Constants.accessGroup] = accessGroup
         }
@@ -156,7 +156,7 @@ open class KeychainPreferences: PreferencesAdapter, MutablePreferencesType {
         let status = withUnsafeMutablePointer(to: &result) {
             SecItemCopyMatching(query as CFDictionary, UnsafeMutablePointer($0))
         }
-        
+
         var dico = PreferencesDictionary()
         lastStatus = status
         if status == errSecSuccess {
@@ -165,7 +165,7 @@ open class KeychainPreferences: PreferencesAdapter, MutablePreferencesType {
                     if let key = item[Constants.account] as? String, let data = item[Constants.valueData] as? Data {
                         if let text = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as? String {
                             dico[key] = text
-                        } else  {
+                        } else {
                             dico[key] = data
                         }
                     }
@@ -175,18 +175,17 @@ open class KeychainPreferences: PreferencesAdapter, MutablePreferencesType {
         return dico
     }
 
-    open func set(_ value: PreferenceObject?, forKey key: PreferenceKey){
+    open func set(_ value: PreferenceObject?, forKey key: PreferenceKey) {
         if let string = value as? String {
             if let data = string.data(using: String.Encoding.utf8) {
                 set(data as AnyObject?, forKey: key)
             }
-        }
-        else if let data = value as? Data {
+        } else if let data = value as? Data {
             var query: [String: Any] = [
-                Constants.klass       : klass.rawValue as AnyObject,
-                Constants.account : key as AnyObject,
-                Constants.valueData   : data as AnyObject,
-                Constants.accessible  : accessible.rawValue as AnyObject
+                Constants.klass: klass.rawValue as AnyObject,
+                Constants.account: key as AnyObject,
+                Constants.valueData: data as AnyObject,
+                Constants.accessible: accessible.rawValue as AnyObject
             ]
             if let accessGroup = self.accessGroup {
                 query[Constants.accessGroup] = accessGroup
@@ -197,18 +196,16 @@ open class KeychainPreferences: PreferencesAdapter, MutablePreferencesType {
             SecItemDelete(query as CFDictionary)
             lastStatus =  SecItemAdd(query as CFDictionary, nil)
             // return status == errSecSuccess
-        }
-        else if let objectToArchive = value {
+        } else if let objectToArchive = value {
             set(objectToArchive: objectToArchive, forKey: key)
-        }
-        else {
+        } else {
             removeObject(forKey: key)
         }
     }
-    open func removeObject(forKey key: PreferenceKey){
+    open func removeObject(forKey key: PreferenceKey) {
         var query: [String: Any] = [
-            Constants.klass       : klass.rawValue as AnyObject,
-            Constants.account : key as AnyObject ]
+            Constants.klass: klass.rawValue as AnyObject,
+            Constants.account: key as AnyObject ]
         if let accessGroup = self.accessGroup {
             query[Constants.accessGroup] = accessGroup
         }
@@ -219,42 +216,42 @@ open class KeychainPreferences: PreferencesAdapter, MutablePreferencesType {
         lastStatus = SecItemDelete(query as CFDictionary)
         // return status == errSecSuccess
     }
-    open func set(_ value: Int, forKey key: PreferenceKey){
+    open func set(_ value: Int, forKey key: PreferenceKey) {
         self.set(NSNumber(value: value), forKey: key)
     }
-    open func set(_ value: Float, forKey key: PreferenceKey){
+    open func set(_ value: Float, forKey key: PreferenceKey) {
         self.set(NSNumber(value: value), forKey: key)
     }
-    open func set(_ value: Double, forKey key: PreferenceKey){
+    open func set(_ value: Double, forKey key: PreferenceKey) {
         self.set(NSNumber(value: value), forKey: key)
     }
-    open func set(_ value: Bool, forKey key: PreferenceKey){
+    open func set(_ value: Bool, forKey key: PreferenceKey) {
         self.set(NSNumber(value: value), forKey: key)
     }
-    open func set(url value: URL?, forKey key: PreferenceKey){
+    open func set(url value: URL?, forKey key: PreferenceKey) {
         self.set(value, forKey: key)
     }
     open func set(objectToArchive value: PreferenceObject?, forKey key: PreferenceKey) {
         Prephirences.archive(object: value, intoPreferences: self, forKey: key)
     }
-    open func clearAll(){
-        var query = [ kSecClass as String : klass.rawValue ]
+    open func clearAll() {
+        var query = [kSecClass as String: klass.rawValue]
         if let accessGroup = self.accessGroup {
             query[Constants.accessGroup] = accessGroup
         }
         if let service = self.service {
             query[Constants.service] = service
         }
-        
+
         lastStatus = SecItemDelete(query as CFDictionary)
     }
 
-    open func set(dictionary: PreferencesDictionary){
-        for (key,value) in dictionary {
+    open func set(dictionary: PreferencesDictionary) {
+        for (key, value) in dictionary {
             set(value, forKey: key )
         }
     }
-    
+
     // MARK: addon to cast on string or data
     open subscript(string key: PreferenceKey) -> String? {
         get {
@@ -281,15 +278,16 @@ open class KeychainPreferences: PreferencesAdapter, MutablePreferencesType {
             }
         }
     }
- 
+
 }
 
 // MARK: kSecAttrAccessible
 public enum SecurityAttributeAccessible: CustomStringConvertible {
-    case accessibleWhenUnlocked, accessibleWhenUnlockedThisDeviceOnly,  accessibleAfterFirstUnlock, accessibleAfterFirstUnlockThisDeviceOnly, accessibleAlways,  accessibleWhenPasscodeSetThisDeviceOnly,  accessibleAlwaysThisDeviceOnly
-    
+    case accessibleWhenUnlocked, accessibleWhenUnlockedThisDeviceOnly, accessibleAfterFirstUnlock
+    case accessibleAfterFirstUnlockThisDeviceOnly, accessibleAlways, accessibleWhenPasscodeSetThisDeviceOnly, accessibleAlwaysThisDeviceOnly
+
     public static var defaultOption: SecurityAttributeAccessible {  return .accessibleWhenUnlocked }
-    
+
     public var rawValue: String {
         switch self {
         case .accessibleWhenUnlocked:
@@ -314,7 +312,7 @@ public enum SecurityAttributeAccessible: CustomStringConvertible {
                 return ""
             #endif
         }
-      
+
     }
 
     public var description: String { return rawValue }
@@ -323,9 +321,9 @@ public enum SecurityAttributeAccessible: CustomStringConvertible {
 // MARK: kSecClass
 public enum SecurityClass: CustomStringConvertible {
     case genericPassword /*, InternetPassword, Certificate, Key, Identity*/
-    
+
     public static var defaultOption: SecurityClass {  return .genericPassword }
-    
+
     public var rawValue: String {
         switch self {
         case .genericPassword:

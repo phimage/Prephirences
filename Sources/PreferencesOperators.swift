@@ -4,7 +4,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2016 Eric Marchand (phimage)
+Copyright (c) 2017 Eric Marchand (phimage)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,21 +29,20 @@ import Foundation
 
 // MARK: modify
 // add
-public func += <L:MutablePreferencesType, R:PreferencesType> (left: inout L, right: R) {
+public func += <L: MutablePreferencesType, R: PreferencesType> (left: inout L, right: R) {
     for (k, v) in right.dictionary() { left[k] = v }
 }
 
-public func += <L:MutablePreferencesType> (left: inout L, right: PreferencesDictionary) {
+public func += <L: MutablePreferencesType> (left: inout L, right: PreferencesDictionary) {
     for (k, v) in right { left[k] = v }
 }
 
-public func +=<L:MutablePreferencesType> (left: inout L, right: [(PreferenceKey, PreferenceObject)]) {
+public func +=<L: MutablePreferencesType> (left: inout L, right: [(PreferenceKey, PreferenceObject)]) {
     for (k, v) in right { left[k] = v }
 }
-
 
 infix operator ?=: AssignmentPrecedence
-public func ?= <L:MutablePreferencesType> (left: inout L, right: [(PreferenceKey, PreferenceObject)]) {
+public func ?= <L: MutablePreferencesType> (left: inout L, right: [(PreferenceKey, PreferenceObject)]) {
     for (k, v) in right {
         if !left.hasObject(forKey: k) {
           left[k] = v
@@ -52,7 +51,7 @@ public func ?= <L:MutablePreferencesType> (left: inout L, right: [(PreferenceKey
 }
 
 // remove
-public func -= <L:MutablePreferencesType> (left: inout L, right: String) {
+public func -= <L: MutablePreferencesType> (left: inout L, right: String) {
     left.removeObject(forKey: right)
 }
 
@@ -63,12 +62,10 @@ precedencegroup BackwardPipePrecedence {
 }
 infix operator <|: BackwardPipePrecedence
 
-public func <|<P:PreferencesType, T>(preferences: P, key: String) -> Preference<T> {
+public func <| <P: PreferencesType, T>(preferences: P, key: String) -> Preference<T> {
     return preferences.preference(forKey: key)
 }
 
-public func <|<P:MutablePreferencesType, T>(preferences: P, key: String) -> MutablePreference<T> {
+public func <| <P: MutablePreferencesType, T>(preferences: P, key: String) -> MutablePreference<T> {
     return preferences.preference(forKey: key)
 }
-
-

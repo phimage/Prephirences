@@ -4,7 +4,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2016 Eric Marchand (phimage)
+Copyright (c) 2017 Eric Marchand (phimage)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,21 +29,20 @@ import Foundation
 
 /* Plist represent an editable 'plist' file as preference */
 open class Plist: MutableDictionaryPreferences {
-    
+
     static let Extension = "plist"
-    
+
     var filePath: String
-    
+
     /* Write to file after each modification */
     open var writeImmediatly: Bool = false
-    
-    
+
     // MARK: init
     public init?(filename: String?, bundle: Bundle = Bundle.main) {
        self.filePath = bundle.path(forResource: filename, ofType: Plist.Extension) ?? ""
        super.init(filename: filename, ofType: Plist.Extension, bundle: bundle)
     }
-    
+
     public override init?(filePath: String) {
         self.filePath = filePath
         super.init(filePath: filePath)
@@ -57,15 +56,15 @@ open class Plist: MutableDictionaryPreferences {
     open func write(_ atomically: Bool = true) -> Bool {
         return self.writeToFile(self.filePath, atomically: atomically)
     }
-    
+
     open func read() -> Bool {
-        if let d = NSDictionary(contentsOfFile: self.filePath) as? Dictionary<String,AnyObject> {
+        if let d = NSDictionary(contentsOfFile: self.filePath) as? [String: AnyObject] {
             self.dico = d
             return true
         }
         return false
     }
-    
+
     fileprivate func notifyChange() {
         if writeImmediatly {
             let _ = write()
@@ -82,7 +81,7 @@ open class Plist: MutableDictionaryPreferences {
             notifyChange()
         }
     }
-    
+
     open override func clearAll() {
         super.clearAll()
         notifyChange()
@@ -95,11 +94,11 @@ open class Plist: MutableDictionaryPreferences {
         super.removeObject(forKey: key)
         notifyChange()
     }
-    open override func set(_ value: Int, forKey key: PreferenceKey){
+    open override func set(_ value: Int, forKey key: PreferenceKey) {
         super.set(value, forKey: key)
         notifyChange()
     }
-    open override func set(_ value: Float, forKey key: PreferenceKey){
+    open override func set(_ value: Float, forKey key: PreferenceKey) {
         super.set(value, forKey: key)
         notifyChange()
     }
@@ -115,11 +114,10 @@ open class Plist: MutableDictionaryPreferences {
         super.set(url, forKey: key)
         notifyChange()
     }
-    
+
     open override func set(dictionary: PreferencesDictionary) {
         super.set(dictionary: dictionary)
         notifyChange()
     }
 
-    
 }

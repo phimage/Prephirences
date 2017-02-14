@@ -35,13 +35,13 @@ extension NSUbiquitousKeyValueStore : MutablePreferencesType {
     public func dictionary() -> PreferencesDictionary {
         return self.dictionaryRepresentation
     }
-    
+
     public func stringArray(forKey key: PreferenceKey) -> [String]? {
         return array(forKey: key) as? [String]
     }
-    
+
     // MARK: number
-    
+
     public func integer(forKey key: PreferenceKey) -> Int {
         return Int(longLong(forKey: key))
     }
@@ -52,33 +52,31 @@ extension NSUbiquitousKeyValueStore : MutablePreferencesType {
     @nonobjc public func set(_ value: Int, forKey key: PreferenceKey) {
         set(Int64(value), forKey: key)
     }
-    
+
     @nonobjc public func set(_ value: Float, forKey key: PreferenceKey) {
         set(Double(value), forKey: key)
     }
 }
 
-
 // MARK: url
 extension NSUbiquitousKeyValueStore {
-    
-    
+
     public func url(forKey key: PreferenceKey) -> URL? {
         if let bookData = self.data(forKey: key) {
-            var isStale : ObjCBool = false
+            var isStale: ObjCBool = false
             #if os(OSX)
             let options = NSURL.BookmarkResolutionOptions.withSecurityScope
             #elseif os(iOS) || os(watchOS) || os(tvOS)
             let options = URL.BookmarkResolutionOptions.withoutUI
             #endif
-            
+
             do {
                 let url = try (NSURL(resolvingBookmarkData: bookData, options: options, relativeTo: nil, bookmarkDataIsStale: &isStale) as URL)
                 set(url, forKey: key)
                 return url
             } catch { }
         }
-        
+
         return nil
     }
 
@@ -96,8 +94,7 @@ extension NSUbiquitousKeyValueStore {
                 data = nil
             }
             set(data, forKey: key)
-        }
-        else {
+        } else {
             removeObject(forKey: key)
         }
     }

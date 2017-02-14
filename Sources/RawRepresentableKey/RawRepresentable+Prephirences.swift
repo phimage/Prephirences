@@ -3,19 +3,19 @@
 //  Prephirences
 /*
  The MIT License (MIT)
- 
- Copyright (c) 2016 Eric Marchand (phimage)
- 
+
+ Copyright (c) 2017 Eric Marchand (phimage)
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -25,11 +25,10 @@
  SOFTWARE.
  */
 
-
 import Foundation
 
 public extension PreferencesType {
-    
+
     public func object<R: RawRepresentable>(forKey rawRepresentableKey: R) -> PreferenceObject? where R.RawValue == PreferenceKey {
         return object(forKey: rawRepresentableKey.rawValue)
     }
@@ -45,39 +44,39 @@ public extension PreferencesType {
     public func string<R: RawRepresentable>(forKey rawRepresentableKey: R) -> String? where R.RawValue == PreferenceKey {
         return string(forKey: rawRepresentableKey.rawValue)
     }
-    
+
     public func array<R: RawRepresentable>(forKey rawRepresentableKey: R) -> [PreferenceObject]? where R.RawValue == PreferenceKey {
         return array(forKey: rawRepresentableKey.rawValue)
     }
-    
+
     public func dictionary<R: RawRepresentable>(forKey rawRepresentableKey: R) -> [PreferenceKey : PreferenceObject]? where R.RawValue == PreferenceKey {
         return dictionary(forKey: rawRepresentableKey.rawValue)
     }
-    
+
     public func data<R: RawRepresentable>(forKey rawRepresentableKey: R) -> Data? where R.RawValue == PreferenceKey {
         return data(forKey: rawRepresentableKey.rawValue)
     }
-    
+
     public func stringArray<R: RawRepresentable>(forKey rawRepresentableKey: R) -> [String]? where R.RawValue == PreferenceKey {
         return stringArray(forKey: rawRepresentableKey.rawValue)
     }
-    
+
     public func integer<R: RawRepresentable>(forKey rawRepresentableKey: R) -> Int where R.RawValue == PreferenceKey {
         return integer(forKey: rawRepresentableKey.rawValue)
     }
-    
+
     public func float<R: RawRepresentable>(forKey rawRepresentableKey: R) -> Float where R.RawValue == PreferenceKey {
         return float(forKey: rawRepresentableKey.rawValue)
     }
-    
+
     public func double<R: RawRepresentable>(forKey rawRepresentableKey: R) -> Double where R.RawValue == PreferenceKey {
         return double(forKey: rawRepresentableKey.rawValue)
     }
-    
+
     public func bool<R: RawRepresentable>(forKey rawRepresentableKey: R) -> Bool where R.RawValue == PreferenceKey {
         return bool(forKey: rawRepresentableKey.rawValue)
     }
-    
+
     public func url<R: RawRepresentable>(forKey rawRepresentableKey: R) -> URL? where R.RawValue == PreferenceKey {
         return url(forKey: rawRepresentableKey.rawValue)
     }
@@ -85,40 +84,40 @@ public extension PreferencesType {
     public func rawRepresentable<T: RawRepresentable, R: RawRepresentable>(forKey rawRepresentableKey: R) -> T? where R.RawValue == PreferenceKey {
         return self.rawRepresentable(forKey: rawRepresentableKey.rawValue)
     }
-    
+
 }
 
 public extension MutablePreferencesType {
-    
-    public func set<R: RawRepresentable>(_ value: PreferenceObject?,  rawRepresentableKey: R) where R.RawValue == PreferenceKey {
+
+    public func set<R: RawRepresentable>(_ value: PreferenceObject?, rawRepresentableKey: R) where R.RawValue == PreferenceKey {
         set(value, forKey: rawRepresentableKey.rawValue)
     }
-    
+
     public func removeObject<R: RawRepresentable>(forKey rawRepresentableKey: R) where R.RawValue == PreferenceKey {
         removeObject(forKey: rawRepresentableKey.rawValue)
     }
 
-    public func set<R: RawRepresentable>(_ value: Int,  rawRepresentableKey: R) where R.RawValue == PreferenceKey {
+    public func set<R: RawRepresentable>(_ value: Int, rawRepresentableKey: R) where R.RawValue == PreferenceKey {
         set(value, forKey : rawRepresentableKey.rawValue)
     }
-    
-    public func set<R: RawRepresentable>(_ value: Float,  rawRepresentableKey: R) where R.RawValue == PreferenceKey {
+
+    public func set<R: RawRepresentable>(_ value: Float, rawRepresentableKey: R) where R.RawValue == PreferenceKey {
         set(value, forKey : rawRepresentableKey.rawValue)
     }
-    
-    public func set<R: RawRepresentable>(_ value: Double,  rawRepresentableKey: R) where R.RawValue == PreferenceKey {
+
+    public func set<R: RawRepresentable>(_ value: Double, rawRepresentableKey: R) where R.RawValue == PreferenceKey {
         set(value, forKey : rawRepresentableKey.rawValue)
     }
-    
-    public func set<R: RawRepresentable>(_ value: Bool,  rawRepresentableKey: R) where R.RawValue == PreferenceKey {
+
+    public func set<R: RawRepresentable>(_ value: Bool, rawRepresentableKey: R) where R.RawValue == PreferenceKey {
         set(value, forKey : rawRepresentableKey.rawValue)
     }
-    
-    public func set<R: RawRepresentable>(_ url: URL?,  rawRepresentableKey: R) where R.RawValue == PreferenceKey {
+
+    public func set<R: RawRepresentable>(_ url: URL?, rawRepresentableKey: R) where R.RawValue == PreferenceKey {
         set(url, forKey : rawRepresentableKey.rawValue)
     }
-    
-    public func set<T: RawRepresentable, R: RawRepresentable>(rawValue value: T?,  rawRepresentableKey: R) where R.RawValue == PreferenceKey {
+
+    public func set<T: RawRepresentable, R: RawRepresentable>(rawValue value: T?, rawRepresentableKey: R) where R.RawValue == PreferenceKey {
         self.set(rawValue: value, forKey : rawRepresentableKey.rawValue)
     }
 

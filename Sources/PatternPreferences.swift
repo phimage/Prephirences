@@ -4,7 +4,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2016 Eric Marchand (phimage)
+Copyright (c) 2017 Eric Marchand (phimage)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,42 +27,42 @@ SOFTWARE.
 
 import Foundation
 
-//MARK: composite pattern
-open class CompositePreferences: PreferencesType , ExpressibleByArrayLiteral {
-    
+// MARK: composite pattern
+open class CompositePreferences: PreferencesType, ExpressibleByArrayLiteral {
+
     var array: [PreferencesType] = []
-    
+
     // MARK: singleton
-    static let sharedInstance = CompositePreferences([]) // TODO make it lazy
-    
+    static let sharedInstance = CompositePreferences([])
+
     // MARK: init
-    public init(_ array: [PreferencesType]){
+    public init(_ array: [PreferencesType]) {
         self.array = array
     }
-    
+
     // MARK: ArrayLiteralConvertible
     public typealias Element = PreferencesType
-    
+
     public convenience required init(arrayLiteral elements: Element...) {
         self.init([])
         for element in elements {
             self.array.append(element)
         }
     }
-    
+
     // MARK: PreferencesType
     open subscript(key: PreferenceKey) -> PreferenceObject? {
         get {
             // first return win
             for prefs in array {
-                if let value = prefs.object(forKey: key){
+                if let value = prefs.object(forKey: key) {
                     return value
                 }
             }
             return nil
         }
     }
-    
+
     open func object(forKey key: PreferenceKey) -> PreferenceObject? {
         return self[key]
     }
@@ -70,7 +70,7 @@ open class CompositePreferences: PreferencesType , ExpressibleByArrayLiteral {
     open func hasObject(forKey key: PreferenceKey) -> Bool {
         return self[key] != nil
     }
-    
+
     open func string(forKey key: PreferenceKey) -> String? {
         return self[key] as? String
     }
@@ -104,7 +104,7 @@ open class CompositePreferences: PreferencesType , ExpressibleByArrayLiteral {
     open func url(forKey key: PreferenceKey) -> URL? {
         return self[key] as? URL
     }
-    
+
     open func dictionary() -> PreferencesDictionary {
         var dico = PreferencesDictionary()
         for prefs in array.reversed() {
@@ -115,23 +115,23 @@ open class CompositePreferences: PreferencesType , ExpressibleByArrayLiteral {
 }
 
 open class MutableCompositePreferences: CompositePreferences, MutablePreferencesType {
-    
+
     open var affectOnlyFirstMutable: Bool
 
-    public override convenience init(_ array: [PreferencesType]){
+    public override convenience init(_ array: [PreferencesType]) {
         self.init(array, affectOnlyFirstMutable: true)
     }
-    
-    public init(_ array: [PreferencesType], affectOnlyFirstMutable: Bool){
+
+    public init(_ array: [PreferencesType], affectOnlyFirstMutable: Bool) {
         self.affectOnlyFirstMutable = affectOnlyFirstMutable
         super.init(array)
     }
-    
+
     override open subscript(key: PreferenceKey) -> PreferenceObject? {
         get {
             // first return win
             for prefs in array {
-                if let value = prefs.object(forKey: key){
+                if let value = prefs.object(forKey: key) {
                     return value
                 }
             }
@@ -148,17 +148,17 @@ open class MutableCompositePreferences: CompositePreferences, MutablePreferences
             }
         }
     }
-    
+
     open func set(_ value: PreferenceObject?, forKey key: PreferenceKey) {
         self[key] = value
     }
     open func removeObject(forKey key: PreferenceKey) {
         self[key] = nil
     }
-    open func set(_ value: Int, forKey key: PreferenceKey){
+    open func set(_ value: Int, forKey key: PreferenceKey) {
         self[key] = value
     }
-    open func set(_ value: Float, forKey key: PreferenceKey){
+    open func set(_ value: Float, forKey key: PreferenceKey) {
         self[key] = value
     }
     open func set(_ value: Double, forKey key: PreferenceKey) {
@@ -170,8 +170,8 @@ open class MutableCompositePreferences: CompositePreferences, MutablePreferences
     open func set(_ url: URL?, forKey key: PreferenceKey) {
         self[key] = url
     }
-    
-    open func set(dictionary: PreferencesDictionary){
+
+    open func set(dictionary: PreferencesDictionary) {
         for prefs in array {
             if let mutablePrefs = prefs as? MutablePreferencesType {
                 mutablePrefs.set(dictionary: dictionary)
@@ -188,37 +188,37 @@ open class MutableCompositePreferences: CompositePreferences, MutablePreferences
             }
         }
     }
-    
+
 }
 
-//MARK: proxy pattern
+// MARK: proxy pattern
 open class ProxyPreferences {
     fileprivate let proxiable: PreferencesType
     fileprivate let parentKey: String
     var separator: String?
-    
+
     public convenience init(preferences proxiable: PreferencesType) {
         self.init(preferences: proxiable, key: "")
     }
-    
+
     public convenience init(preferences proxiable: PreferencesType, key parentKey: String) {
         self.init(preferences: proxiable, key: parentKey, separator: nil)
     }
-    
+
     public init(preferences proxiable: PreferencesType, key parentKey: String, separator: String?) {
         self.proxiable = proxiable
         self.parentKey = parentKey
         self.separator = separator
     }
-    
+
     fileprivate func computeKey(_ key: String) -> String {
         return self.parentKey + (self.separator ?? "") + key
     }
-    
+
     fileprivate func hasRecursion() -> Bool {
         return self.separator != nil
     }
-    
+
     open subscript(key: String) -> PreferenceObject? {
         get {
             let finalKey = computeKey(key)
@@ -231,7 +231,7 @@ open class ProxyPreferences {
             return nil
         }
     }
-    
+
 }
 
 extension ProxyPreferences: PreferencesType {
@@ -281,15 +281,16 @@ extension ProxyPreferences: PreferencesType {
 }
 
 open class MutableProxyPreferences: ProxyPreferences {
-    
+
     fileprivate var mutable: MutablePreferencesType {
+        // swiftlint:disable:next force_cast
         return self.proxiable as! MutablePreferencesType
     }
-    
+
     public init(preferences proxiable: MutablePreferencesType, key parentKey: PreferenceKey, separator: String) {
         super.init(preferences: proxiable, key: parentKey, separator: separator)
     }
-    
+
     override open subscript(key: PreferenceKey) -> PreferenceObject? {
         get {
             let finalKey = computeKey(key)
@@ -310,39 +311,39 @@ open class MutableProxyPreferences: ProxyPreferences {
             }
         }
     }
-    
+
 }
 
 extension MutableProxyPreferences: MutablePreferencesType {
 
-    public func set(_ value: PreferenceObject?, forKey key: PreferenceKey){
+    public func set(_ value: PreferenceObject?, forKey key: PreferenceKey) {
        self.mutable.set(value, forKey: key)
     }
-    public func removeObject(forKey key: PreferenceKey){
+    public func removeObject(forKey key: PreferenceKey) {
         self.mutable.removeObject(forKey: key)
     }
-    public func set(_ value: Int, forKey key: PreferenceKey){
+    public func set(_ value: Int, forKey key: PreferenceKey) {
          self.mutable.set(value, forKey: key)
     }
-    public func set(_ value: Float, forKey key: PreferenceKey){
+    public func set(_ value: Float, forKey key: PreferenceKey) {
         self.mutable.set(value, forKey: key)
     }
-    public func set(_ value: Double, forKey key: PreferenceKey){
+    public func set(_ value: Double, forKey key: PreferenceKey) {
         self.mutable.set(value, forKey: key)
     }
-    public func set(_ value: Bool, forKey key: PreferenceKey){
+    public func set(_ value: Bool, forKey key: PreferenceKey) {
         self.mutable.set(value, forKey: key)
     }
-    public func set(_ url: URL?, forKey key: PreferenceKey){
+    public func set(_ url: URL?, forKey key: PreferenceKey) {
         self.mutable.set(url, forKey: key)
     }
     public func set(objectToArchive value: PreferenceObject?, forKey key: PreferenceKey) {
         self.mutable.set(objectToArchive: value, forKey: key)
     }
-    public func clearAll(){
+    public func clearAll() {
         self.mutable.clearAll()
     }
-    public func set(dictionary registrationDictionary: PreferencesDictionary){
+    public func set(dictionary registrationDictionary: PreferencesDictionary) {
         self.mutable.set(dictionary: registrationDictionary)
     }
 }
@@ -377,20 +378,19 @@ extension PreferencesAdapter {
     }
 }
 
-
-// MARK : KVC
+// MARK: KVC
 // object must informal protocol NSKeyValueCoding
 open class KVCPreferences: PreferencesAdapter {
     fileprivate let object: NSObject
-    
+
     public init(_ object: NSObject) {
         self.object = object
     }
-    
+
     open func object(forKey key: PreferenceKey) -> PreferenceObject? {
         return self.object.value(forKey: key)
     }
-    
+
     open func keys() -> [String] {
         var names: [String] = []
         var count: UInt32 = 0
@@ -404,15 +404,15 @@ open class KVCPreferences: PreferencesAdapter {
         free(properties)
         return names
     }
-    
+
 }
 
 open class MutableKVCPreferences: KVCPreferences {
-    
+
     public override init(_ object: NSObject) {
         super.init(object)
     }
-    
+
     open subscript(key: PreferenceKey) -> PreferenceObject? {
         get {
              return self.object(forKey: key)
@@ -421,33 +421,33 @@ open class MutableKVCPreferences: KVCPreferences {
             self.set(newValue, forKey: key)
         }
     }
-    
+
 }
 
 extension MutableKVCPreferences: MutablePreferencesType {
-    public func set(_ value: PreferenceObject?, forKey key: PreferenceKey){
-        if (self.object.responds(to: NSSelectorFromString(key))) {
+    public func set(_ value: PreferenceObject?, forKey key: PreferenceKey) {
+        if self.object.responds(to: NSSelectorFromString(key)) {
             self.object.setValue(value, forKey: key)
         }
     }
-    public func removeObject(forKey key: PreferenceKey){
-        if (self.object.responds(to: NSSelectorFromString(key))) {
+    public func removeObject(forKey key: PreferenceKey) {
+        if self.object.responds(to: NSSelectorFromString(key)) {
             self.object.setValue(nil, forKey: key)
         }
     }
-    public func set(_ value: Int, forKey key: PreferenceKey){
+    public func set(_ value: Int, forKey key: PreferenceKey) {
         self.set(NSNumber(value: value), forKey: key)
     }
-    public func set(_ value: Float, forKey key: PreferenceKey){
+    public func set(_ value: Float, forKey key: PreferenceKey) {
         self.set(NSNumber(value: value), forKey: key)
     }
-    public func set(_ value: Double, forKey key: PreferenceKey){
+    public func set(_ value: Double, forKey key: PreferenceKey) {
         self.set(NSNumber(value: value), forKey: key)
     }
-    public func set(_ value: Bool, forKey key: PreferenceKey){
+    public func set(_ value: Bool, forKey key: PreferenceKey) {
         self.set(NSNumber(value: value), forKey: key)
     }
-    public func clearAll(){
+    public func clearAll() {
        // not implemented, maybe add protocol to set defaults attributes values
     }
 
@@ -461,7 +461,7 @@ open class CollectionPreferencesAdapter<C: Collection> {
     let collection: C
     public typealias MapPreferenceKey = (C.Iterator.Element) -> PreferenceKey
     public typealias MapPreferenceObject = (C.Iterator.Element) -> PreferenceObject
-    
+
     let mapKey: MapPreferenceKey
     let mapValue: MapPreferenceObject
 
@@ -476,30 +476,28 @@ open class CollectionPreferencesAdapter<C: Collection> {
 extension CollectionPreferencesAdapter: PreferencesType {
 
     public func object(forKey key: PreferenceKey) -> PreferenceObject? {
-        if let object = collection.find({ mapKey($0) == key }){
+        if let object = collection.find({ mapKey($0) == key }) {
             return mapValue(object)
         }
         return nil
     }
 
     public func dictionary() -> PreferencesDictionary {
-        return collection.dictionary{ ( mapKey($0), mapValue($0) ) }
+        return collection.dictionary { ( mapKey($0), mapValue($0) ) }
     }
 
 }
 
-
 extension Collection {
 
     func mapFilterNil<T>(_ transform: (Self.Iterator.Element) -> T?) -> [T] {
-        return self.map(transform).filter{ $0 != nil }.map{ $0! }
+        return self.map(transform).filter { $0 != nil }.map { $0! }
     }
 
-    func dictionary<K, V>(_ transform: (Self.Iterator.Element) throws -> (key: K, value: V)?) rethrows -> Dictionary<K, V> {
-        var dict: Dictionary<K, V> = [:]
+    func dictionary<K, V>(_ transform: (Self.Iterator.Element) throws -> (key: K, value: V)?) rethrows -> [K: V] {
+        var dict: [K: V] = [:]
         for e in self {
-            if let (key, value) = try transform(e)
-            {
+            if let (key, value) = try transform(e) {
                 dict[key] = value
             }
         }
@@ -509,4 +507,5 @@ extension Collection {
     func find(_ predicate: (Self.Iterator.Element) throws -> Bool) rethrows -> Self.Iterator.Element? {
         return try index(where: predicate).map({ self[$0] })
     }
+
 }

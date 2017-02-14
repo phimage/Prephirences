@@ -4,7 +4,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2016 Eric Marchand (phimage)
+Copyright (c) 2017 Eric Marchand (phimage)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,7 @@ extension Foundation.UserDefaults: MutablePreferencesType {
     public func dictionary() -> [PreferenceKey : PreferenceObject] {
         return self.dictionaryRepresentation()
     }
-    
+
     //subscript access
     public subscript(key: PreferenceKey) -> PreferenceObject? {
         get {
@@ -69,7 +69,6 @@ extension Foundation.UserDefaults: MutablePreferencesType {
     #endif
 }
 
-
 #if os(OSX)
     import AppKit
 
@@ -97,5 +96,3 @@ extension Foundation.UserDefaults: MutablePreferencesType {
         }
     }
 #endif
-
-

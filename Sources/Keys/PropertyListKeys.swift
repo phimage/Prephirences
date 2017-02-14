@@ -4,7 +4,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2016 Eric Marchand (phimage)
+Copyright (c) 2017 Eric Marchand (phimage)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@ import Foundation
 
 // https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html#//apple_ref/doc/uid/TP40009249-SW1
 public enum CoreFoundationKeys: PreferenceKey {
-    
+
     case CFBundleAllowMixedLocalizations
     case CFBundleDevelopmentRegion
     case CFBundleDisplayName
@@ -49,7 +49,7 @@ public enum CoreFoundationKeys: PreferenceKey {
     case CFBundleSpokenName
     case CFBundleURLTypes
     case CFBundleVersion
-    
+
     #if os(OSX)
     case CFAppleHelpAnchor
     case CFBundleHelpBookFolder
@@ -59,11 +59,11 @@ public enum CoreFoundationKeys: PreferenceKey {
     case CFPlugInFactories
     case CFPlugInTypes
     case CFPlugInUnloadFunction
-    
+
     #elseif os(iOS)
     case CFBundleIconFiles
     #endif
-    
+
     // MARK: dev environment
     case DTXcode
     case DTXcodeBuild
@@ -73,21 +73,21 @@ public enum CoreFoundationKeys: PreferenceKey {
     case DTPlatformVersion
     case DTSDKBuild
     case DTSDKName
-    
+
 }
 
 extension PreferencesType {
-    
+
     public subscript(key: CoreFoundationKeys) -> PreferenceObject? {
         return self[key.rawValue]
     }
-    
+
 }
 
 #if os(iOS)
     // https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Articles/iPhoneOSKeys.html
     public enum IOSKeys: PreferenceKey {
-        
+
         case MKDirectionsApplicationSupportedModes
         case NSHealthShareUsageDescription
         case NSHealthUpdateUsageDescription
@@ -113,65 +113,64 @@ extension PreferencesType {
         case UIViewEdgeAntialiasing
         case UIViewGroupOpacity
     }
-    
+
     extension PreferencesType {
-        
+
         public subscript(key: IOSKeys) -> PreferenceObject? {
             return self[key.rawValue]
         }
-        
+
     }
 #endif
 
 #if os(watchOS)
     // https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Articles/watchOSKeys.html#//apple_ref/doc/uid/TP40016498-SW1
     public enum WatchOSKeys: PreferenceKey {
-        
+
         case CLKComplicationSupportedFamilies
         case CLKComplicationPrincipalClass
         case WKAppBundleIdentifier
         case WKCompanionAppBundleIdentifier
         case WKExtensionDelegateClassName
         case WKWatchKitApp
-        
+
     }
     extension PreferencesType {
-        
+
         public subscript(key: WatchOSKeys) -> PreferenceObject? {
             return self[key.rawValue]
         }
-        
+
     }
 #endif
-
 
 #if os(OSX)
     // https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Articles/GeneralPurposeKeys.html#//apple_ref/doc/uid/TP40009253-SW1
     public enum OSXKeys: PreferenceKey {
-        
+
         case APFileDescriptionKey
         case APDisplayedAsContainer
         case APFileDestinationPath
         case APFileName
         case APFileSourcePath
         case APInstallAction
-        
+
     }
-    
+
     extension PreferencesType {
-        
+
         public subscript(key: OSXKeys) -> PreferenceObject? {
             return self[key.rawValue]
         }
-        
+
     }
 #endif
 
 // https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Articles/LaunchServicesKeys.html
 public enum LaunchServicesKeys: PreferenceKey {
-    
+
     case LSMinimumSystemVersion
-    
+
     #if os(OSX)
     case LSApplicationCategoryType
     case LSArchitecturePriority
@@ -186,7 +185,7 @@ public enum LaunchServicesKeys: PreferenceKey {
     case LSUIElement
     case LSUIPresentationMode
     case LSVisibleInClassic
-    
+
     #else
     case LSRequiresIPhoneOS
     case LSSupportsOpeningDocumentsInPlace
@@ -196,9 +195,9 @@ public enum LaunchServicesKeys: PreferenceKey {
 }
 
 extension PreferencesType {
-    
+
     public subscript(key: LaunchServicesKeys) -> PreferenceObject? {
         return self[key.rawValue]
     }
-    
+
 }

@@ -48,6 +48,3 @@ let StaticValue = "value"
 let StaticConfig: DictionaryPreferences = [StaticKey: StaticValue]
 let MainBundle = NSBundle.mainBundle()
 let Preferences: MutableCompositePreferences = [StaticConfig, AppConfig, UserDefaults, MainBundle]
-
-
-

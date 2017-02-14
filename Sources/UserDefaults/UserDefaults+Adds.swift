@@ -4,7 +4,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2016 Eric Marchand (phimage)
+Copyright (c) 2017 Eric Marchand (phimage)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -41,41 +41,41 @@ public extension Foundation.UserDefaults {
     #elseif os(iOS) || os(watchOS) || os(tvOS)
     typealias Color = UIColor
     #endif
-    
+
     public func set(color: Color, forKey aKey: String) {
         let theData = NSKeyedArchiver.archivedData(withRootObject: color)
         self.set(theData, forKey:aKey)
     }
-    
+
     public func color(forKey aKey: String) -> Color? {
         if let theData = self.data(forKey: aKey), let color = NSKeyedUnarchiver.unarchiveObject(with: theData) as? Color {
             return color
         }
         return nil
     }
-    
+
     // MARK: CGRect,CGSize,CGPoint
     #if os(OSX)
     private func NSStringFromCGRect(_ value: CGRect) -> String {
         return NSStringFromRect(NSRectFromCGRect(value))
     }
-    
+
     private func NSStringFromCGSize(_ value: CGSize) -> String {
         return NSStringFromSize(NSSizeFromCGSize(value))
     }
-    
+
     private func NSStringFromCGPoint(_ value: CGPoint) -> String {
         return NSStringFromPoint(NSPointFromCGPoint(value))
     }
-    
+
     private func CGRectFromString(_ value: String) -> CGRect {
         return NSRectToCGRect(NSRectFromString(value))
     }
-    
+
     private func CGSizeFromString(_ value: String) -> CGSize {
         return NSSizeToCGSize(NSSizeFromString(value))
     }
-    
+
     private func CGPointFromString(_ value: String) -> CGPoint {
         return NSPointToCGPoint(NSPointFromString(value))
     }
@@ -87,11 +87,11 @@ public extension Foundation.UserDefaults {
         }
         return nil
     }
-    
+
     @nonobjc public func set(_ value: CGRect, forKey key: PreferenceKey) {
         self.set(NSStringFromCGRect(value), forKey: key)
     }
-    
+
     public func cgSize(forKey key: PreferenceKey) -> CGSize? {
         if let string = self.string(forKey: key) {
             return CGSizeFromString(string)
@@ -102,7 +102,7 @@ public extension Foundation.UserDefaults {
     @nonobjc public func set(_ value: CGSize, forKey key: PreferenceKey) {
         self.set(NSStringFromCGSize(value), forKey: key)
     }
-    
+
     public func cgPoint(forKey key: PreferenceKey) -> CGPoint? {
         if let string = self.string(forKey: key) {
             return CGPointFromString(string)
@@ -113,7 +113,7 @@ public extension Foundation.UserDefaults {
     @nonobjc public func set(_ value: CGPoint, forKey key: PreferenceKey) {
         self.set(NSStringFromCGPoint(value), forKey: key)
     }
-    
+
     #if os(OSX)
     // MARK: NSRect
     public func nsRectForKey(key: String) -> NSRect? {
@@ -123,7 +123,6 @@ public extension Foundation.UserDefaults {
         return nil
     }
 
-    
     // MARK: NSSize
     public func nsSizeForKey(key: String) -> NSSize? {
         if let string = self.string(forKey: key) {
@@ -132,16 +131,16 @@ public extension Foundation.UserDefaults {
         return nil
     }
     #endif
-    
+
 }
 
-//MARK: Global shortcut
+// MARK: Global shortcut
 public var UserDefaultsKeySeparator = "."
 
 #if os(OSX)
     import AppKit
     public var UserDefaultsController = NSUserDefaultsController.shared()
-    
+
     // http://stackoverflow.com/questions/29312106/xcode-6-os-x-storyboard-multiple-user-defaults-controllers-bug-with-multiple-sce/29509031#29509031
     @objc(SharedUserDefaultsControllerProxy)
     public class SharedUserDefaultsControllerProxy: NSObject {

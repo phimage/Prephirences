@@ -4,7 +4,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2016 Eric Marchand (phimage)
+Copyright (c) 2017 Eric Marchand (phimage)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -31,18 +31,17 @@ import Foundation
 // Adapt Dictionary to PreferencesType (with adapter pattern)
 open class DictionaryPreferences: PreferencesType, Sequence, ExpressibleByDictionaryLiteral {
 
-    internal var dico : PreferencesDictionary
+    internal var dico: PreferencesDictionary
 
     // MARK: init
     public init(dictionary: PreferencesDictionary) {
         self.dico = dictionary
     }
-    
+
     public init?(filePath: String) {
         if let d = NSDictionary(contentsOfFile: filePath) as? PreferencesDictionary {
             self.dico = d
-        }
-        else {
+        } else {
             self.dico = [:]
             return nil
         }
@@ -52,13 +51,11 @@ open class DictionaryPreferences: PreferencesType, Sequence, ExpressibleByDictio
         if let filePath = bundle.path(forResource: filename, ofType: ext) {
             if let d = NSDictionary(contentsOfFile: filePath) as? PreferencesDictionary {
                 self.dico = d
-            }
-            else {
+            } else {
                 self.dico = [:]
                 return nil
             }
-        }
-        else {
+        } else {
             self.dico = [:]
             return nil
         }
@@ -67,7 +64,7 @@ open class DictionaryPreferences: PreferencesType, Sequence, ExpressibleByDictio
     public init(preferences: PreferencesType) {
         self.dico = preferences.dictionary()
     }
-    
+
     // MARK: DictionaryLiteralConvertibles
     public typealias Key = PreferenceKey
     public typealias Value = PreferenceObject
@@ -79,22 +76,22 @@ open class DictionaryPreferences: PreferencesType, Sequence, ExpressibleByDictio
             dico[key] = value
         }
     }
-    
+
     // MARK: SequenceType
 
     open func makeIterator() -> DictionaryIterator<Key, Value> {
         return self.dico.makeIterator()
     }
-    
+
     public typealias Index = DictionaryIndex<Key, Value>
-    
+
     open subscript (position: DictionaryIndex<Key, Value>) -> Element {
         get {
             return dico[position]
         }
     }
 
-    open subscript(key : Key?) -> Value? {
+    open subscript(key: Key?) -> Value? {
         get {
             if key != nil {
                 return dico[key!]
@@ -102,22 +99,22 @@ open class DictionaryPreferences: PreferencesType, Sequence, ExpressibleByDictio
             return nil
         }
     }
-    
+
     // MARK: PreferencesType
     open subscript(key: String) -> PreferenceObject? {
         get {
             return dico[key]
         }
     }
-    
+
     open func object(forKey key: PreferenceKey) -> PreferenceObject? {
         return dico[key]
     }
-    
+
     open func hasObject(forKey key: PreferenceKey) -> Bool {
         return dico[key] != nil
     }
-    
+
     open func string(forKey key: PreferenceKey) -> String? {
         return dico[key] as? String
     }
@@ -152,7 +149,7 @@ open class DictionaryPreferences: PreferencesType, Sequence, ExpressibleByDictio
     open func dictionary() -> PreferencesDictionary {
         return self.dico
     }
-    
+
     // MARK: specifics methods
     open func writeToFile(_ path: String, atomically: Bool = true) -> Bool {
         return (self.dico as NSDictionary).write(toFile: path, atomically: atomically)
@@ -171,18 +168,18 @@ open class MutableDictionaryPreferences: DictionaryPreferences, MutablePreferenc
             dico[key] = newValue
         }
     }
-    
+
     open func set(_ value: PreferenceObject?, forKey key: PreferenceKey) {
         dico[key] = value
     }
     open func removeObject(forKey key: PreferenceKey) {
         dico[key] = nil
     }
-    
-    open func set(_ value: Int, forKey key: PreferenceKey){
+
+    open func set(_ value: Int, forKey key: PreferenceKey) {
         dico[key] = value
     }
-    open func set(_ value: Float, forKey key: PreferenceKey){
+    open func set(_ value: Float, forKey key: PreferenceKey) {
         dico[key] = value
     }
     open func set(_ value: Double, forKey key: PreferenceKey) {
@@ -202,7 +199,7 @@ open class MutableDictionaryPreferences: DictionaryPreferences, MutablePreferenc
     open func clearAll() {
         dico.removeAll()
     }
-    
+
 }
 
 // MARK: - private
@@ -212,7 +209,7 @@ internal func +=<K, V> (left: inout [K : V], right: [K : V]) { for (k, v) in rig
 // MARK: - Buffered preferences
 open class BufferPreferences: MutableDictionaryPreferences {
     var buffered: MutablePreferencesType
-    
+
     public init(_ buffered: MutablePreferencesType) {
         self.buffered = buffered
         super.init(dictionary: buffered.dictionary())
@@ -226,7 +223,7 @@ open class BufferPreferences: MutableDictionaryPreferences {
     func commit() {
         buffered.set(dictionary: self.dictionary())
     }
-    
+
     func rollback() {
         self.dico = buffered.dictionary()
     }
