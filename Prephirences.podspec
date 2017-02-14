@@ -30,26 +30,26 @@ Pod::Spec.new do |s|
   s.default_subspecs = 'Core', 'Keys'
 
   s.subspec "Core" do  |sp|
-    sp.source_files = "Prephirences/*.swift"
+    sp.source_files = "Sources/*.swift"
   end
 
   s.subspec "CoreData" do  |sp|
-    sp.source_files = ['Prephirences/CoreData/*.swift']
+    sp.source_files = ['Sources/CoreData/*.swift']
     sp.dependency 'Prephirences/Core'
   end
 
   s.subspec "UserDefaults" do  |sp|
-    sp.source_files = ['Prephirences/UserDefaults/*.swift']
+    sp.source_files = ['Sources/UserDefaults/*.swift']
     sp.dependency 'Prephirences/Core'
   end
 
   s.subspec "Keys" do  |sp|
-    sp.source_files = ['Prephirences/Keys/*.swift']
+    sp.source_files = ['Sources/Keys/*.swift']
     sp.dependency 'Prephirences/Core'
   end
 
   s.subspec "RawRepresentableKey" do  |sp|
-    sp.source_files = ['Prephirences/RawRepresentableKey/*.swift']
+    sp.source_files = ['Sources/RawRepresentableKey/*.swift']
     sp.dependency 'Prephirences/Core'
   end
 
@@ -61,7 +61,7 @@ Pod::Spec.new do |s|
 
   s.subspec "Cocoa" do  |sp|
     sp.platform = :osx, '10.10'
-    sp.osx.source_files = ['PrephirencesMacOSX/*.swift']
+    sp.osx.source_files = ['Xcodes/Mac/*.swift']
   end
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
