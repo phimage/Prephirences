@@ -1,21 +1,22 @@
 language: objective-c
-osx_image: xcode7
-env:
-  global:
+osx_image: xcode8
+global:
   - LC_CTYPE=en_US.UTF-8
   - LANG=en_US.UTF-8
-  matrix:
-    - DESTINATION="OS=8.3,name=iPhone 5S" SCHEME="PrephirencesiOS" SDK=iphonesimulator9.0 TEST="test"
-    - DESTINATION="OS=8.4,name=iPhone 6" SCHEME="PrephirencesiOS" SDK=iphonesimulator9.0 TEST="test"
-    - DESTINATION="OS=9.0,name=iPhone 6" SCHEME="PrephirencesiOS" SDK=iphonesimulator9.0 TEST="test"
-    - DESTINATION="arch=x86_64" SCHEME="PrephirencesMacOSX" SDK=macosx10.11 TEST=""
+  - PROJECT=Prephirences.xcworkspace
+  - IOS_FRAMEWORK_SCHEME="PrephirencesiOS"
+  - MACOS_FRAMEWORK_SCHEME="PrephirencesMac"
+  - IOS_SDK=iphonesimulator10.0
+  - MACOS_SDK=macosx10.12
+env:
+  - DESTINATION="OS=10.0,name=iPhone 6s" SCHEME="$IOS_FRAMEWORK_SCHEME" SDK="$IOS_SDK" TEST="test"
+  - DESTINATION="arch=x86_64" SCHEME="$MACOS_FRAMEWORK_SCHEME" SDK=macosx10.12
 before_install:
-  - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
   - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
 script:
   - set -o pipefail
   - xcodebuild -version
-  - xcodebuild -project Prephirences.xcodeproj -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" 
+  - xcodebuild -project "$PROJECT" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION"
     -configuration Release ONLY_ACTIVE_ARCH=NO $TEST | xcpretty -c
 after_success:
   - bash <(curl -s https://codecov.io/bash)

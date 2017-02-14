@@ -156,7 +156,10 @@ extension PreferenceTransformation {
     
     public func get<T: Any>(_ key: PreferenceKey,from preferences: PreferencesType) -> T? {
         let value = preferences.object(forKey: key)
-        return reverseTransformedValue(value) as? T
+        guard let reverted = reverseTransformedValue(value) else {
+            return nil
+        }
+        return reverted as? T
     }
     
     public func set<T: Any>(_ key: PreferenceKey, value newValue: T?, to preferences: MutablePreferencesType) {
@@ -174,6 +177,9 @@ extension TransformationKey: PreferenceTransformation {
     public func reverseTransformedValue<T: Any>(_ value: PreferenceObject?) -> T? {
         switch(self) {
         case .none :
+            guard let value = value else {
+                return nil
+            }
             return value as? T
         case .archive :
             if let data = value as? Data {
@@ -181,11 +187,20 @@ extension TransformationKey: PreferenceTransformation {
             }
             return nil
         case .valueTransformer(let valueTransformer) :
-            return valueTransformer.reverseTransformedValue(value) as? T
+            guard let reverted = valueTransformer.reverseTransformedValue(value) else {
+                return nil
+            }
+            return reverted as? T
         case .closureTuple(let (_, revert)) :
-            return revert(value) as? T
+            guard let reverted = revert(value) else {
+                return nil
+            }
+            return reverted as? T
         case .compose(transformations: let ts):
             if ts.isEmpty {
+                guard let value = value else {
+                    return nil
+                }
                 return value as? T
             }
             var currentValue = value
@@ -195,7 +210,10 @@ extension TransformationKey: PreferenceTransformation {
                 currentValue = tranformation?.reverseTransformedValue(currentValue)
                 tranformation = slice.popFirst()
             }
-            return currentValue as? T
+            guard let safeValue = currentValue else {
+                return nil
+            }
+            return safeValue as? T
         }
     }
     

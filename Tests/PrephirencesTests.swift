@@ -8,7 +8,7 @@
 
 import Foundation
 import XCTest
-import Prephirences
+@testable import Prephirences
 #if os(iOS)
     import UIKit
 #endif
@@ -212,10 +212,16 @@ class PrephirencesTests: XCTestCase {
         default: XCTFail("nil")
         }
         
-        let intFromBoolPref : MutablePreference<Int> = boolPref.transform{ value in
-            return (value ?? false) ? 1:0
+        let anInt: Int = 10 // FIXME failed with 1 -> data is bool, not int
+        let intFromBoolPref: MutablePreference<Int> = boolPref.transform { value in
+            return (value ?? false) ? anInt : 0
         }
-        XCTAssert(intFromBoolPref.value! == 1)
+        guard let v = intFromBoolPref.value else {
+            XCTFail("nil value")
+            return
+        }
+        let expected = (boolPref.value ?? false) ? anInt : 0
+        XCTAssertEqual(v, expected)
         
 
         

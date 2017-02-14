@@ -135,17 +135,14 @@
 		C42114FE1AE7D8E200A09DD9 /* Prephirences.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Prephirences.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C42115011AE7D8E200A09DD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C42115021AE7D8E200A09DD9 /* PrephirencesMacOSX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrephirencesMacOSX.h; sourceTree = "<group>"; };
-		C421151B1AE7D97900A09DD9 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C43CA39C1D7434A800D318FF /* PreferenceOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferenceOperators.swift; sourceTree = "<group>"; };
 		C44CBDC21C21B32D00902E5C /* NSHTTPCookieStorage+Prephirences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSHTTPCookieStorage+Prephirences.swift"; sourceTree = "<group>"; };
 		C45D31391AE929D40034D1E3 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		C45D313A1AE929DD0034D1E3 /* Prephirences.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = Prephirences.podspec; sourceTree = "<group>"; };
 		C45D981E1C3AC12D007C8ECC /* NSCoder+Prephirences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSCoder+Prephirences.swift"; sourceTree = "<group>"; };
 		C477D9D71C03237F00486C13 /* ReflectingPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReflectingPreferences.swift; sourceTree = "<group>"; };
 		C47F324C1AED144500195CDA /* ManagedObjectPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectPreferences.swift; sourceTree = "<group>"; };
 		C47F32501AED1E3B00195CDA /* UserDefaults+Adds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Adds.swift"; sourceTree = "<group>"; };
 		C47F32531AED289400195CDA /* NSUbiquitousKeyValueStore+Prephirences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUbiquitousKeyValueStore+Prephirences.swift"; sourceTree = "<group>"; };
-		C4969D821B2187AE000E8E71 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		C4A3F3141BA44DC700F40DB6 /* Test.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Test.plist; sourceTree = "<group>"; };
 		C4B3ED2B1B17165C00D807DA /* Prephirences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Prephirences.swift; sourceTree = "<group>"; };
 		C4B838411B284C15009D5B74 /* Preference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preference.swift; sourceTree = "<group>"; };
@@ -201,34 +198,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		07FC415F1BE66517005F195C /* PrephirencesWatchos */ = {
+		07FC415F1BE66517005F195C /* watchOS */ = {
 			isa = PBXGroup;
 			children = (
 				07FC41601BE66517005F195C /* PrephirencesWatchos.h */,
 				07FC41621BE66517005F195C /* Info.plist */,
 			);
-			path = PrephirencesWatchos;
+			name = watchOS;
+			path = Xcodes/watchOS;
 			sourceTree = "<group>";
 		};
-		07FC417B1BE670BF005F195C /* PrephirencesTvOS */ = {
+		07FC417B1BE670BF005F195C /* tvOS */ = {
 			isa = PBXGroup;
 			children = (
 				07FC417C1BE670BF005F195C /* PrephirencesTvOS.h */,
 				07FC417E1BE670BF005F195C /* Info.plist */,
 			);
-			path = PrephirencesTvOS;
+			name = tvOS;
+			path = Xcodes/tvOS;
 			sourceTree = "<group>";
 		};
 		C42114A61AE7D0CB00A09DD9 = {
 			isa = PBXGroup;
 			children = (
-				C42114B21AE7D0CB00A09DD9 /* Prephirences */,
-				C42114DC1AE7D84900A09DD9 /* PrephirencesiOS */,
-				07FC415F1BE66517005F195C /* PrephirencesWatchos */,
-				07FC417B1BE670BF005F195C /* PrephirencesTvOS */,
-				C42114FF1AE7D8E200A09DD9 /* PrephirencesMacOSX */,
+				C42114B21AE7D0CB00A09DD9 /* Sources */,
+				C4AAB72A1E52EBF400348D04 /* Xcodes */,
 				C45D313B1AE929F10034D1E3 /* Resources */,
-				C4FF650C1B6B7C7300BFE4F4 /* PrephirencesTests */,
+				C4FF650C1B6B7C7300BFE4F4 /* Tests */,
 				C42114B11AE7D0CB00A09DD9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -245,7 +241,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		C42114B21AE7D0CB00A09DD9 /* Prephirences */ = {
+		C42114B21AE7D0CB00A09DD9 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				C42114D01AE7D15D00A09DD9 /* PreferencesType.swift */,
@@ -261,16 +257,17 @@
 				C4D15A181D3CE22C0030E8CF /* RawRepresentableKey */,
 				C47F324B1AED142100195CDA /* CoreData */,
 			);
-			path = Prephirences;
+			path = Sources;
 			sourceTree = "<group>";
 		};
-		C42114DC1AE7D84900A09DD9 /* PrephirencesiOS */ = {
+		C42114DC1AE7D84900A09DD9 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
 				C42114DF1AE7D84900A09DD9 /* PrephirencesiOS.h */,
 				C42114DD1AE7D84900A09DD9 /* Supporting Files */,
 			);
-			path = PrephirencesiOS;
+			name = iOS;
+			path = Xcodes/iOS;
 			sourceTree = "<group>";
 		};
 		C42114DD1AE7D84900A09DD9 /* Supporting Files */ = {
@@ -281,14 +278,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		C42114FF1AE7D8E200A09DD9 /* PrephirencesMacOSX */ = {
+		C42114FF1AE7D8E200A09DD9 /* Mac */ = {
 			isa = PBXGroup;
 			children = (
 				C4F2A6851B147CCD0092017D /* PreferencesTabViewController.swift */,
 				C42115021AE7D8E200A09DD9 /* PrephirencesMacOSX.h */,
 				C42115001AE7D8E200A09DD9 /* Supporting Files */,
 			);
-			path = PrephirencesMacOSX;
+			name = Mac;
+			path = Xcodes/Mac;
 			sourceTree = "<group>";
 		};
 		C42115001AE7D8E200A09DD9 /* Supporting Files */ = {
@@ -327,10 +325,7 @@
 		C45D313B1AE929F10034D1E3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				C4969D821B2187AE000E8E71 /* .travis.yml */,
-				C421151B1AE7D97900A09DD9 /* README.md */,
 				C45D31391AE929D40034D1E3 /* LICENSE */,
-				C45D313A1AE929DD0034D1E3 /* Prephirences.podspec */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -351,6 +346,17 @@
 			path = UserDefaults;
 			sourceTree = "<group>";
 		};
+		C4AAB72A1E52EBF400348D04 /* Xcodes */ = {
+			isa = PBXGroup;
+			children = (
+				C42114DC1AE7D84900A09DD9 /* iOS */,
+				07FC415F1BE66517005F195C /* watchOS */,
+				07FC417B1BE670BF005F195C /* tvOS */,
+				C42114FF1AE7D8E200A09DD9 /* Mac */,
+			);
+			name = Xcodes;
+			sourceTree = "<group>";
+		};
 		C4D15A181D3CE22C0030E8CF /* RawRepresentableKey */ = {
 			isa = PBXGroup;
 			children = (
@@ -368,15 +374,14 @@
 			path = Keys;
 			sourceTree = "<group>";
 		};
-		C4FF650C1B6B7C7300BFE4F4 /* PrephirencesTests */ = {
+		C4FF650C1B6B7C7300BFE4F4 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				C4FF650D1B6B7C7300BFE4F4 /* PrephirencesTests.swift */,
 				C4FF650F1B6B7C7300BFE4F4 /* Info.plist */,
 				C4A3F3141BA44DC700F40DB6 /* Test.plist */,
 			);
-			name = PrephirencesTests;
-			path = PrephirencesiOSTests;
+			path = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -417,9 +422,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		07FC415D1BE66517005F195C /* PrephirencesWatchos */ = {
+		07FC415D1BE66517005F195C /* PrephirencesWatchOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 07FC41651BE66517005F195C /* Build configuration list for PBXNativeTarget "PrephirencesWatchos" */;
+			buildConfigurationList = 07FC41651BE66517005F195C /* Build configuration list for PBXNativeTarget "PrephirencesWatchOS" */;
 			buildPhases = (
 				07FC41591BE66517005F195C /* Sources */,
 				07FC415A1BE66517005F195C /* Frameworks */,
@@ -430,7 +435,7 @@
 			);
 			dependencies = (
 			);
-			name = PrephirencesWatchos;
+			name = PrephirencesWatchOS;
 			productName = PrephirenceWatchos;
 			productReference = 07FC415E1BE66517005F195C /* Prephirences.framework */;
 			productType = "com.apple.product-type.framework";
@@ -471,9 +476,9 @@
 			productReference = C42114DB1AE7D84900A09DD9 /* Prephirences.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		C42114FD1AE7D8E200A09DD9 /* PrephirencesMacOSX */ = {
+		C42114FD1AE7D8E200A09DD9 /* PrephirencesMac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C42115111AE7D8E200A09DD9 /* Build configuration list for PBXNativeTarget "PrephirencesMacOSX" */;
+			buildConfigurationList = C42115111AE7D8E200A09DD9 /* Build configuration list for PBXNativeTarget "PrephirencesMac" */;
 			buildPhases = (
 				C42114F91AE7D8E200A09DD9 /* Sources */,
 				C42114FA1AE7D8E200A09DD9 /* Frameworks */,
@@ -484,7 +489,7 @@
 			);
 			dependencies = (
 			);
-			name = PrephirencesMacOSX;
+			name = PrephirencesMac;
 			productName = PrephirenceMacOSX;
 			productReference = C42114FE1AE7D8E200A09DD9 /* Prephirences.framework */;
 			productType = "com.apple.product-type.framework";
@@ -551,8 +556,8 @@
 			projectRoot = "";
 			targets = (
 				C42114DA1AE7D84900A09DD9 /* PrephirencesiOS */,
-				C42114FD1AE7D8E200A09DD9 /* PrephirencesMacOSX */,
-				07FC415D1BE66517005F195C /* PrephirencesWatchos */,
+				C42114FD1AE7D8E200A09DD9 /* PrephirencesMac */,
+				07FC415D1BE66517005F195C /* PrephirencesWatchOS */,
 				07FC41791BE670BF005F195C /* PrephirencesTvOS */,
 				C4FF650A1B6B7C7300BFE4F4 /* PrephirencesiOSTests */,
 			);
@@ -744,7 +749,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = PrephirencesWatchos/Info.plist;
+				INFOPLIST_FILE = Xcodes/watchOS/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.PrephirencesWatchos;
@@ -766,7 +771,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = PrephirencesWatchos/Info.plist;
+				INFOPLIST_FILE = Xcodes/watchOS/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.PrephirencesWatchos;
@@ -789,7 +794,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = PrephirencesTvOS/Info.plist;
+				INFOPLIST_FILE = Xcodes/tvOS/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.Prephirences;
@@ -812,7 +817,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = PrephirencesTvOS/Info.plist;
+				INFOPLIST_FILE = Xcodes/tvOS/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.Prephirences;
@@ -930,7 +935,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = PrephirencesiOS/Info.plist;
+				INFOPLIST_FILE = Xcodes/iOS/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -952,7 +957,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = PrephirencesiOS/Info.plist;
+				INFOPLIST_FILE = Xcodes/iOS/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -979,7 +984,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = PrephirencesMacOSX/Info.plist;
+				INFOPLIST_FILE = Xcodes/Mac/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.Prephirences;
@@ -998,7 +1003,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = PrephirencesMacOSX/Info.plist;
+				INFOPLIST_FILE = Xcodes/Mac/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.Prephirences;
@@ -1012,7 +1017,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ENABLE_TESTABILITY = YES;
-				INFOPLIST_FILE = PrephirencesiOSTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.PrephirencesiOSTests;
@@ -1025,7 +1030,7 @@
 		C4FF65151B6B7C7300BFE4F4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = PrephirencesiOSTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.PrephirencesiOSTests;
@@ -1039,7 +1044,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		07FC41651BE66517005F195C /* Build configuration list for PBXNativeTarget "PrephirencesWatchos" */ = {
+		07FC41651BE66517005F195C /* Build configuration list for PBXNativeTarget "PrephirencesWatchOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				07FC41631BE66517005F195C /* Debug */,
@@ -1075,7 +1080,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C42115111AE7D8E200A09DD9 /* Build configuration list for PBXNativeTarget "PrephirencesMacOSX" */ = {
+		C42115111AE7D8E200A09DD9 /* Build configuration list for PBXNativeTarget "PrephirencesMac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C42115121AE7D8E200A09DD9 /* Debug */,

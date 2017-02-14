@@ -7,16 +7,16 @@
       buildImplicitDependencies = "YES">
       <BuildActionEntries>
          <BuildActionEntry
-            buildForTesting = "YES"
+            buildForTesting = "NO"
             buildForRunning = "YES"
             buildForProfiling = "YES"
             buildForArchiving = "YES"
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "07FC415D1BE66517005F195C"
+               BlueprintIdentifier = "C42114FD1AE7D8E200A09DD9"
                BuildableName = "Prephirences.framework"
-               BlueprintName = "PrephirencesWatchos"
+               BlueprintName = "PrephirencesMac"
                ReferencedContainer = "container:Prephirences.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -29,6 +29,15 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "C42114FD1AE7D8E200A09DD9"
+            BuildableName = "Prephirences.framework"
+            BlueprintName = "PrephirencesMac"
+            ReferencedContainer = "container:Prephirences.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -45,9 +54,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "07FC415D1BE66517005F195C"
+            BlueprintIdentifier = "C42114FD1AE7D8E200A09DD9"
             BuildableName = "Prephirences.framework"
-            BlueprintName = "PrephirencesWatchos"
+            BlueprintName = "PrephirencesMac"
             ReferencedContainer = "container:Prephirences.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -63,9 +72,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "07FC415D1BE66517005F195C"
+            BlueprintIdentifier = "C42114FD1AE7D8E200A09DD9"
             BuildableName = "Prephirences.framework"
-            BlueprintName = "PrephirencesWatchos"
+            BlueprintName = "PrephirencesMac"
             ReferencedContainer = "container:Prephirences.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

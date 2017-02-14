@@ -128,7 +128,12 @@ open class MutablePreference<T>: Preference<T> {
     // Return a new instance with a different type
     open func transform<U>(_ closure: (T?) -> U?) -> MutablePreference<U> {
         let newPref = MutablePreference<U>(preferences: self.mutablePreferences, key: self.key, transformation: self.transformation)
-        newPref.value = closure(self.value)
+        let oldValue = self.value
+        if let newValue = closure(oldValue) {
+            newPref.value = newValue
+        } else {
+            newPref.value = nil
+        }
         return newPref
     }
     
