@@ -22,12 +22,12 @@ enum PlistKey: String {
 /// A subscript to use with PlistKey
 extension PreferencesType {
     subscript(key: PlistKey) -> AnyObject? {
-        return self[key.rawValue]
+        return self[key.rawValue] as AnyObject
     }
 }
 
 // MARK: NSUserDefaults
-let UserDefaults = NSUserDefaults.standardUserDefaults()
+let UserDefaults = Foundation.UserDefaults.standard
 
 class FromDefaults { // or extension NSUserDefaults or other model class ...
     /// example of variable binded on UserDefaults
@@ -46,5 +46,5 @@ class FromDefaults { // or extension NSUserDefaults or other model class ...
 let StaticKey = "key"
 let StaticValue = "value"
 let StaticConfig: DictionaryPreferences = [StaticKey: StaticValue]
-let MainBundle = NSBundle.mainBundle()
+let MainBundle = Bundle.main
 let Preferences: MutableCompositePreferences = [StaticConfig, AppConfig, UserDefaults, MainBundle]
