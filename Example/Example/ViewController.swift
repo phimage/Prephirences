@@ -40,9 +40,9 @@ class ViewController: UITableViewController {
         // From UserDefaults
         stringFromDefaultLabel.text = FromDefaults.string ?? "Enter a string"
         numberFromDefaultSlider.value = UserDefaults["DefaultKeyNumber"] as? Float ?? 0
-        boolFromDefaultsSwitch.on = UserDefaults["DefaultKeyBool"] as? Bool ?? true
+        boolFromDefaultsSwitch.isOn = UserDefaults["DefaultKeyBool"] as? Bool ?? true
 
-        stringFromDefaultLabel.addTarget(self, action: #selector(ViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+        stringFromDefaultLabel.addTarget(self, action: #selector(ViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
     }
 
     override func didReceiveMemoryWarning() {
@@ -53,16 +53,16 @@ class ViewController: UITableViewController {
     // Set values to defaults
     // could also use bind api...
 
-    @IBAction func textFieldDidChange(sender: UITextField) {
+    @IBAction func textFieldDidChange(_ sender: UITextField) {
         FromDefaults.string = sender.text
         UserDefaults.synchronize()
     }
-    @IBAction func sliderChanged(sender: UISlider) {
+    @IBAction func sliderChanged(_ sender: UISlider) {
         UserDefaults["DefaultKeyNumber"] = sender.value
         UserDefaults.synchronize()
     }
-    @IBAction func switchChanged(sender: UISwitch) {
-        UserDefaults["DefaultKeyBool"] = sender.on
+    @IBAction func switchChanged(_ sender: UISwitch) {
+        UserDefaults["DefaultKeyBool"] = sender.isOn
         UserDefaults.synchronize()
     }
 }
