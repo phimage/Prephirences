@@ -211,6 +211,7 @@
                         <outlet property="boolLabel" destination="j1u-U7-Ve2" id="gBR-eJ-7w3"/>
                         <outlet property="numberFromDefaultSlider" destination="2hb-fW-aTH" id="uy7-Ta-lCZ"/>
                         <outlet property="numberLabel" destination="47f-6u-VLq" id="GPb-ju-eWO"/>
+                        <outlet property="stringFromDefaultLabel" destination="aey-wI-qAS" id="dwp-rP-MNv"/>
                         <outlet property="stringLabel" destination="Ija-hm-4sc" id="huG-K4-zTC"/>
                         <outlet property="versionLabel" destination="kCM-vy-Sdf" id="Zar-mQ-Dao"/>
                     </connections>
