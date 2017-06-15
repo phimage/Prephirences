@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
   s.tvos.deployment_target = '9.0'
 
   # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  s.source       = { :git => "https://github.com/phimage/Prephirences.git", :tag => s.version }
+  s.source       = { :git => "https://github.com/riveryan/Prephirences.git", :branch => "xcode9" }
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 
