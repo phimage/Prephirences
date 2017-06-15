@@ -27,6 +27,24 @@ SOFTWARE.
 
 import Foundation
 
+open class DictionaryIteratorAdapter<Key: Hashable, Value>: IteratorProtocol {
+    var dictionaryIterator: DictionaryIterator<Key, Value>?
+
+    init(dictionaryIterator: DictionaryIterator<Key, Value>) {
+        self.dictionaryIterator = dictionaryIterator
+    }
+
+    open func next() -> (Key, Value)? {
+        if let ele = dictionaryIterator?.next() {
+            return (ele.key, ele.value)
+        } else {
+            return nil
+        }
+    }
+
+    public typealias Element = (Key, Value)
+}
+
 // MARK: Dictionary Adapter
 // Adapt Dictionary to PreferencesType (with adapter pattern)
 open class DictionaryPreferences: PreferencesType, Sequence, ExpressibleByDictionaryLiteral {
@@ -79,8 +97,8 @@ open class DictionaryPreferences: PreferencesType, Sequence, ExpressibleByDictio
 
     // MARK: SequenceType
 
-    open func makeIterator() -> DictionaryIterator<Key, Value> {
-        return self.dico.makeIterator()
+    open func makeIterator() -> DictionaryIteratorAdapter<Key, Value> {
+        return DictionaryIteratorAdapter<Key, Value>.init(dictionaryIterator: self.dico.makeIterator())
     }
 
     public typealias Index = DictionaryIndex<Key, Value>
