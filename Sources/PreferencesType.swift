@@ -119,7 +119,6 @@ public extension PreferencesType {
     public func url(forKey key: PreferenceKey) -> URL? {
         return self.object(forKey: key) as? URL
     }
-
 }
 
 public extension MutablePreferencesType {

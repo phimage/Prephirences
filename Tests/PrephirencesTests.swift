@@ -20,6 +20,7 @@ class PrephirencesTests: XCTestCase {
 
     let mykey = "key"
     let myvalue = "value"
+    let mykey2 = "key2"
 
     override func setUp() {
         super.setUp()
@@ -491,7 +492,42 @@ class PrephirencesTests: XCTestCase {
         pref.color = "blue"
         XCTAssertEqual(pref.color, pref.object(forKey: TestKey.color) as? String)
     }
+    
+    func testOpPrepherence() {
+        let value = 4
+        let value2 = 2
+        let preferences: DictionaryPreferences = [mykey: value, mykey2: value2]
+        
+        let pref: Preference<Int> = preferences <| mykey
+        let pref2: Preference<Int> = preferences <| mykey2
 
+        XCTAssertEqual(pref + pref2, value + value2)
+        XCTAssertEqual(pref * pref2, value * value2)
+        XCTAssertEqual(pref - pref2, value - value2)
+        XCTAssertEqual(pref / pref2, value / value2)
+        XCTAssertEqual(pref % pref2, value % value2)
+        
+    }
+
+    func testOpPreferences() {
+        let value = 4
+        let value2 = 2
+        let preferences: DictionaryPreferences = [mykey: value, mykey2: value2, "array": [value], "array2": [value2]]
+
+        XCTAssertEqual(preferences.operation(on: mykey, with: mykey2, using: +), value + value2)
+        XCTAssertEqual(preferences.operation(on: mykey, with: mykey2, using: *), value * value2)
+        XCTAssertEqual(preferences.operation(on: mykey, with: mykey2, using: -), value - value2)
+        XCTAssertEqual(preferences.operation(on: mykey, with: mykey2, using: /), value / value2)
+        XCTAssertEqual(preferences.operation(on: mykey, with: mykey2, using: %), value % value2)
+
+        let _: Int? = preferences.operation(on: mykey, with: mykey2, using: +) // to check compilation
+        
+        if let result: [Int] = preferences.operation(on: "array", with: "array2", using: +) {
+             XCTAssertEqual(result, [value, value2])
+        } else {
+             XCTFail("failed to get array add op result")
+        }
+    }
 }
 
 struct PrefStruc {

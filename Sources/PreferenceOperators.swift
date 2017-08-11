@@ -55,6 +55,46 @@ public func ~=<B: Comparable> (preference: Preference<B>, value: CountableClosed
     return false
 }
 
+// MARK: Op Arithmetic
+public func +<T: Addable> (left: Preference<T>, right: Preference<T>) -> T? {
+    return Preference<T>.operation(left, right, +)
+}
+public func +<T: IntegerArithmetic> (left: Preference<T>, right: Preference<T>) -> T? {
+    return Preference<T>.operation(left, right, +)
+}
+public func -<T: IntegerArithmetic> (left: Preference<T>, right: Preference<T>) -> T? {
+    return Preference<T>.operation(left, right, -)
+}
+public func *<T: IntegerArithmetic> (left: Preference<T>, right: Preference<T>) -> T? {
+    return Preference<T>.operation(left, right, *)
+}
+public func /<T: IntegerArithmetic> (left: Preference<T>, right: Preference<T>) -> T? {
+    return Preference<T>.operation(left, right, /)
+}
+public func %<T: IntegerArithmetic> (left: Preference<T>, right: Preference<T>) -> T? {
+    return Preference<T>.operation(left, right, %)
+}
+public func &<T: BitwiseOperations> (left: Preference<T>, right: Preference<T>) -> T? {
+    return Preference<T>.operation(left, right, &)
+}
+public func |<T: BitwiseOperations> (left: Preference<T>, right: Preference<T>) -> T? {
+    return Preference<T>.operation(left, right, |)
+}
+public func ^<T: BitwiseOperations> (left: Preference<T>, right: Preference<T>) -> T? {
+    return Preference<T>.operation(left, right, ^)
+}
+extension Preference {
+    static func operation<T>(_ left: Preference<T>, _ right: Preference<T>, _ op: (T, T) -> T) -> T? {
+        if let leftValue = left.value {
+            if let rightValue = right.value {
+                return op(leftValue, rightValue)
+            }
+            return leftValue
+        }
+        return right.value
+    }
+}
+
 // MARK: Equatable
 public func ==<T: Equatable> (left: Preference<T>, right: Preference<T>) -> Bool {
     return left.value == right.value

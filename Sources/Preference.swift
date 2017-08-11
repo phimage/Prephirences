@@ -73,6 +73,10 @@ extension PreferencesType {
         return Preference<T>(preferences: self, key: key)
     }
 
+    public func operation<T>(on key: PreferenceKey, with key2: PreferenceKey, using operation: (T, T) -> T) -> T? {
+        return Preference<T>.operation(preference(forKey: key), preference(forKey: key2), operation)
+    }
+
 }
 
 // Mutable instance of `Preference`
