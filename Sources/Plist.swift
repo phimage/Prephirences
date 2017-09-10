@@ -67,7 +67,7 @@ open class Plist: MutableDictionaryPreferences {
 
     fileprivate func notifyChange() {
         if writeImmediatly {
-            let _ = write()
+            _ = write()
         }
     }
 

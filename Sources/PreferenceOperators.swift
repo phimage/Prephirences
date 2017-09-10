@@ -111,10 +111,7 @@ public func < <T: Comparable> (left: Preference<T>, right: Preference<T>) -> Boo
         }
         return true
     }
-    if let _ = right.value { // left nil
-        return true
-    }
-    return false // strict when equal
+    return right.value != nil
 }
 
 // MARK: helper protocol to get a default value

@@ -59,7 +59,7 @@ open class KeychainPreferences: PreferencesAdapter, MutablePreferencesType {
     open var service: String?
 
     open var stringEncoding: String.Encoding = .utf8
-    
+
     open var lastStatus: OSStatus?
 
     // MARK: Prephirences
@@ -165,7 +165,7 @@ open class KeychainPreferences: PreferencesAdapter, MutablePreferencesType {
             if let items = result as? [[String: AnyObject]] {
                 for item in items {
                     if let key = item[Constants.account] as? String, let data = item[Constants.valueData] as? Data {
-                        if let text = String(data: data, encoding: stringEncoding){
+                        if let text = String(data: data, encoding: stringEncoding) {
                             dico[key] = text
                         } else {
                             dico[key] = data

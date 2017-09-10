@@ -105,7 +105,7 @@ open class PrephirencesForType<Key: Hashable> {
             if let value = newValue {
                 Prephirences.registerInstance(value, forKey: key)
             } else {
-                let _ = Prephirences.unregisterInstance(forKey: key)
+                _ = Prephirences.unregisterInstance(forKey: key)
             }
         }
     }
