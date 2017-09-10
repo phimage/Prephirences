@@ -122,3 +122,100 @@ public extension MutablePreferencesType {
     }
 
 }
+
+open class PreferenceSerializable<ValueType>: RawRepresentable {
+    public typealias RawValue = PreferenceKey
+    public let rawValue: PreferenceKey
+
+    public required init(rawValue: PreferenceKey) {
+        self.rawValue = rawValue
+    }
+}
+
+// There is no generic subscript in swift 3, so multiple function by type
+extension MutablePreferencesType {
+    public subscript(key: PreferenceSerializable<String?>) -> String? {
+        get { return string(forKey: key.rawValue) }
+        set { set(newValue, forKey: key.rawValue) }
+    }
+
+    public subscript(key: PreferenceSerializable<String>) -> String {
+        get { return string(forKey: key.rawValue) ?? "" }
+        set { set(key, forKey: newValue) }
+    }
+
+    public subscript(key: PreferenceSerializable<Int?>) -> Int? {
+        get { return object(forKey:key.rawValue) as? Int }
+        set { set(newValue, forKey: key.rawValue) }
+    }
+
+    public subscript(key: PreferenceSerializable<Int>) -> Int {
+        get { return integer(forKey: key.rawValue) }
+        set { set(newValue, forKey: key.rawValue) }
+    }
+
+    public subscript(key: PreferenceSerializable<Double?>) -> Double? {
+        get { return object(forKey: key.rawValue) as? Double}
+        set { set(newValue, forKey: key.rawValue) }
+    }
+
+    public subscript(key: PreferenceSerializable<Double>) -> Double {
+        get { return double(forKey: key.rawValue) }
+        set { set(newValue, forKey: key.rawValue) }
+    }
+
+    public subscript(key: PreferenceSerializable<Bool?>) -> Bool? {
+        get { return object(forKey: key.rawValue) as? Bool }
+        set { set(newValue, forKey: key.rawValue) }
+    }
+
+    public subscript(key: PreferenceSerializable<Bool>) -> Bool {
+        get { return bool(forKey:key.rawValue) }
+        set { set(newValue, forKey: key.rawValue) }
+    }
+
+    public subscript(key: PreferenceSerializable<Any?>) -> Any? {
+        get { return object(forKey: key.rawValue) }
+        set { set(newValue, forKey: key.rawValue) }
+    }
+
+    public subscript(key: PreferenceSerializable<Data?>) -> Data? {
+        get { return data(forKey: key.rawValue) }
+        set { set(newValue, forKey: key.rawValue) }
+    }
+
+    public subscript(key: PreferenceSerializable<Data>) -> Data {
+        get { return data(forKey: key.rawValue) ?? Data() }
+        set { set(newValue, forKey: key.rawValue) }
+    }
+
+    public subscript(key: PreferenceSerializable<Date?>) -> Date? {
+        get { return object(forKey: key.rawValue) as? Date }
+        set { set(newValue, forKey: key.rawValue) }
+    }
+
+    public subscript(key: PreferenceSerializable<URL?>) -> URL? {
+        get { return url(forKey: key.rawValue) }
+        set { set(newValue, forKey: key.rawValue) }
+    }
+
+    public subscript(key: PreferenceSerializable<[String: Any]?>) -> [String: Any]? {
+        get { return dictionary(forKey: key.rawValue) }
+        set { set(newValue, forKey: key.rawValue) }
+    }
+
+    public subscript(key: PreferenceSerializable<[String: Any]>) -> [String: Any] {
+        get { return dictionary(forKey: key.rawValue) ?? [:] }
+        set { set(newValue, forKey: key.rawValue) }
+    }
+
+    public subscript(key: PreferenceSerializable<[Any]?>) -> [Any]? {
+        get { return array(forKey: key.rawValue) }
+        set { set(newValue, forKey: key.rawValue) }
+    }
+
+    public subscript(key: PreferenceSerializable<[Any]>) -> [Any] {
+        get { return array(forKey: key.rawValue) ?? [] }
+        set { set(newValue, forKey: key.rawValue) }
+    }
+}
