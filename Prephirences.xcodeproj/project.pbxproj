@@ -80,6 +80,10 @@
 		C47F324E1AED144500195CDA /* ManagedObjectPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F324C1AED144500195CDA /* ManagedObjectPreferences.swift */; };
 		C47F32511AED1E3B00195CDA /* UserDefaults+Adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F32501AED1E3B00195CDA /* UserDefaults+Adds.swift */; };
 		C47F32521AED1E3B00195CDA /* UserDefaults+Adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F32501AED1E3B00195CDA /* UserDefaults+Adds.swift */; };
+		C4876C891F6578210080839E /* NSCachePreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4876C881F6578210080839E /* NSCachePreferences.swift */; };
+		C4876C8A1F6578210080839E /* NSCachePreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4876C881F6578210080839E /* NSCachePreferences.swift */; };
+		C4876C8B1F657EB20080839E /* NSCachePreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4876C881F6578210080839E /* NSCachePreferences.swift */; };
+		C4876C8C1F657EB20080839E /* NSCachePreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4876C881F6578210080839E /* NSCachePreferences.swift */; };
 		C4A3F3151BA44DC700F40DB6 /* Test.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4A3F3141BA44DC700F40DB6 /* Test.plist */; };
 		C4B3ED2C1B17165C00D807DA /* Prephirences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B3ED2B1B17165C00D807DA /* Prephirences.swift */; };
 		C4B838421B284C15009D5B74 /* Preference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B838411B284C15009D5B74 /* Preference.swift */; };
@@ -143,6 +147,7 @@
 		C47F324C1AED144500195CDA /* ManagedObjectPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectPreferences.swift; sourceTree = "<group>"; };
 		C47F32501AED1E3B00195CDA /* UserDefaults+Adds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Adds.swift"; sourceTree = "<group>"; };
 		C47F32531AED289400195CDA /* NSUbiquitousKeyValueStore+Prephirences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUbiquitousKeyValueStore+Prephirences.swift"; sourceTree = "<group>"; };
+		C4876C881F6578210080839E /* NSCachePreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCachePreferences.swift; sourceTree = "<group>"; };
 		C4A3F3141BA44DC700F40DB6 /* Test.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Test.plist; sourceTree = "<group>"; };
 		C4B3ED2B1B17165C00D807DA /* Prephirences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Prephirences.swift; sourceTree = "<group>"; };
 		C4B838411B284C15009D5B74 /* Preference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preference.swift; sourceTree = "<group>"; };
@@ -310,6 +315,7 @@
 				C477D9D71C03237F00486C13 /* ReflectingPreferences.swift */,
 				C4FA9B1C1C0F1730009CF439 /* Bundle.swift */,
 				C45D981E1C3AC12D007C8ECC /* NSCoder+Prephirences.swift */,
+				C4876C881F6578210080839E /* NSCachePreferences.swift */,
 			);
 			name = Impl;
 			sourceTree = "<group>";
@@ -627,6 +633,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				07FC41661BE6656C005F195C /* PreferencesType.swift in Sources */,
+				C4876C8B1F657EB20080839E /* NSCachePreferences.swift in Sources */,
 				07FC41671BE6656C005F195C /* DictionaryPreferences.swift in Sources */,
 				07FC41681BE6656C005F195C /* PatternPreferences.swift in Sources */,
 				07FC41691BE6656C005F195C /* Plist.swift in Sources */,
@@ -656,6 +663,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C404AE171D81B2D200E5321E /* PreferencesType.swift in Sources */,
+				C4876C8C1F657EB20080839E /* NSCachePreferences.swift in Sources */,
 				C404AE1D1D81B4DF00E5321E /* Prephirences.swift in Sources */,
 				C416C7FA1D81B9210006DD89 /* DictionaryPreferences.swift in Sources */,
 				C416C8071D81B9300006DD89 /* UserDefaults+Adds.swift in Sources */,
@@ -685,6 +693,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C42114F61AE7D87400A09DD9 /* PatternPreferences.swift in Sources */,
+				C4876C891F6578210080839E /* NSCachePreferences.swift in Sources */,
 				C42114F51AE7D86F00A09DD9 /* DictionaryPreferences.swift in Sources */,
 				C4EBB8441B15DE4D0075187B /* Plist.swift in Sources */,
 				C42114F71AE7D87600A09DD9 /* UserDefaults+Prephirences.swift in Sources */,
@@ -726,6 +735,7 @@
 				C42115171AE7D90E00A09DD9 /* PreferencesType.swift in Sources */,
 				C477D9D91C03237F00486C13 /* ReflectingPreferences.swift in Sources */,
 				07FC41731BE66A30005F195C /* PreferencesOperators.swift in Sources */,
+				C4876C8A1F6578210080839E /* NSCachePreferences.swift in Sources */,
 				C404AE1A1D81B43100E5321E /* PreferenceTransformation.swift in Sources */,
 				C4D15A1B1D3CE2780030E8CF /* RawRepresentable+Prephirences.swift in Sources */,
 				C47F324E1AED144500195CDA /* ManagedObjectPreferences.swift in Sources */,
