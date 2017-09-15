@@ -213,17 +213,16 @@ class PrephirencesTests: XCTestCase {
         default: XCTFail("nil")
         }
 
-        let anInt: Int = 10 // FIXME failed with 1 -> data is bool, not int
+        let anInt: Int = 10
         let intFromBoolPref: MutablePreference<Int> = boolPref.transform { value in
-            return (value ?? false) ? anInt : 0
+            return (value ?? false) ? anInt : anInt
         }
         guard let v = intFromBoolPref.value else {
             XCTFail("nil value")
             return
         }
-        let expected = (boolPref.value ?? false) ? anInt : 0
-        XCTAssertEqual(v, expected)
-
+        XCTAssertEqual(v, anInt)
+        XCTAssertNil(boolPref.value)
 
 
         var stringPref: MutablePreference<String> = userDefaults.preference(forKey: "string")

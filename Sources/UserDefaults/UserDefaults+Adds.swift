@@ -139,7 +139,7 @@ public var UserDefaultsKeySeparator = "."
 
 #if os(OSX)
     import AppKit
-    public var UserDefaultsController = NSUserDefaultsController.shared()
+    public var UserDefaultsController = NSUserDefaultsController.shared
 
     // http://stackoverflow.com/questions/29312106/xcode-6-os-x-storyboard-multiple-user-defaults-controllers-bug-with-multiple-sce/29509031#29509031
     @objc(SharedUserDefaultsControllerProxy)

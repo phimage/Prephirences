@@ -42,13 +42,13 @@ public func ~=<T: Equatable> (preference: Preference<T>, value: T) -> Bool {
     return false
 }
 
-public func ~=<B: Comparable> (value: CountableClosedRange<B>, preference: Preference<B>) -> Bool {
+public func ~=<B> (value: CountableClosedRange<B>, preference: Preference<B>) -> Bool {
     if let pv = preference.value {
         return value ~= pv
     }
     return false
 }
-public func ~=<B: Comparable> (preference: Preference<B>, value: CountableClosedRange<B>) -> Bool {
+public func ~=<B> (preference: Preference<B>, value: CountableClosedRange<B>) -> Bool {
     if let pv = preference.value {
         return value ~= pv
     }
@@ -59,28 +59,28 @@ public func ~=<B: Comparable> (preference: Preference<B>, value: CountableClosed
 public func +<T: Addable> (left: Preference<T>, right: Preference<T>) -> T? {
     return Preference<T>.operation(left, right, +)
 }
-public func +<T: IntegerArithmetic> (left: Preference<T>, right: Preference<T>) -> T? {
+public func +<T: BinaryInteger> (left: Preference<T>, right: Preference<T>) -> T? {
     return Preference<T>.operation(left, right, +)
 }
-public func -<T: IntegerArithmetic> (left: Preference<T>, right: Preference<T>) -> T? {
+public func -<T: BinaryInteger> (left: Preference<T>, right: Preference<T>) -> T? {
     return Preference<T>.operation(left, right, -)
 }
-public func *<T: IntegerArithmetic> (left: Preference<T>, right: Preference<T>) -> T? {
+public func *<T: BinaryInteger> (left: Preference<T>, right: Preference<T>) -> T? {
     return Preference<T>.operation(left, right, *)
 }
-public func /<T: IntegerArithmetic> (left: Preference<T>, right: Preference<T>) -> T? {
+public func /<T: BinaryInteger> (left: Preference<T>, right: Preference<T>) -> T? {
     return Preference<T>.operation(left, right, /)
 }
-public func %<T: IntegerArithmetic> (left: Preference<T>, right: Preference<T>) -> T? {
+public func %<T: BinaryInteger> (left: Preference<T>, right: Preference<T>) -> T? {
     return Preference<T>.operation(left, right, %)
 }
-public func &<T: BitwiseOperations> (left: Preference<T>, right: Preference<T>) -> T? {
+public func &<T: FixedWidthInteger> (left: Preference<T>, right: Preference<T>) -> T? {
     return Preference<T>.operation(left, right, &)
 }
-public func |<T: BitwiseOperations> (left: Preference<T>, right: Preference<T>) -> T? {
+public func |<T: FixedWidthInteger> (left: Preference<T>, right: Preference<T>) -> T? {
     return Preference<T>.operation(left, right, |)
 }
-public func ^<T: BitwiseOperations> (left: Preference<T>, right: Preference<T>) -> T? {
+public func ^<T: FixedWidthInteger> (left: Preference<T>, right: Preference<T>) -> T? {
     return Preference<T>.operation(left, right, ^)
 }
 extension Preference {
@@ -137,44 +137,44 @@ extension Array: Initializable {}
 extension Bool: Initializable {}
 
 // MARK: IntegerArithmetic
-public func +=<T> (preference: inout MutablePreference<T>, addend: T) where T:IntegerArithmetic, T:Initializable {
+public func +=<T> (preference: inout MutablePreference<T>, addend: T) where T:BinaryInteger, T:Initializable {
     let c = preference.value ?? T()
     preference.value = c + addend
 }
-public func -=<T> (preference: inout MutablePreference<T>, addend: T) where T:IntegerArithmetic, T:Initializable {
+public func -=<T> (preference: inout MutablePreference<T>, addend: T) where T:BinaryInteger, T:Initializable {
     let c = preference.value ?? T()
     preference.value = c - addend
 }
 
-public func *=<T> (preference: inout MutablePreference<T>, multiplier : T) where T:IntegerArithmetic, T:Initializable {
+public func *=<T> (preference: inout MutablePreference<T>, multiplier : T) where T:BinaryInteger, T:Initializable {
     let c = preference.value ?? T()
     preference.value = c * multiplier
 }
 
-public func /=<T> (preference: inout MutablePreference<T>, divisor : T) where T:IntegerArithmetic, T:Initializable {
+public func /=<T> (preference: inout MutablePreference<T>, divisor : T) where T:BinaryInteger, T:Initializable {
     let c = preference.value ?? T()
     preference.value = c / divisor
 }
 
-public func %=<T> (preference: inout MutablePreference<T>, modulo : T) where T:IntegerArithmetic, T:Initializable {
+public func %=<T> (preference: inout MutablePreference<T>, modulo : T) where T:BinaryInteger, T:Initializable {
     let c = preference.value ?? T()
     preference.value = c % modulo
 }
 
 // MARK: Bitwise Operations
-public func &= <T>(preference: inout MutablePreference<T>, rhs: T) where T: BitwiseOperations, T:Initializable {
+public func &= <T>(preference: inout MutablePreference<T>, rhs: T) where T: FixedWidthInteger, T:Initializable {
     let c = preference.value ?? T()
     preference.value = c & rhs
 }
-public func |= <T>(preference: inout MutablePreference<T>, rhs: T) where T: BitwiseOperations, T:Initializable {
+public func |= <T>(preference: inout MutablePreference<T>, rhs: T) where T: FixedWidthInteger, T:Initializable {
     let c = preference.value ?? T()
     preference.value = c | rhs
 }
-public func ^=<T> (preference: inout MutablePreference<T>, rhs: T) where T: BitwiseOperations, T:Initializable {
+public func ^=<T> (preference: inout MutablePreference<T>, rhs: T) where T: FixedWidthInteger, T:Initializable {
     let c = preference.value ?? T()
     preference.value = c ^ rhs
 }
-public func ~= <T>(preference: inout MutablePreference<T>, rhs: T) where T: BitwiseOperations {
+public func ~= <T>(preference: inout MutablePreference<T>, rhs: T) where T: FixedWidthInteger {
     preference.value = ~rhs
 }
 
