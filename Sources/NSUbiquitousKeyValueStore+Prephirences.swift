@@ -30,6 +30,7 @@ import Foundation
 /** Prephirences Extends NSUbiquitousKeyValueStore
 
 */
+#if !os(watchOS)
 extension NSUbiquitousKeyValueStore: MutablePreferencesType {
 
     public func dictionary() -> PreferencesDictionary {
@@ -100,3 +101,4 @@ extension NSUbiquitousKeyValueStore {
     }
 
 }
+#endif
