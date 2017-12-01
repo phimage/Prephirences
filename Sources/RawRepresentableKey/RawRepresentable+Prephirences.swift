@@ -98,27 +98,27 @@ public extension MutablePreferencesType {
     }
 
     public func set<R: RawRepresentable>(_ value: Int, rawRepresentableKey: R) where R.RawValue == PreferenceKey {
-        set(value, forKey : rawRepresentableKey.rawValue)
+        set(value, forKey: rawRepresentableKey.rawValue)
     }
 
     public func set<R: RawRepresentable>(_ value: Float, rawRepresentableKey: R) where R.RawValue == PreferenceKey {
-        set(value, forKey : rawRepresentableKey.rawValue)
+        set(value, forKey: rawRepresentableKey.rawValue)
     }
 
     public func set<R: RawRepresentable>(_ value: Double, rawRepresentableKey: R) where R.RawValue == PreferenceKey {
-        set(value, forKey : rawRepresentableKey.rawValue)
+        set(value, forKey: rawRepresentableKey.rawValue)
     }
 
     public func set<R: RawRepresentable>(_ value: Bool, rawRepresentableKey: R) where R.RawValue == PreferenceKey {
-        set(value, forKey : rawRepresentableKey.rawValue)
+        set(value, forKey: rawRepresentableKey.rawValue)
     }
 
     public func set<R: RawRepresentable>(_ url: URL?, rawRepresentableKey: R) where R.RawValue == PreferenceKey {
-        set(url, forKey : rawRepresentableKey.rawValue)
+        set(url, forKey: rawRepresentableKey.rawValue)
     }
 
     public func set<T: RawRepresentable, R: RawRepresentable>(rawValue value: T?, rawRepresentableKey: R) where R.RawValue == PreferenceKey {
-        self.set(rawValue: value, forKey : rawRepresentableKey.rawValue)
+        self.set(rawValue: value, forKey: rawRepresentableKey.rawValue)
     }
 
 }
@@ -145,7 +145,7 @@ extension MutablePreferencesType {
     }
 
     public subscript(key: PreferenceSerializable<Int?>) -> Int? {
-        get { return object(forKey:key.rawValue) as? Int }
+        get { return object(forKey: key.rawValue) as? Int }
         set { set(newValue, forKey: key.rawValue) }
     }
 
@@ -170,7 +170,7 @@ extension MutablePreferencesType {
     }
 
     public subscript(key: PreferenceSerializable<Bool>) -> Bool {
-        get { return bool(forKey:key.rawValue) }
+        get { return bool(forKey: key.rawValue) }
         set { set(newValue, forKey: key.rawValue) }
     }
 

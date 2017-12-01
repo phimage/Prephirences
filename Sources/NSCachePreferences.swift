@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class NSCachePreferences<ObjectType>: MutablePreferencesType  where ObjectType : AnyObject {
+public class NSCachePreferences<ObjectType>: MutablePreferencesType  where ObjectType: AnyObject {
 
     public let cache: NSCache<NSString, ObjectType>
     public var insertCost: Int = 0

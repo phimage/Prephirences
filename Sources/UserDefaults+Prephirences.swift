@@ -32,7 +32,7 @@ import Foundation
 */
 extension Foundation.UserDefaults: MutablePreferencesType {
 
-    public func dictionary() -> [PreferenceKey : PreferenceObject] {
+    public func dictionary() -> [PreferenceKey: PreferenceObject] {
         return self.dictionaryRepresentation()
     }
 

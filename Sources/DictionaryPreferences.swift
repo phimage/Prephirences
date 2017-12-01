@@ -139,7 +139,7 @@ open class DictionaryPreferences: PreferencesType, Sequence, ExpressibleByDictio
     open func array(forKey key: PreferenceKey) -> [PreferenceObject]? {
         return dico[key] as? [AnyObject]
     }
-    open func dictionary(forKey key: PreferenceKey) -> [String : AnyObject]? {
+    open func dictionary(forKey key: PreferenceKey) -> [String: AnyObject]? {
         return dico[key] as? [String: AnyObject]
     }
     open func data(forKey key: PreferenceKey) -> Data? {
@@ -222,7 +222,7 @@ open class MutableDictionaryPreferences: DictionaryPreferences, MutablePreferenc
 
 // MARK: - private
 // dictionary append
-internal func +=<K, V> (left: inout [K : V], right: [K : V]) { for (k, v) in right { left[k] = v } }
+internal func +=<K, V> (left: inout [K: V], right: [K: V]) { for (k, v) in right { left[k] = v } }
 
 // MARK: - Buffered preferences
 open class BufferPreferences: MutableDictionaryPreferences {

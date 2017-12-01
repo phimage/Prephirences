@@ -137,40 +137,40 @@ extension Array: Initializable {}
 extension Bool: Initializable {}
 
 // MARK: IntegerArithmetic
-public func +=<T> (preference: inout MutablePreference<T>, addend: T) where T:BinaryInteger, T:Initializable {
+public func +=<T> (preference: inout MutablePreference<T>, addend: T) where T: BinaryInteger, T: Initializable {
     let c = preference.value ?? T()
     preference.value = c + addend
 }
-public func -=<T> (preference: inout MutablePreference<T>, addend: T) where T:BinaryInteger, T:Initializable {
+public func -=<T> (preference: inout MutablePreference<T>, addend: T) where T: BinaryInteger, T: Initializable {
     let c = preference.value ?? T()
     preference.value = c - addend
 }
 
-public func *=<T> (preference: inout MutablePreference<T>, multiplier : T) where T:BinaryInteger, T:Initializable {
+public func *=<T> (preference: inout MutablePreference<T>, multiplier : T) where T: BinaryInteger, T: Initializable {
     let c = preference.value ?? T()
     preference.value = c * multiplier
 }
 
-public func /=<T> (preference: inout MutablePreference<T>, divisor : T) where T:BinaryInteger, T:Initializable {
+public func /=<T> (preference: inout MutablePreference<T>, divisor : T) where T: BinaryInteger, T: Initializable {
     let c = preference.value ?? T()
     preference.value = c / divisor
 }
 
-public func %=<T> (preference: inout MutablePreference<T>, modulo : T) where T:BinaryInteger, T:Initializable {
+public func %=<T> (preference: inout MutablePreference<T>, modulo : T) where T: BinaryInteger, T: Initializable {
     let c = preference.value ?? T()
     preference.value = c % modulo
 }
 
 // MARK: Bitwise Operations
-public func &= <T>(preference: inout MutablePreference<T>, rhs: T) where T: FixedWidthInteger, T:Initializable {
+public func &= <T>(preference: inout MutablePreference<T>, rhs: T) where T: FixedWidthInteger, T: Initializable {
     let c = preference.value ?? T()
     preference.value = c & rhs
 }
-public func |= <T>(preference: inout MutablePreference<T>, rhs: T) where T: FixedWidthInteger, T:Initializable {
+public func |= <T>(preference: inout MutablePreference<T>, rhs: T) where T: FixedWidthInteger, T: Initializable {
     let c = preference.value ?? T()
     preference.value = c | rhs
 }
-public func ^=<T> (preference: inout MutablePreference<T>, rhs: T) where T: FixedWidthInteger, T:Initializable {
+public func ^=<T> (preference: inout MutablePreference<T>, rhs: T) where T: FixedWidthInteger, T: Initializable {
     let c = preference.value ?? T()
     preference.value = c ^ rhs
 }
@@ -185,7 +185,7 @@ public protocol Addable {
 extension String: Addable {}
 extension Array: Addable {}
 
-public func +=<T> (preference: inout MutablePreference<T>, addend: T) where T:Addable, T:Initializable {
+public func +=<T> (preference: inout MutablePreference<T>, addend: T) where T: Addable, T: Initializable {
     let c = preference.value ?? T()
     preference.value = c + addend
 }
@@ -211,12 +211,12 @@ extension Conjunctive {
     }
 }
 
-public func && <T>(left: MutablePreference<T>, right: Preference<T>) -> T where T: Conjunctive, T:Initializable {
+public func && <T>(left: MutablePreference<T>, right: Preference<T>) -> T where T: Conjunctive, T: Initializable {
     let leftV = left.value ?? T()
     let rightV = right.value ?? T()
     return leftV && rightV
 }
-public func &&=<T> (preference: inout MutablePreference<T>, right: @autoclosure () throws -> T) rethrows where T:Conjunctive, T:Initializable {
+public func &&=<T> (preference: inout MutablePreference<T>, right: @autoclosure () throws -> T) rethrows where T: Conjunctive, T: Initializable {
     let c = preference.value ?? T()
     try preference.value = c && right
 }
@@ -237,7 +237,7 @@ public func ||=<T> (preference: inout MutablePreference<T>, rhs: @autoclosure ()
     try preference.value = c || rhs
 }
 
-public func || <T>(left: MutablePreference<T>, right: Preference<T>) -> T where T: Disjunctive, T:Initializable {
+public func || <T>(left: MutablePreference<T>, right: Preference<T>) -> T where T: Disjunctive, T: Initializable {
     let leftV = left.value ?? T()
     let rightV = right.value ?? T()
     return leftV || rightV

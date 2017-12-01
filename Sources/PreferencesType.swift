@@ -96,7 +96,7 @@ public extension PreferencesType {
         return self.object(forKey: key) as? [AnyObject]
     }
     public func dictionary(forKey key: PreferenceKey) -> PreferencesDictionary? {
-        return self.object(forKey: key) as? [String : AnyObject]
+        return self.object(forKey: key) as? [String: AnyObject]
     }
     public func data(forKey key: PreferenceKey) -> Data? {
         return self.object(forKey: key) as? Data

@@ -30,7 +30,7 @@ import Foundation
 /** Prephirences Extends NSUbiquitousKeyValueStore
 
 */
-extension NSUbiquitousKeyValueStore : MutablePreferencesType {
+extension NSUbiquitousKeyValueStore: MutablePreferencesType {
 
     public func dictionary() -> PreferencesDictionary {
         return self.dictionaryRepresentation
@@ -89,7 +89,7 @@ extension NSUbiquitousKeyValueStore {
             #endif
             let data: Data?
             do {
-                data = try urlToSet.bookmarkData(options: options, includingResourceValuesForKeys:nil, relativeTo:nil)
+                data = try urlToSet.bookmarkData(options: options, includingResourceValuesForKeys: nil, relativeTo: nil)
             } catch _ {
                 data = nil
             }

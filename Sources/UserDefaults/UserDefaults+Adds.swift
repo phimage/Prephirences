@@ -44,7 +44,7 @@ public extension Foundation.UserDefaults {
 
     public func set(color: Color, forKey aKey: String) {
         let theData = NSKeyedArchiver.archivedData(withRootObject: color)
-        self.set(theData, forKey:aKey)
+        self.set(theData, forKey: aKey)
     }
 
     public func color(forKey aKey: String) -> Color? {

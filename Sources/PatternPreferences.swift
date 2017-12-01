@@ -77,7 +77,7 @@ open class CompositePreferences: PreferencesType, ExpressibleByArrayLiteral {
     open func array(forKey key: PreferenceKey) -> [PreferenceObject]? {
         return self[key] as? [AnyObject]
     }
-    open func dictionary(forKey key: PreferenceKey) -> [String : AnyObject]? {
+    open func dictionary(forKey key: PreferenceKey) -> [String: AnyObject]? {
         return self[key] as? [String: AnyObject]
     }
     open func data(forKey key: PreferenceKey) -> Data? {
