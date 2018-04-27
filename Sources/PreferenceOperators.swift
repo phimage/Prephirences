@@ -146,17 +146,17 @@ public func -=<T> (preference: inout MutablePreference<T>, addend: T) where T: B
     preference.value = c - addend
 }
 
-public func *=<T> (preference: inout MutablePreference<T>, multiplier : T) where T: BinaryInteger, T: Initializable {
+public func *=<T> (preference: inout MutablePreference<T>, multiplier: T) where T: BinaryInteger, T: Initializable {
     let c = preference.value ?? T()
     preference.value = c * multiplier
 }
 
-public func /=<T> (preference: inout MutablePreference<T>, divisor : T) where T: BinaryInteger, T: Initializable {
+public func /=<T> (preference: inout MutablePreference<T>, divisor: T) where T: BinaryInteger, T: Initializable {
     let c = preference.value ?? T()
     preference.value = c / divisor
 }
 
-public func %=<T> (preference: inout MutablePreference<T>, modulo : T) where T: BinaryInteger, T: Initializable {
+public func %=<T> (preference: inout MutablePreference<T>, modulo: T) where T: BinaryInteger, T: Initializable {
     let c = preference.value ?? T()
     preference.value = c % modulo
 }

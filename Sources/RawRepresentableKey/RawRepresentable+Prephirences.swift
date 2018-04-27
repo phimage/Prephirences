@@ -49,7 +49,7 @@ public extension PreferencesType {
         return array(forKey: rawRepresentableKey.rawValue)
     }
 
-    public func dictionary<R: RawRepresentable>(forKey rawRepresentableKey: R) -> [PreferenceKey : PreferenceObject]? where R.RawValue == PreferenceKey {
+    public func dictionary<R: RawRepresentable>(forKey rawRepresentableKey: R) -> [PreferenceKey: PreferenceObject]? where R.RawValue == PreferenceKey {
         return dictionary(forKey: rawRepresentableKey.rawValue)
     }
 
