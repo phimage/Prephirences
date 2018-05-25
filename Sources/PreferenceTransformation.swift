@@ -222,9 +222,8 @@ extension TransformationKey: PreferenceTransformation {
         case .archive :
             if let archivable = value as? NSCoding {
                 return Prephirences.archive(archivable)
-            } else {
-                return nil
             }
+            return nil
         case .valueTransformer(let valueTransformer) :
             return valueTransformer.transformedValue(value)
         case .closureTuple(let (transform, _)) :

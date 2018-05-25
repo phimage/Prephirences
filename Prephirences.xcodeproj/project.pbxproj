@@ -23,6 +23,7 @@
 		07FC41731BE66A30005F195C /* PreferencesOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FC41711BE66A30005F195C /* PreferencesOperators.swift */; };
 		07FC41741BE66A30005F195C /* PreferencesOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FC41711BE66A30005F195C /* PreferencesOperators.swift */; };
 		07FC417D1BE670BF005F195C /* PrephirencesTvOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 07FC417C1BE670BF005F195C /* PrephirencesTvOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		489EC52620B8376E00F54424 /* PrephirenceType+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489EC52520B8376E00F54424 /* PrephirenceType+Codable.swift */; };
 		C404AE171D81B2D200E5321E /* PreferencesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114D01AE7D15D00A09DD9 /* PreferencesType.swift */; };
 		C404AE191D81B43100E5321E /* PreferenceTransformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C404AE181D81B43100E5321E /* PreferenceTransformation.swift */; };
 		C404AE1A1D81B43100E5321E /* PreferenceTransformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C404AE181D81B43100E5321E /* PreferenceTransformation.swift */; };
@@ -127,6 +128,7 @@
 		07FC417A1BE670BF005F195C /* Prephirences.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Prephirences.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		07FC417C1BE670BF005F195C /* PrephirencesTvOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrephirencesTvOS.h; sourceTree = "<group>"; };
 		07FC417E1BE670BF005F195C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		489EC52520B8376E00F54424 /* PrephirenceType+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PrephirenceType+Codable.swift"; sourceTree = "<group>"; };
 		C404AE181D81B43100E5321E /* PreferenceTransformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferenceTransformation.swift; sourceTree = "<group>"; };
 		C413F2B01BEB6753002816BE /* PreferencesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesController.swift; sourceTree = "<group>"; };
 		C42114CE1AE7D15000A09DD9 /* UserDefaults+Prephirences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Prephirences.swift"; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 				C4B838411B284C15009D5B74 /* Preference.swift */,
 				C43CA39C1D7434A800D318FF /* PreferenceOperators.swift */,
 				C404AE181D81B43100E5321E /* PreferenceTransformation.swift */,
+				489EC52520B8376E00F54424 /* PrephirenceType+Codable.swift */,
 				C44CBDC51C21B35000902E5C /* Impl */,
 				C44CBDC61C21B35C00902E5C /* UI */,
 				C4FA9B161C0F1551009CF439 /* Keys */,
@@ -696,6 +699,7 @@
 				C4876C891F6578210080839E /* NSCachePreferences.swift in Sources */,
 				C42114F51AE7D86F00A09DD9 /* DictionaryPreferences.swift in Sources */,
 				C4EBB8441B15DE4D0075187B /* Plist.swift in Sources */,
+				489EC52620B8376E00F54424 /* PrephirenceType+Codable.swift in Sources */,
 				C42114F71AE7D87600A09DD9 /* UserDefaults+Prephirences.swift in Sources */,
 				C45D981F1C3AC12D007C8ECC /* NSCoder+Prephirences.swift in Sources */,
 				C4FA9B1D1C0F1730009CF439 /* Bundle.swift in Sources */,
