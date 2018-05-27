@@ -64,7 +64,4 @@ Pod::Spec.new do |s|
     sp.osx.source_files = ['Xcodes/Mac/*.swift']
   end
 
-  # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  s.resource  = "logo.png"
-
 end
