@@ -157,7 +157,7 @@ Before storing or accessing the value, transformation could be applied, which co
 
 This allow to archive, to change type, return default value if nil and many more.
 
-You can get and set value using `substrict`
+You can get and set value using `subscript`
 ```swift
 userDefaults["aKey", myTransformation] = myObject
 
