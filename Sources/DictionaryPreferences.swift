@@ -139,8 +139,8 @@ open class DictionaryPreferences: PreferencesType, Sequence, ExpressibleByDictio
     open func array(forKey key: PreferenceKey) -> [PreferenceObject]? {
         return dico[key] as? [AnyObject]
     }
-    open func dictionary(forKey key: PreferenceKey) -> [String: AnyObject]? {
-        return dico[key] as? [String: AnyObject]
+    open func dictionary(forKey key: PreferenceKey) -> PreferencesDictionary? {
+        return dico[key] as? PreferencesDictionary
     }
     open func data(forKey key: PreferenceKey) -> Data? {
         return dico[key] as? Data

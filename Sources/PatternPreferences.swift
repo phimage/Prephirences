@@ -28,16 +28,26 @@ SOFTWARE.
 import Foundation
 
 // MARK: composite pattern
-open class CompositePreferences: PreferencesType, ExpressibleByArrayLiteral {
 
-    var array: [PreferencesType] = []
+/// A `PreferencesType` which could agregate multiple `PreferencesType`.
+/// The first `PreferencesType` which defined a key, will return its value.
+open class CompositePreferences: ExpressibleByArrayLiteral {
+
+    var _array: [PreferencesType] = []
+
+    /// Array of `PreferencesType`.
+    public var array: [PreferencesType] {
+        return _array
+    }
 
     // MARK: singleton
+    /// Shared instance.
     static let sharedInstance = CompositePreferences([])
 
     // MARK: init
+    /// Initialize using an array of `PreferencesType`.
     public init(_ array: [PreferencesType]) {
-        self.array = array
+        self._array = array
     }
 
     // MARK: ArrayLiteralConvertible
@@ -46,22 +56,23 @@ open class CompositePreferences: PreferencesType, ExpressibleByArrayLiteral {
     public convenience required init(arrayLiteral elements: Element...) {
         self.init([])
         for element in elements {
-            self.array.append(element)
+            self._array.append(element)
         }
     }
 
-    // MARK: PreferencesType
     open subscript(key: PreferenceKey) -> PreferenceObject? {
-        get {
-            // first return win
-            for prefs in array {
-                if let value = prefs.object(forKey: key) {
-                    return value
-                }
+        // first return win
+        for prefs in _array {
+            if let value = prefs.object(forKey: key) {
+                return value
             }
-            return nil
         }
+        return nil
     }
+}
+
+// MARK: PreferencesType
+extension CompositePreferences: PreferencesType {
 
     open func object(forKey key: PreferenceKey) -> PreferenceObject? {
         return self[key]
@@ -77,8 +88,8 @@ open class CompositePreferences: PreferencesType, ExpressibleByArrayLiteral {
     open func array(forKey key: PreferenceKey) -> [PreferenceObject]? {
         return self[key] as? [AnyObject]
     }
-    open func dictionary(forKey key: PreferenceKey) -> [String: AnyObject]? {
-        return self[key] as? [String: AnyObject]
+    open func dictionary(forKey key: PreferenceKey) -> PreferencesDictionary? {
+        return self[key] as? PreferencesDictionary
     }
     open func data(forKey key: PreferenceKey) -> Data? {
         return self[key] as? Data
@@ -107,21 +118,72 @@ open class CompositePreferences: PreferencesType, ExpressibleByArrayLiteral {
 
     open func dictionary() -> PreferencesDictionary {
         var dico = PreferencesDictionary()
-        for prefs in array.reversed() {
+        for prefs in _array.reversed() {
             dico += prefs.dictionary()
         }
         return dico
     }
 }
 
+extension CompositePreferences {
+
+    /// Return only `MutablePreferencesType`.
+    public var mutableArray: [PreferencesType] {
+        return self._array.filter { $0 is MutablePreferencesType }
+    }
+
+    /// Return only `PreferencesType` which is not `MutablePreferencesType`.
+    public var immutableArray: [PreferencesType] {
+        return self._array.filter { !($0 is MutablePreferencesType) }
+    }
+
+    /// Return the first `PreferencesType` which define the value for a specific key.
+    ///
+    /// - parameter key: the key to check.
+    ///
+    /// - returns: The `PreferencesType` that we seek.
+    open func preferences(with key: PreferenceKey) -> PreferencesType? {
+        // the first return win
+        for prefs in _array {
+            if prefs.hasObject(forKey: key) {
+                return prefs
+            }
+        }
+        return nil
+    }
+
+    /// Return the first `MutablePreferencesType` which define the value for a specific key.
+    ///
+    /// - parameter key: the key to check.
+    ///
+    /// - returns: The `MutablePreferencesType` that we seek.
+    open func mutablePreferences(with key: PreferenceKey) -> MutablePreferencesType? {
+        // the first return win
+        for prefs in _array {
+            if let mutablePrefs = prefs as? MutablePreferencesType, prefs.hasObject(forKey: key) {
+                return mutablePrefs
+            }
+        }
+        return nil
+    }
+
+}
+
+/// A `MutablePreferencesType` which could agregate multiple `PreferencesType`.
+/// The first `PreferencesType` which defined a key, will return its value.
+/// The first `MutablePreferencesType` will be affected when setting value if `affectOnlyFirstMutable` is `true`,
+/// else all `MutablePreferencesType`
 open class MutableCompositePreferences: CompositePreferences, MutablePreferencesType {
 
+    /// A boolean which defined if only the first `MutablePreferencesType` will be affected when setting a new value.
     open var affectOnlyFirstMutable: Bool
 
+    /// Initialize using an array of `PreferencesType`.
     public override convenience init(_ array: [PreferencesType]) {
         self.init(array, affectOnlyFirstMutable: true)
     }
 
+    /// Initialize using an array of `PreferencesType` and choose `affectOnlyFirstMutable` value.
     public init(_ array: [PreferencesType], affectOnlyFirstMutable: Bool) {
         self.affectOnlyFirstMutable = affectOnlyFirstMutable
         super.init(array)
@@ -130,7 +192,7 @@ open class MutableCompositePreferences: CompositePreferences, MutablePreferences
     override open subscript(key: PreferenceKey) -> PreferenceObject? {
         get {
             // first return win
-            for prefs in array {
+            for prefs in _array {
                 if let value = prefs.object(forKey: key) {
                     return value
                 }
@@ -138,7 +200,7 @@ open class MutableCompositePreferences: CompositePreferences, MutablePreferences
             return nil
         }
         set {
-            for prefs in array {
+            for prefs in _array {
                 if let mutablePrefs = prefs as? MutablePreferencesType {
                     mutablePrefs.set(newValue, forKey: key)
                     if affectOnlyFirstMutable {
@@ -172,7 +234,7 @@ open class MutableCompositePreferences: CompositePreferences, MutablePreferences
     }
 
     open func set(dictionary: PreferencesDictionary) {
-        for prefs in array {
+        for prefs in _array {
             if let mutablePrefs = prefs as? MutablePreferencesType {
                 mutablePrefs.set(dictionary: dictionary)
                 if affectOnlyFirstMutable {
@@ -182,7 +244,7 @@ open class MutableCompositePreferences: CompositePreferences, MutablePreferences
         }
     }
     open  func clearAll() {
-        for prefs in array {
+        for prefs in _array {
             if let mutablePrefs = prefs as? MutablePreferencesType {
                 mutablePrefs.clearAll()
             }
@@ -192,6 +254,8 @@ open class MutableCompositePreferences: CompositePreferences, MutablePreferences
 }
 
 // MARK: proxy pattern
+
+/// A `PreferencesType` proxy of another `PreferencesType`.
 open class ProxyPreferences {
     fileprivate let proxiable: PreferencesType
     fileprivate let parentKey: String
@@ -280,6 +344,7 @@ extension ProxyPreferences: PreferencesType {
     }
 }
 
+/// A `MutablePreferencesType` proxy of another `MutablePreferencesType`.
 open class MutableProxyPreferences: ProxyPreferences {
 
     fileprivate var mutable: MutablePreferencesType {
