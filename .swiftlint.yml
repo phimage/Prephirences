@@ -7,6 +7,7 @@ disabled_rules:
     - cyclomatic_complexity
     - variable_name
     - todo
+    - nesting
 
 shorthand_operator: warning
 

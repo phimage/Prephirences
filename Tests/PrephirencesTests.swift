@@ -11,9 +11,11 @@ import XCTest
 @testable import Prephirences
 #if os(iOS)
     import UIKit
+typealias Color = UIColor
 #endif
 #if os(OSX)
     import AppKit
+typealias Color = NSColor
 #endif
 
 class PrephirencesTests: XCTestCase {
@@ -243,12 +245,12 @@ class PrephirencesTests: XCTestCase {
 
         var preferences: MutableDictionaryPreferences = [mykey: myvalue, "key2": "value2"]
 
-        let value = UIColor.blue
+        let value = Color.blue
         let key = "color"
         preferences[key, .archive] = value
 
 
-        guard let unarchived = preferences[key, .archive] as? UIColor else {
+        guard let unarchived = preferences[key, .archive] as? Color else {
             XCTFail("Cannot unarchive \(key)")
             return
         }
@@ -265,7 +267,7 @@ class PrephirencesTests: XCTestCase {
             return
         }
 
-        let colorPref: MutablePreference<UIColor> = preferences <| key
+        let colorPref: MutablePreference<Color> = preferences <| key
         colorPref.transformationKey = .archive
 
         guard let _ = colorPref.value else {
@@ -273,17 +275,17 @@ class PrephirencesTests: XCTestCase {
             return
         }
 
-        let value2 = UIColor.red
+        let value2: Color = .red
         colorPref.value = value2
 
-        guard let unarchived2 = preferences[key, .archive] as? UIColor else {
+        guard let unarchived2 = preferences[key, .archive] as? Color else {
             XCTFail("Cannot unarchive \(key)")
             return
         }
         XCTAssertEqual(value2, unarchived2)
 
 
-        let valueDefault = UIColor.yellow
+        let valueDefault: Color = .yellow
         let whenNil = colorPref.whenNil(use: valueDefault)
         colorPref.value = nil
         XCTAssertEqual(valueDefault, whenNil.value)
@@ -294,10 +296,10 @@ class PrephirencesTests: XCTestCase {
 
         var preferences: MutableDictionaryPreferences = [mykey: myvalue, "key2": "value2"]
 
-        let colorDico: [String: UIColor] = ["blue": UIColor.blue, "red": UIColor.red]
+        let colorDico: [String: Color] = ["blue": .blue, "red": .red]
 
         func transform(_ obj: Any?) -> Any? {
-            if let color = obj as? UIColor {
+            if let color = obj as? Color {
 
                 for (name, c) in colorDico {
                     if c == color {
@@ -314,12 +316,12 @@ class PrephirencesTests: XCTestCase {
             return nil
         }
 
-        let value = UIColor.blue
+    let value: Color = .blue
         let key = "color"
         preferences[key, .closureTuple(transform: transform, revert: revert)] = value
 
 
-        guard let unarchived = preferences[key, .closureTuple(transform: transform, revert: revert)] as? UIColor else {
+        guard let unarchived = preferences[key, .closureTuple(transform: transform, revert: revert)] as? Color else {
             XCTFail("Cannot unarchive \(key)")
             return
         }
@@ -336,7 +338,7 @@ class PrephirencesTests: XCTestCase {
             return
         }
 
-        let colorPref: MutablePreference<UIColor> = preferences <| key
+        let colorPref: MutablePreference<Color> = preferences <| key
         colorPref.transformationKey = .closureTuple(transform: transform, revert: revert)
 
         guard let _ = colorPref.value else {
@@ -344,10 +346,10 @@ class PrephirencesTests: XCTestCase {
             return
         }
 
-        let value2 = UIColor.red
+    let value2: Color = .red
         colorPref.value = value2
 
-        guard let unarchived2 = preferences[key, .closureTuple(transform: transform, revert: revert)] as? UIColor else {
+        guard let unarchived2 = preferences[key, .closureTuple(transform: transform, revert: revert)] as? Color else {
             XCTFail("Cannot unarchive \(key)")
             return
         }

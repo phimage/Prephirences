@@ -104,25 +104,19 @@ open class DictionaryPreferences: PreferencesType, Sequence, ExpressibleByDictio
     public typealias Index = DictionaryIndex<Key, Value>
 
     open subscript (position: DictionaryIndex<Key, Value>) -> Element {
-        get {
-            return dico[position]
-        }
+        return dico[position]
     }
 
     open subscript(key: Key?) -> Value? {
-        get {
-            if key != nil {
-                return dico[key!]
-            }
-            return nil
+        if key != nil {
+            return dico[key!]
         }
+        return nil
     }
 
     // MARK: PreferencesType
     open subscript(key: String) -> PreferenceObject? {
-        get {
-            return dico[key]
-        }
+        return dico[key]
     }
 
     open func object(forKey key: PreferenceKey) -> PreferenceObject? {

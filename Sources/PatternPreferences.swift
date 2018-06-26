@@ -284,16 +284,14 @@ open class ProxyPreferences {
     }
 
     open subscript(key: String) -> PreferenceObject? {
-        get {
-            let finalKey = computeKey(key)
-            if let value = self.proxiable.object(forKey: finalKey) {
-                return value
-            }
-            if hasRecursion() {
-                return ProxyPreferences(preferences: self.proxiable, key: finalKey, separator: self.separator)
-            }
-            return nil
+        let finalKey = computeKey(key)
+        if let value = self.proxiable.object(forKey: finalKey) {
+            return value
         }
+        if hasRecursion() {
+            return ProxyPreferences(preferences: self.proxiable, key: finalKey, separator: self.separator)
+        }
+        return nil
     }
 
 }
