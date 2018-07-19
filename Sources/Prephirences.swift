@@ -31,10 +31,10 @@ import Foundation
 open class Prephirences {
 
     /** Shared preferences. Could be replaced by any other preferences */
-    open static var sharedInstance: PreferencesType = MutableDictionaryPreferences()
+    public static var sharedInstance: PreferencesType = MutableDictionaryPreferences()
 
     // casting shortcut for sharedInstance
-    open static var sharedMutableInstance: MutablePreferencesType? {
+    public static var sharedMutableInstance: MutablePreferencesType? {
         return sharedInstance as? MutablePreferencesType
     }
 
@@ -73,7 +73,7 @@ open class Prephirences {
     }
 
     /* allow to use subscript with desired key type */
-    open static func instances<KeyType: Hashable>() -> PrephirencesForType<KeyType> {
+    public static func instances<KeyType: Hashable>() -> PrephirencesForType<KeyType> {
         return PrephirencesForType<KeyType>()
     }
 
@@ -81,14 +81,14 @@ open class Prephirences {
         return value == nil
     }
 
-    open static func unraw<T>(_ object: T.RawValue?) -> T? where T: RawRepresentable, T.RawValue: PreferenceObject {
+    public static func unraw<T>(_ object: T.RawValue?) -> T? where T: RawRepresentable, T.RawValue: PreferenceObject {
         if let rawValue = object {
             return T(rawValue: rawValue)
         }
         return nil
     }
 
-    open static func raw<T>(_ value: T?) -> T.RawValue? where T: RawRepresentable, T.RawValue: PreferenceObject {
+    public static func raw<T>(_ value: T?) -> T.RawValue? where T: RawRepresentable, T.RawValue: PreferenceObject {
         return value?.rawValue
     }
 
@@ -140,14 +140,14 @@ internal func == (left: PrephirencesKey, right: PrephirencesKey) -> Bool {
 
 extension Prephirences {
 
-    open static func unarchive(fromPreferences preferences: PreferencesType, forKey key: PreferenceKey) -> PreferenceObject? {
+    public static func unarchive(fromPreferences preferences: PreferencesType, forKey key: PreferenceKey) -> PreferenceObject? {
         if let data = preferences.data(forKey: key) {
             return unarchive(data)
         }
         return nil
     }
 
-    open static func archive(object value: PreferenceObject?, intoPreferences preferences: MutablePreferencesType, forKey key: PreferenceKey) {
+    public static func archive(object value: PreferenceObject?, intoPreferences preferences: MutablePreferencesType, forKey key: PreferenceKey) {
         if let toArchive: PreferenceObject = value {
             let data = archive(toArchive)
             preferences.set(data, forKey: key)
@@ -156,11 +156,11 @@ extension Prephirences {
         }
     }
 
-    open static func unarchive(_ data: Data) -> PreferenceObject? {
+    public static func unarchive(_ data: Data) -> PreferenceObject? {
         return NSKeyedUnarchiver.unarchiveObject(with: data)
     }
 
-    open static func archive(_ object: PreferenceObject) -> Data {
+    public static func archive(_ object: PreferenceObject) -> Data {
         return NSKeyedArchiver.archivedData(withRootObject: object)
     }
 }

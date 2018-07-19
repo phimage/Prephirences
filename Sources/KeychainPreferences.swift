@@ -37,7 +37,7 @@ open class KeychainPreferences: PreferencesAdapter {
     // MARK: constantes
 
     /// Shared instance. service is equal to bundle identifier.
-    open static var sharedInstance = KeychainPreferences(service: Bundle.main.bundleIdentifier ?? "Prephirences")
+    public static var sharedInstance = KeychainPreferences(service: Bundle.main.bundleIdentifier ?? "Prephirences")
 
     /// Class Constants
     static let klass = String(kSecClass)
@@ -167,14 +167,14 @@ open class KeychainPreferences: PreferencesAdapter {
     open var accessGroup: String?
 
     /// Optional service (for .genericPassword)
-    open let service: String?
+    public let service: String?
 
     /// Optional server url (for .internetPassword)
-    open let server: URL?
+    public let server: URL?
     /// Optional protocol (for .internetPassword)
-    open let `protocol`: SecurityAttributeProtocol?
+    public let `protocol`: SecurityAttributeProtocol?
     /// Optional authentication (for .internetPassword)
-    open let authentication: SecurityAttributeAuthentication?
+    public let authentication: SecurityAttributeAuthentication?
 
     /// An optional message to display when authenticate
     open var authenticationPrompt: String?

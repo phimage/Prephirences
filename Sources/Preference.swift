@@ -31,7 +31,7 @@ import Foundation
 open class Preference<T> {
 
     var preferences: PreferencesType
-    open let key: PreferenceKey
+    public let key: PreferenceKey
     open var transformation: PreferenceTransformation
     open var transformationKey: TransformationKey {
         get {
