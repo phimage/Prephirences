@@ -91,9 +91,9 @@ open class KeychainPreferences: PreferencesAdapter {
         static let creationDate = String(kSecAttrCreationDate)
         static let modificationDate = String(kSecAttrModificationDate)
         static let accessControl = String(kSecAttrAccessControl)
-        @available(iOS 10.0, OSX 10.12, *)
+        @available(iOS 10.0, OSX 10.12, tvOS 10.0, *)
         static let tokenIDSecureEnclave = String(kSecAttrTokenIDSecureEnclave)
-        @available(iOS 10.0, OSX 10.12, *)
+        @available(iOS 10.0, OSX 10.12, tvOS 10.0, *)
         static let accessGroupToken = String(kSecAttrAccessGroupToken)
 
         fileprivate let attributes: [String: Any]
@@ -225,13 +225,13 @@ open class KeychainPreferences: PreferencesAdapter {
                 query[Use.Authentication.context] = authenticationContext
             }
         }
-        #endif
 
         if #available(OSX 10.10, *) {
             if authenticationPrompt != nil {
                 query[Use.Operation.prompt] = authenticationPrompt
             }
         }
+        #endif
 
         return query
     }
