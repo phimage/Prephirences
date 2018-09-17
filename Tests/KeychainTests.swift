@@ -9,6 +9,8 @@
 import XCTest
 @testable import Prephirences
 
+#if os(OSX)
+
 class KeychainTests: XCTestCase {
 
     let mykey = "key"
@@ -78,3 +80,5 @@ class KeychainTests: XCTestCase {
         keychain["keychainall"] = nil
     }
 }
+
+#endif

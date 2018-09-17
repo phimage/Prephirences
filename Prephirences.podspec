@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
 
   # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   s.name         = "Prephirences"
-  s.version      = "4.0.4"
+  s.version      = "4.1.0"
   s.summary      = "A Swift library to manage preferences"
   s.description  = <<-DESC
                    Prephirences is a Swift library that provides useful protocols and methods to manage preferences.
