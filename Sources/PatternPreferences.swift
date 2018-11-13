@@ -261,28 +261,46 @@ open class ProxyPreferences {
     fileprivate let parentKey: String
     var separator: String?
 
+    /// Create a proxy with same key and values.
     public convenience init(preferences proxiable: PreferencesType) {
         self.init(preferences: proxiable, key: "")
     }
 
+    /// Create a proxy with a prefix `key`.
+    /// Before accessing the underlying `preferences`, the `key` will be added as prefix.
     public convenience init(preferences proxiable: PreferencesType, key parentKey: String) {
         self.init(preferences: proxiable, key: parentKey, separator: nil)
     }
 
+    // using a separator for recustion -> not tested
     public init(preferences proxiable: PreferencesType, key parentKey: String, separator: String?) {
         self.proxiable = proxiable
         self.parentKey = parentKey
         self.separator = separator
     }
 
+    /// Genetated the final key.
     fileprivate func computeKey(_ key: String) -> String {
         return self.parentKey + (self.separator ?? "") + key
     }
 
+    /// Genetated the original key.
+    fileprivate func computeInverseKey(_ key: String) -> String? {
+        let prefix = self.parentKey + (self.separator ?? "")
+        if key.starts(with: prefix) {
+            let index = key.index(key.startIndex, offsetBy: prefix.count) // to remove prefix
+            return String(key[index...])
+        }
+        return nil
+    }
+
+
+    /// Want a recustion with multiple proxy, testing ["key1"]["key2"]
     fileprivate func hasRecursion() -> Bool {
         return self.separator != nil
     }
 
+    /// Get the value for `key`.
     open subscript(key: String) -> PreferenceObject? {
         let finalKey = computeKey(key)
         if let value = self.proxiable.object(forKey: finalKey) {
@@ -299,46 +317,57 @@ open class ProxyPreferences {
 extension ProxyPreferences: PreferencesType {
 
     public func object(forKey key: PreferenceKey) -> PreferenceObject? {
-        return self.proxiable.object(forKey: key)
+        return self.proxiable.object(forKey: computeKey(key))
     }
     public func hasObject(forKey key: PreferenceKey) -> Bool {
-        return self.proxiable.hasObject(forKey: key)
+        return self.proxiable.hasObject(forKey: computeKey(key))
     }
     public func string(forKey key: PreferenceKey) -> String? {
-        return self.proxiable.string(forKey: key)
+        return self.proxiable.string(forKey: computeKey(key))
     }
     public func array(forKey key: PreferenceKey) -> [PreferenceObject]? {
-        return self.proxiable.array(forKey: key)
+        return self.proxiable.array(forKey: computeKey(key))
     }
     public func dictionary(forKey key: PreferenceKey) -> PreferencesDictionary? {
-        return self.proxiable.dictionary(forKey: key)
+        return self.proxiable.dictionary(forKey: computeKey(key))
     }
     public func data(forKey key: PreferenceKey) -> Data? {
-        return self.proxiable.data(forKey: key)
+        return self.proxiable.data(forKey: computeKey(key))
     }
     public func stringArray(forKey key: PreferenceKey) -> [String]? {
-        return self.proxiable.stringArray(forKey: key)
+        return self.proxiable.stringArray(forKey: computeKey(key))
     }
     public func integer(forKey key: PreferenceKey) -> Int {
-        return self.proxiable.integer(forKey: key)
+        return self.proxiable.integer(forKey: computeKey(key))
     }
     public func float(forKey key: PreferenceKey) -> Float {
-        return self.proxiable.float(forKey: key)
+        return self.proxiable.float(forKey: computeKey(key))
     }
     public func double(forKey key: PreferenceKey) -> Double {
-        return self.proxiable.double(forKey: key)
+        return self.proxiable.double(forKey: computeKey(key))
     }
     public func bool(forKey key: PreferenceKey) -> Bool {
-        return self.proxiable.bool(forKey: key)
+        return self.proxiable.bool(forKey: computeKey(key))
     }
     public func url(forKey key: PreferenceKey) -> URL? {
-        return self.proxiable.url(forKey: key)
+        return self.proxiable.url(forKey: computeKey(key))
     }
     public func unarchiveObject(forKey key: PreferenceKey) -> PreferenceObject? {
-        return self.proxiable.unarchiveObject(forKey: key)
+        return self.proxiable.unarchiveObject(forKey: computeKey(key))
     }
     public func dictionary() -> PreferencesDictionary {
-        return self.proxiable.dictionary()
+        let proxiableDictionary = self.proxiable.dictionary()
+        if  self.parentKey.isEmpty && separator?.isEmpty ?? false {
+            return proxiableDictionary
+        }
+        var result: PreferencesDictionary = [:]
+        for (key, value) in proxiableDictionary {
+            if let inverseKey = computeInverseKey(key) {
+                result[inverseKey]=value
+            }
+            // else cannot be proxied
+        }
+        return result
     }
 }
 
@@ -350,7 +379,7 @@ open class MutableProxyPreferences: ProxyPreferences {
         return self.proxiable as! MutablePreferencesType
     }
 
-    public init(preferences proxiable: MutablePreferencesType, key parentKey: PreferenceKey, separator: String) {
+    public init(preferences proxiable: MutablePreferencesType, key parentKey: PreferenceKey = "", separator: String? = nil) {
         super.init(preferences: proxiable, key: parentKey, separator: separator)
     }
 
@@ -380,34 +409,43 @@ open class MutableProxyPreferences: ProxyPreferences {
 extension MutableProxyPreferences: MutablePreferencesType {
 
     public func set(_ value: PreferenceObject?, forKey key: PreferenceKey) {
-       self.mutable.set(value, forKey: key)
+       self.mutable.set(value, forKey: computeKey(key))
     }
     public func removeObject(forKey key: PreferenceKey) {
-        self.mutable.removeObject(forKey: key)
+        self.mutable.removeObject(forKey: computeKey(key))
     }
     public func set(_ value: Int, forKey key: PreferenceKey) {
-         self.mutable.set(value, forKey: key)
+         self.mutable.set(value, forKey: computeKey(key))
     }
     public func set(_ value: Float, forKey key: PreferenceKey) {
-        self.mutable.set(value, forKey: key)
+        self.mutable.set(value, forKey: computeKey(key))
     }
     public func set(_ value: Double, forKey key: PreferenceKey) {
-        self.mutable.set(value, forKey: key)
+        self.mutable.set(value, forKey: computeKey(key))
     }
     public func set(_ value: Bool, forKey key: PreferenceKey) {
-        self.mutable.set(value, forKey: key)
+        self.mutable.set(value, forKey: computeKey(key))
     }
     public func set(_ url: URL?, forKey key: PreferenceKey) {
-        self.mutable.set(url, forKey: key)
+        self.mutable.set(url, forKey: computeKey(key))
     }
     public func set(objectToArchive value: PreferenceObject?, forKey key: PreferenceKey) {
-        self.mutable.set(objectToArchive: value, forKey: key)
+        self.mutable.set(objectToArchive: value, forKey: computeKey(key))
     }
     public func clearAll() {
         self.mutable.clearAll()
     }
     public func set(dictionary registrationDictionary: PreferencesDictionary) {
-        self.mutable.set(dictionary: registrationDictionary)
+        let proxiableDictionary = self.proxiable.dictionary()
+        if  self.parentKey.isEmpty && separator?.isEmpty ?? false {
+            self.mutable.set(dictionary: registrationDictionary)
+        } else {
+            var result: PreferencesDictionary = [:]
+            for (key, value) in proxiableDictionary {
+                result[computeKey(key)]=value
+            }
+            self.mutable.set(dictionary: result)
+        }
     }
 }
 

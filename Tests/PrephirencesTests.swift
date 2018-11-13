@@ -529,6 +529,79 @@ class PrephirencesTests: XCTestCase {
              XCTFail("failed to get array add op result")
         }
     }
+
+    func testProxyWithString() {
+        let value = "4"
+        let value2 = "2"
+        let dico = [mykey: value, mykey2: value2]
+        let preferences: DictionaryPreferences = DictionaryPreferences(dictionary: dico)
+        var proxy = preferences.immutableProxy()
+
+        for (key, value) in preferences.dictionary() {
+            XCTAssertEqual(proxy.string(forKey: key), value as? String)
+        }
+        let prefix = "ke"
+        proxy = ProxyPreferences(preferences: preferences, key: prefix)
+        for (key, value) in preferences.dictionary() {
+            let index = key.index(key.startIndex, offsetBy: prefix.count) // to remove "ke"
+            XCTAssertEqual(proxy.string(forKey: String(key[index...])), value as? String)
+        }
+
+        let proxydico = proxy.dictionary()
+        XCTAssertEqual(proxydico.count, dico.count) // will be true if prefix is in all original key
+        // check the keys
+        for (key, _) in proxydico {
+            XCTAssertFalse(key.contains(prefix))
+        }
+    }
+
+    func testProxyWithInt() {
+        let value = 4
+        let value2 = 2
+        let dico = [mykey: value, mykey2: value2]
+        let preferences: DictionaryPreferences = DictionaryPreferences(dictionary: dico)
+        var proxy = preferences.immutableProxy()
+
+        // empty prefix so same key
+        for (key, value) in preferences.dictionary() {
+            XCTAssertEqual(proxy.integer(forKey: key), value as? Int)
+        }
+
+        // with prefix so not same key
+        let prefix = "ke"
+        proxy = ProxyPreferences(preferences: preferences, key: prefix)
+        for (key, value) in preferences.dictionary() {
+            let index = key.index(key.startIndex, offsetBy: prefix.count) // to remove "ke"
+            let newKey = String(key[index...])
+            XCTAssertEqual(proxy.integer(forKey: newKey), value as? Int)
+        }
+    }
+
+    func testMutableProxyWithInteger() {
+        let value = 4
+        let value2 = 2
+        let dico = [mykey: value, mykey2: value2]
+        let preferences: MutableDictionaryPreferences = MutableDictionaryPreferences(dictionary: dico)
+        var proxy = MutableProxyPreferences(preferences: preferences, key: "")
+
+        for (key, value) in preferences.dictionary() {
+            let proxyValue = proxy.integer(forKey: key)
+            XCTAssertEqual(proxyValue, value as? Int)
+            proxy.set(proxyValue + 2, forKey: key)
+            XCTAssertEqual(proxy.integer(forKey: key), preferences.integer(forKey: key))
+        }
+
+        let prefix = "ke"
+        proxy = MutableProxyPreferences(preferences: preferences, key: prefix)
+        for (key, value) in preferences.dictionary() {
+            let index = key.index(key.startIndex, offsetBy: prefix.count) // to remove "ke"
+            let newKey = String(key[index...])
+            let proxyValue = proxy.integer(forKey: newKey)
+            XCTAssertEqual(proxyValue, value as? Int)
+            proxy.set(proxyValue + 2, forKey: key)
+            XCTAssertEqual(proxy.integer(forKey: newKey), preferences.integer(forKey: key))
+        }
+    }
 }
 
 struct PrefStruc {
