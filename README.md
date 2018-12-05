@@ -11,8 +11,13 @@
 [![Cocoapod](http://img.shields.io/cocoapods/v/Prephirences.svg?style=flat)](http://cocoadocs.org/docsets/Prephirences/)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Build Status](https://travis-ci.org/phimage/Prephirences.svg)](https://travis-ci.org/phimage/Prephirences)
-[![Reference](https://www.versioneye.com/objective-c/prephirences/reference_badge.svg?style=flat)](https://www.versioneye.com/objective-c/prephirences/references)
-[![Join the chat at https://gitter.im/phimage/Prephirences](https://img.shields.io/badge/GITTER-join%20chat-00D06F.svg)](https://gitter.im/phimage/Prephirences?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+<a href="https://www.patreon.com/phimage">
+<img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become a Patron!" height="35">
+</a>
+<a href="https://paypal.me/ericphimage">
+<img src="https://buymecoffee.intm.org/img/button-paypal-white.png" alt="Buy me a coffee" height="35">
+</a>
 
 [<img align="left" src="logo.png" hspace="20">](#logo) Prephirences is a Swift library that provides useful protocols and convenience methods to manage application preferences, configurations and app-state.
 
