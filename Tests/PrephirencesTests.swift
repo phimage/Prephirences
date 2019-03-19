@@ -602,6 +602,23 @@ class PrephirencesTests: XCTestCase {
             XCTAssertEqual(proxy.integer(forKey: newKey), preferences.integer(forKey: key))
         }
     }
+
+    func testPrephirencable() {
+        var mutable = Prephirences.sharedMutableInstance
+        mutable?["myStruct.stringValue"] = "test"
+        mutable?["myStruct.mySubLevel.boolValue"] = true
+        mutable?["myStruct.mySubLevel.integer"] = 5
+        mutable?["myStruct.mySubLevel.integerValue"] = 8
+
+        XCTAssertEqual(MyStruct.stringValue, "test")
+        XCTAssertEqual(MyStruct.stringValueLoaded, nil)
+        XCTAssertEqual(MyStruct.MySubLevel.boolValue, true)
+        XCTAssertEqual(MyStruct.MySubLevel.integer, 5)
+        XCTAssertEqual(MyStruct.MySubLevel.integerValue, 8)
+
+        mutable?["myStruct.stringValueLoaded"] = "test2"
+        XCTAssertEqual(MyStruct.stringValueLoaded, nil) // must not modified
+    }
 }
 
 struct PrefStruc {
@@ -622,3 +639,17 @@ enum PrefEnum: String {
     case One, Two, Three
 }
 
+public struct MyStruct: Prephirencable {
+
+    public static let stringValue: String? = instance["stringValue"] as? String
+    public static let stringValueLoaded: String? = instance["stringValueLoaded"] as? String
+
+    public struct MySubLevel: Prephirencable { // swiftlint:disable:this nesting
+        public static let parent = MyStruct.instance
+
+        public static let boolValue: Bool = instance["boolValue"] as? Bool ?? false
+        public static let integer: Int? = instance["integer"] as? Int
+        public static let integerValue: Int  = instance["integerValue"] as? Int ?? 0
+
+    }
+}

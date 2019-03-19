@@ -23,6 +23,10 @@
 		07FC41731BE66A30005F195C /* PreferencesOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FC41711BE66A30005F195C /* PreferencesOperators.swift */; };
 		07FC41741BE66A30005F195C /* PreferencesOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FC41711BE66A30005F195C /* PreferencesOperators.swift */; };
 		07FC417D1BE670BF005F195C /* PrephirencesTvOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 07FC417C1BE670BF005F195C /* PrephirencesTvOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		483C2FD022413D7C007380E2 /* Prephirencable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483C2FCF22413D7C007380E2 /* Prephirencable.swift */; };
+		483C2FD122413E95007380E2 /* Prephirencable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483C2FCF22413D7C007380E2 /* Prephirencable.swift */; };
+		483C2FD222413E96007380E2 /* Prephirencable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483C2FCF22413D7C007380E2 /* Prephirencable.swift */; };
+		483C2FD322413E96007380E2 /* Prephirencable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483C2FCF22413D7C007380E2 /* Prephirencable.swift */; };
 		489EC52620B8376E00F54424 /* PrephirenceType+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489EC52520B8376E00F54424 /* PrephirenceType+Codable.swift */; };
 		C404AE171D81B2D200E5321E /* PreferencesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114D01AE7D15D00A09DD9 /* PreferencesType.swift */; };
 		C404AE191D81B43100E5321E /* PreferenceTransformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C404AE181D81B43100E5321E /* PreferenceTransformation.swift */; };
@@ -141,6 +145,7 @@
 		07FC417A1BE670BF005F195C /* Prephirences.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Prephirences.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		07FC417C1BE670BF005F195C /* PrephirencesTvOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrephirencesTvOS.h; sourceTree = "<group>"; };
 		07FC417E1BE670BF005F195C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		483C2FCF22413D7C007380E2 /* Prephirencable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prephirencable.swift; sourceTree = "<group>"; };
 		489EC52520B8376E00F54424 /* PrephirenceType+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PrephirenceType+Codable.swift"; sourceTree = "<group>"; };
 		C404AE181D81B43100E5321E /* PreferenceTransformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferenceTransformation.swift; sourceTree = "<group>"; };
 		C413F2B01BEB6753002816BE /* PreferencesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesController.swift; sourceTree = "<group>"; };
@@ -284,6 +289,7 @@
 				C43CA39C1D7434A800D318FF /* PreferenceOperators.swift */,
 				C404AE181D81B43100E5321E /* PreferenceTransformation.swift */,
 				489EC52520B8376E00F54424 /* PrephirenceType+Codable.swift */,
+				483C2FCF22413D7C007380E2 /* Prephirencable.swift */,
 				C44CBDC51C21B35000902E5C /* Impl */,
 				C44CBDC61C21B35C00902E5C /* UI */,
 				C4FA9B161C0F1551009CF439 /* Keys */,
@@ -699,6 +705,7 @@
 				07FC41661BE6656C005F195C /* PreferencesType.swift in Sources */,
 				C4876C8B1F657EB20080839E /* NSCachePreferences.swift in Sources */,
 				07FC41671BE6656C005F195C /* DictionaryPreferences.swift in Sources */,
+				483C2FD222413E96007380E2 /* Prephirencable.swift in Sources */,
 				07FC41681BE6656C005F195C /* PatternPreferences.swift in Sources */,
 				07FC41691BE6656C005F195C /* Plist.swift in Sources */,
 				C45D98211C3AC12D007C8ECC /* NSCoder+Prephirences.swift in Sources */,
@@ -729,6 +736,7 @@
 				C404AE171D81B2D200E5321E /* PreferencesType.swift in Sources */,
 				C4876C8C1F657EB20080839E /* NSCachePreferences.swift in Sources */,
 				C404AE1D1D81B4DF00E5321E /* Prephirences.swift in Sources */,
+				483C2FD322413E96007380E2 /* Prephirencable.swift in Sources */,
 				C416C7FA1D81B9210006DD89 /* DictionaryPreferences.swift in Sources */,
 				C416C8071D81B9300006DD89 /* UserDefaults+Adds.swift in Sources */,
 				C416C8021D81B9210006DD89 /* Bundle.swift in Sources */,
@@ -779,6 +787,7 @@
 				C44CBDC31C21B32D00902E5C /* NSHTTPCookieStorage+Prephirences.swift in Sources */,
 				07FC41721BE66A30005F195C /* PreferencesOperators.swift in Sources */,
 				C413F2B71BEB7CF6002816BE /* PreferencesController.swift in Sources */,
+				483C2FD022413D7C007380E2 /* Prephirencable.swift in Sources */,
 				C46B4C171AEE432000B95F6B /* NSUbiquitousKeyValueStore+Prephirences.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -810,6 +819,7 @@
 				C4B838431B287E38009D5B74 /* Preference.swift in Sources */,
 				C413F2B21BEB6753002816BE /* PreferencesController.swift in Sources */,
 				C46B4C181AEE432000B95F6B /* NSUbiquitousKeyValueStore+Prephirences.swift in Sources */,
+				483C2FD122413E95007380E2 /* Prephirencable.swift in Sources */,
 				C45D98201C3AC12D007C8ECC /* NSCoder+Prephirences.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

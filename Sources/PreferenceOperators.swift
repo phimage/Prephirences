@@ -218,7 +218,7 @@ public func && <T>(left: MutablePreference<T>, right: Preference<T>) -> T where 
 }
 public func &&=<T> (preference: inout MutablePreference<T>, right: @autoclosure () throws -> T) rethrows where T: Conjunctive, T: Initializable {
     let c = preference.value ?? T()
-    try preference.value = c && right
+    try preference.value = c && right()
 }
 
 /// MARK: Disjunctive
@@ -234,7 +234,7 @@ extension Disjunctive {
 
 public func ||=<T> (preference: inout MutablePreference<T>, rhs: @autoclosure () throws -> T) rethrows where T: Disjunctive, T: Initializable {
     let c = preference.value ?? T()
-    try preference.value = c || rhs
+    try preference.value = c || rhs()
 }
 
 public func || <T>(left: MutablePreference<T>, right: Preference<T>) -> T where T: Disjunctive, T: Initializable {
