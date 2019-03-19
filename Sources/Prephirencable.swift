@@ -17,7 +17,7 @@ protocol Prephirencable {
 
 extension Prephirencable {
     static var key: String {
-        return "\(self)".lowercasingFirst + UserDefaultsKeySeparator
+        return "\(self)".lowercasingFirst + "."
     }
     static var parent: PreferencesType {
         return Prephirences.sharedInstance
