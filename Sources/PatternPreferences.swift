@@ -294,7 +294,6 @@ open class ProxyPreferences {
         return nil
     }
 
-
     /// Want a recustion with multiple proxy, testing ["key1"]["key2"]
     fileprivate func hasRecursion() -> Bool {
         return self.separator != nil

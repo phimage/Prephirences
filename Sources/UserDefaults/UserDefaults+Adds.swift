@@ -89,7 +89,7 @@ public extension Foundation.UserDefaults {
 
     #if os(OSX)
     // MARK: NSRect
-    public func nsRectForKey(key: String) -> NSRect? {
+    func nsRectForKey(key: String) -> NSRect? {
         if let string = self.string(forKey: key) {
             return NSRectFromString(string)
         }
@@ -97,7 +97,7 @@ public extension Foundation.UserDefaults {
     }
 
     // MARK: NSSize
-    public func nsSizeForKey(key: String) -> NSSize? {
+    func nsSizeForKey(key: String) -> NSSize? {
         if let string = self.string(forKey: key) {
             return NSCoder.cgSize(for: string)
         }
