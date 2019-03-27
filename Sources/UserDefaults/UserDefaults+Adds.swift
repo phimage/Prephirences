@@ -42,48 +42,48 @@ public extension Foundation.UserDefaults {
     typealias Color = UIColor
     #endif
 
-    public func set(color: Color, forKey aKey: String) {
+    func set(color: Color, forKey aKey: String) {
         let theData = NSKeyedArchiver.archivedData(withRootObject: color)
         self.set(theData, forKey: aKey)
     }
 
-    public func color(forKey aKey: String) -> Color? {
+    func color(forKey aKey: String) -> Color? {
         if let theData = self.data(forKey: aKey), let color = NSKeyedUnarchiver.unarchiveObject(with: theData) as? Color {
             return color
         }
         return nil
     }
 
-    public func cgRect(forKey key: PreferenceKey) -> CGRect? {
+    func cgRect(forKey key: PreferenceKey) -> CGRect? {
         if let string = self.string(forKey: key) {
             return NSCoder.cgRect(for: string)
         }
         return nil
     }
 
-    @nonobjc public func set(_ value: CGRect, forKey key: PreferenceKey) {
+    @nonobjc func set(_ value: CGRect, forKey key: PreferenceKey) {
         self.set(NSCoder.string(for: value), forKey: key)
     }
 
-    public func cgSize(forKey key: PreferenceKey) -> CGSize? {
+    func cgSize(forKey key: PreferenceKey) -> CGSize? {
         if let string = self.string(forKey: key) {
             return NSCoder.cgSize(for: string)
         }
         return nil
     }
 
-    @nonobjc public func set(_ value: CGSize, forKey key: PreferenceKey) {
+    @nonobjc func set(_ value: CGSize, forKey key: PreferenceKey) {
         self.set(NSCoder.string(for: value), forKey: key)
     }
 
-    public func cgPoint(forKey key: PreferenceKey) -> CGPoint? {
+    func cgPoint(forKey key: PreferenceKey) -> CGPoint? {
         if let string = self.string(forKey: key) {
             return NSCoder.cgPoint(for: string)
         }
         return nil
     }
 
-    @nonobjc public func set(_ value: CGPoint, forKey key: PreferenceKey) {
+    @nonobjc func set(_ value: CGPoint, forKey key: PreferenceKey) {
         self.set(NSCoder.string(for: value), forKey: key)
     }
 
@@ -149,7 +149,7 @@ extension NSCoder {
         return CGRectFromString(string)
     }
     static func cgSize(for string: String) -> CGSize {
-        return CGSizeFromString(string))
+        return CGSizeFromString(string)
     }
     static func cgPoint(for string: String) -> CGPoint {
         return CGPointFromString(string)

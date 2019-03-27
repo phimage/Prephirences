@@ -85,45 +85,45 @@ public extension PreferencesType {
     subscript(key: PreferenceKey) -> PreferenceObject? {
         return object(forKey: key)
     }
-    public func hasObject(forKey key: PreferenceKey) -> Bool {
+    func hasObject(forKey key: PreferenceKey) -> Bool {
         return self.object(forKey: key) != nil
     }
 
-    public func string(forKey key: PreferenceKey) -> String? {
+    func string(forKey key: PreferenceKey) -> String? {
         return self.object(forKey: key) as? String
     }
-    public func array(forKey key: PreferenceKey) -> [PreferenceObject]? {
+    func array(forKey key: PreferenceKey) -> [PreferenceObject]? {
         return self.object(forKey: key) as? [AnyObject]
     }
-    public func dictionary(forKey key: PreferenceKey) -> PreferencesDictionary? {
+    func dictionary(forKey key: PreferenceKey) -> PreferencesDictionary? {
         return self.object(forKey: key) as? PreferencesDictionary
     }
-    public func data(forKey key: PreferenceKey) -> Data? {
+    func data(forKey key: PreferenceKey) -> Data? {
         return self.object(forKey: key) as? Data
     }
-    public func stringArray(forKey key: PreferenceKey) -> [String]? {
+    func stringArray(forKey key: PreferenceKey) -> [String]? {
         return self.object(forKey: key) as? [String]
     }
-    public func integer(forKey key: PreferenceKey) -> Int {
+    func integer(forKey key: PreferenceKey) -> Int {
         return self.object(forKey: key) as? Int ?? 0
     }
-    public func float(forKey key: PreferenceKey) -> Float {
+    func float(forKey key: PreferenceKey) -> Float {
         return self.object(forKey: key) as? Float ?? 0
     }
-    public func double(forKey key: PreferenceKey) -> Double {
+    func double(forKey key: PreferenceKey) -> Double {
         return self.object(forKey: key) as? Double ?? 0
     }
-    public func bool(forKey key: PreferenceKey) -> Bool {
+    func bool(forKey key: PreferenceKey) -> Bool {
         return self.object(forKey: key) as? Bool ?? false
     }
-    public func url(forKey key: PreferenceKey) -> URL? {
+    func url(forKey key: PreferenceKey) -> URL? {
         return self.object(forKey: key) as? URL
     }
 }
 
 public extension MutablePreferencesType {
 
-    public subscript(key: PreferenceKey) -> PreferenceObject? {
+    subscript(key: PreferenceKey) -> PreferenceObject? {
         get {
             return self.object(forKey: key)
         }
@@ -136,36 +136,36 @@ public extension MutablePreferencesType {
         }
     }
 
-    public func set(_ value: Int, forKey key: PreferenceKey) {
+    func set(_ value: Int, forKey key: PreferenceKey) {
         self.set(value as PreferenceObject?, forKey: key)
     }
-    public func set(_ value: Float, forKey key: PreferenceKey) {
+    func set(_ value: Float, forKey key: PreferenceKey) {
         self.set(value as PreferenceObject?, forKey: key)
     }
-    public func set(_ value: Double, forKey key: PreferenceKey) {
+    func set(_ value: Double, forKey key: PreferenceKey) {
         self.set(value as PreferenceObject?, forKey: key)
     }
-    public func set(_ value: Bool, forKey key: PreferenceKey) {
+    func set(_ value: Bool, forKey key: PreferenceKey) {
         self.set(value as PreferenceObject?, forKey: key)
     }
 
-    public func set(_ url: URL?, forKey key: PreferenceKey) {
+    func set(_ url: URL?, forKey key: PreferenceKey) {
         self.set(url as PreferenceObject?, forKey: key)
     }
 
-    public func set(dictionary: PreferencesDictionary) {
+    func set(dictionary: PreferencesDictionary) {
         for (key, value) in dictionary {
             self.set(value, forKey: key )
         }
     }
 
-    public func set(objects: [PreferenceObject], forKeys keys: [PreferenceKey]) {
+    func set(objects: [PreferenceObject], forKeys keys: [PreferenceKey]) {
         for keyIndex in 0 ..< keys.count {
             self.set(objects[keyIndex], forKey: keys [keyIndex])
         }
     }
 
-    public func clearAll() {
+    func clearAll() {
         for (key, _) in self.dictionary() {
             self.removeObject(forKey: key)
         }

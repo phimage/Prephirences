@@ -92,20 +92,20 @@ public func == (lhs: TransformationKey, rhs: TransformationKey) -> Bool {
 
 public extension PreferencesType {
 
-    public subscript(key: PreferenceKey, closure: (PreferenceObject?) -> Any?) -> Any? {
+    subscript(key: PreferenceKey, closure: (PreferenceObject?) -> Any?) -> Any? {
         return closure(object(forKey: key))
     }
 
-    public subscript(key: PreferenceKey, transformationKey: TransformationKey) -> Any? {
+    subscript(key: PreferenceKey, transformationKey: TransformationKey) -> Any? {
         return transformationKey.get(key, from: self)
     }
 
-    public subscript(key: PreferenceKey, transformation: PreferenceTransformation) -> Any? {
+    subscript(key: PreferenceKey, transformation: PreferenceTransformation) -> Any? {
         return transformation.get(key, from: self)
     }
 
     #if !os(Linux)
-    public subscript(key: PreferenceKey, valueTransformer: ValueTransformer) -> PreferenceObject? {
+    subscript(key: PreferenceKey, valueTransformer: ValueTransformer) -> PreferenceObject? {
         return valueTransformer.reverseTransformedValue(object(forKey: key))
     }
     #endif
@@ -113,7 +113,7 @@ public extension PreferencesType {
 
 public extension MutablePreferencesType {
 
-    public subscript(key: PreferenceKey, transformationKey: TransformationKey) -> Any? {
+    subscript(key: PreferenceKey, transformationKey: TransformationKey) -> Any? {
         get {
             return transformationKey.get(key, from: self)
         }
@@ -122,7 +122,7 @@ public extension MutablePreferencesType {
         }
     }
 
-    public subscript(key: PreferenceKey, transformation: PreferenceTransformation) -> Any? {
+    subscript(key: PreferenceKey, transformation: PreferenceTransformation) -> Any? {
         get {
             return transformation.get(key, from: self)
         }
@@ -132,7 +132,7 @@ public extension MutablePreferencesType {
     }
 
     #if !os(Linux)
-    public subscript(key: PreferenceKey, valueTransformer: ValueTransformer) -> PreferenceObject? {
+    subscript(key: PreferenceKey, valueTransformer: ValueTransformer) -> PreferenceObject? {
         get {
             return valueTransformer.reverseTransformedValue(object(forKey: key))
         }
@@ -270,7 +270,7 @@ extension RawRepresentable where Self.RawValue: PreferenceObject {
 public extension PreferencesType {
 
     // Read a RawRepresentable object
-    public func rawRepresentable<T: RawRepresentable>(forKey key: PreferenceKey) -> T? {
+    func rawRepresentable<T: RawRepresentable>(forKey key: PreferenceKey) -> T? {
         if let rawValue = self.object(forKey: key) as? T.RawValue {
             return T(rawValue: rawValue)
         }
@@ -282,7 +282,7 @@ public extension PreferencesType {
 public extension MutablePreferencesType {
 
     // Store a RawRepresentable object
-    public func set<T: RawRepresentable>(rawValue value: T?, forKey key: PreferenceKey) {
+    func set<T: RawRepresentable>(rawValue value: T?, forKey key: PreferenceKey) {
         if let rawValue = value?.rawValue {
             self.set(rawValue, forKey: key)
         } else {

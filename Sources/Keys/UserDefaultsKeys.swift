@@ -31,7 +31,7 @@ import Foundation
 
 public extension Foundation.UserDefaults {
     // List of common key used in NSUserDefaults
-    public enum Keys: PreferenceKey {
+    enum Keys: PreferenceKey {
         case AppleKeyboards // [String]
         case AppleKeyboardsExpanded // Int
         case AddingEmojiKeybordHandled // Int

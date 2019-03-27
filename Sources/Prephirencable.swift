@@ -10,12 +10,12 @@ import Foundation
 
 /// Protocol to create preferences from Struct hierarchy
 /// by creating keypath using the Struct name.
-protocol Prephirencable {
+public protocol Prephirencable {
     static var key: String {get}
     static var parent: PreferencesType {get}
 }
 
-extension Prephirencable {
+public extension Prephirencable {
     static var key: String {
         return "\(self)".lowercasingFirst + "."
     }

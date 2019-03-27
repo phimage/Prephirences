@@ -115,12 +115,12 @@ open class PrephirencesForType<Key: Hashable> {
 /* Generic key for dictionary */
 struct PrephirencesKey: Hashable, Equatable {
     fileprivate let underlying: Any
-    fileprivate let hashValueFunc: () -> Int
+    fileprivate let hashFunc: (inout Hasher) -> Void
     fileprivate let equalityFunc: (Any) -> Bool
 
     init<T: Hashable>(_ key: T) {
         underlying = key
-        hashValueFunc = { key.hashValue }
+        hashFunc = { key.hash(into: &$0) }
         equalityFunc = {
             if let other = $0 as? T {
                 return key == other
@@ -129,7 +129,9 @@ struct PrephirencesKey: Hashable, Equatable {
         }
     }
 
-    var hashValue: Int { return hashValueFunc() }
+    func hash(into hasher: inout Hasher) {
+        hashFunc(&hasher)
+    }
 }
 
 internal func == (left: PrephirencesKey, right: PrephirencesKey) -> Bool {
