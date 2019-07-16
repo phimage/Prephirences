@@ -619,6 +619,53 @@ class PrephirencesTests: XCTestCase {
         mutable?["myStruct.stringValueLoaded"] = "test2"
         XCTAssertEqual(MyStruct.stringValueLoaded, nil) // must not modified
     }
+
+    func testProperty() {
+        let structObject = MyStruct()
+
+        var mutable = Prephirences.sharedMutableInstance
+        mutable?["stringValue"] = "test"
+        XCTAssertEqual(structObject.stringValueProperty, "test")
+
+        mutable?["boolValue"] = true
+        XCTAssertEqual(structObject.boolValueProperty, true)
+
+        mutable?["integerValue"] = 8
+        XCTAssertEqual(structObject.integerValueProperty, 8)
+        
+        mutable = UserDefaults.standard
+        mutable?["boolValue"] = nil
+        mutable?["integerValue"] = nil
+        mutable?["stringValue"] = nil
+   
+        XCTAssertNil(structObject.boolValuePropertyUserDefaults)
+        XCTAssertNil(structObject.integerValuePropertyUserDefaults)
+        XCTAssertNil(structObject.stringValuePropertyUserDefaults)
+
+        mutable?["boolValue"] = true
+        XCTAssertEqual(structObject.boolValuePropertyUserDefaults, true)
+        mutable?["integerValue"] = 8
+        XCTAssertEqual(structObject.integerValuePropertyUserDefaults, 8)
+        mutable?["stringValue"] = "test"
+        XCTAssertEqual(structObject.stringValuePropertyUserDefaults, "test")
+
+        structObject.boolValuePropertyUserDefaults = nil
+        structObject.integerValuePropertyUserDefaults = nil
+        structObject.stringValuePropertyUserDefaults = nil
+        
+        XCTAssertNil(structObject.boolValuePropertyUserDefaults)
+        XCTAssertNil(structObject.integerValuePropertyUserDefaults)
+        XCTAssertNil(structObject.stringValuePropertyUserDefaults)
+        
+        structObject.boolValuePropertyUserDefaults = true
+        structObject.integerValuePropertyUserDefaults = 8
+        structObject.stringValuePropertyUserDefaults = "test"
+        
+        XCTAssertEqual(mutable?["boolValue"] as? Bool, true)
+        XCTAssertEqual(mutable?["integerValue"] as? Int, 8)
+        XCTAssertEqual(mutable?["stringValue"] as? String, "test")
+        
+    }
 }
 
 struct PrefStruc {
@@ -652,4 +699,23 @@ public struct MyStruct: Prephirencable {
         public static let integerValue: Int  = instance["integerValue"] as? Int ?? 0
 
     }
+    
+    @Preference(key: "stringValue")
+    var stringValueProperty: String?
+    
+    @Preference(key: "boolValue")
+    var boolValueProperty: Bool?
+
+    @Preference(key: "integerValue")
+    var integerValueProperty: Int?
+
+    @MutablePreference(preferences: UserDefaults.standard, key: "stringValue")
+    var stringValuePropertyUserDefaults: String?
+    
+    @MutablePreference(preferences: UserDefaults.standard, key: "boolValue")
+    var boolValuePropertyUserDefaults: Bool?
+    
+    @MutablePreference(preferences: UserDefaults.standard, key: "integerValue")
+    var integerValuePropertyUserDefaults: Int?
 }
+

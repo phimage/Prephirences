@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
 
   # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   s.name         = "Prephirences"
-  s.version      = "5.0.0"
+  s.version      = "5.1.0"
   s.summary      = "A Swift library to manage preferences"
   s.description  = <<-DESC
                    Prephirences is a Swift library that provides useful protocols and methods to manage preferences.
@@ -17,10 +17,10 @@ Pod::Spec.new do |s|
   s.author             = { "phimage" => "eric.marchand.n7@gmail.com" }
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  s.ios.deployment_target = '9.3'
-  s.osx.deployment_target = '10.11'
-  s.watchos.deployment_target = '3.0'
-  s.tvos.deployment_target = '9.2'
+  s.ios.deployment_target = '10.0'
+  s.osx.deployment_target = '10.12'
+  s.watchos.deployment_target = '4.0'
+  s.tvos.deployment_target = '10.0'
 
   # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   s.source       = { :git => "https://github.com/phimage/Prephirences.git", :tag => s.version }

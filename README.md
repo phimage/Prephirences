@@ -18,9 +18,16 @@
 [<img align="left" src="logo.png" hspace="20">](#logo) Prephirences is a Swift library that provides useful protocols and convenience methods to manage application preferences, configurations and app-state.
 
 ```swift
+  @Preference(key: "enabled")
+  var enabled: Bool?
+
+  @MutablePreference(preferences: UserDefaults.standard, key: "enabled")
+  var enabled: Bool?
+```
+```swift
 let userDefaults = UserDefaults.standard
 if let enabled = userDefaults["enabled"] as? Bool {..}
-userDefaults["mycolorkey", .Archive] = UIColor.blueColor()
+userDefaults["mycolorkey", archive] = UIColor.blue
 ```
 
 Preferences could be
