@@ -108,8 +108,8 @@ open class DictionaryPreferences: PreferencesType, Sequence, ExpressibleByDictio
     }
 
     open subscript(key: Key?) -> Value? {
-        if key != nil {
-            return dico[key!]
+        if let key = key {
+            return dico[key]
         }
         return nil
     }
