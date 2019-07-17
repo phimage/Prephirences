@@ -591,13 +591,13 @@ extension CollectionPreferencesAdapter: PreferencesType {
 extension Collection {
 
     func mapFilterNil<T>(_ transform: (Self.Iterator.Element) -> T?) -> [T] {
-        return self.map(transform).filter { $0 != nil }.map { $0! }
+        return self.map(transform).filter { $0 != nil }.compactMap { $0 }
     }
 
     func dictionary<K, V>(_ transform: (Self.Iterator.Element) throws -> (key: K, value: V)?) rethrows -> [K: V] {
         var dict: [K: V] = [:]
-        for e in self {
-            if let (key, value) = try transform(e) {
+        for element in self {
+            if let (key, value) = try transform(element) {
                 dict[key] = value
             }
         }
@@ -605,7 +605,7 @@ extension Collection {
     }
 
     func find(_ predicate: (Self.Iterator.Element) throws -> Bool) rethrows -> Self.Iterator.Element? {
-        return try firstIndex(where: predicate).map({ self[$0] })
+        return try firstIndex(where: predicate).map { self[$0] }
     }
 
 }

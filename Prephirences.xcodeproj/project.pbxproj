@@ -185,6 +185,7 @@
 		C4FF650B1B6B7C7300BFE4F4 /* PrephirencesiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PrephirencesiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4FF650D1B6B7C7300BFE4F4 /* PrephirencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrephirencesTests.swift; sourceTree = "<group>"; };
 		C4FF650F1B6B7C7300BFE4F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C5A5A0DB22DF4DF000C0FB38 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -258,6 +259,7 @@
 		C42114A61AE7D0CB00A09DD9 = {
 			isa = PBXGroup;
 			children = (
+				C5A5A0DB22DF4DF000C0FB38 /* Package.swift */,
 				C42114B21AE7D0CB00A09DD9 /* Sources */,
 				C4AAB72A1E52EBF400348D04 /* Xcodes */,
 				C45D313B1AE929F10034D1E3 /* Resources */,

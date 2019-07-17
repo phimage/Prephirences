@@ -75,20 +75,18 @@ class PrephirencesTests: XCTestCase {
             } else {
                 XCTFail("Failed to read from file")
             }
-        }else {
+        } else {
             XCTFail("Failed to get file url")
         }
 
-
-        if  let  preference = DictionaryPreferences(filename: "Test", ofType: "plist", bundle: Bundle(for: type(of: self))) {
+        if let preference = DictionaryPreferences(filename: "Test", ofType: "plist", bundle: Bundle(for: type(of: self))) ?? DictionaryPreferences(filePath: "Tests/Test.plist")
+            {
             for (key,value) in preference.dictionary() {
                 print("\(key)=\(value)")
             }
-
         } else {
             XCTFail("Failed to read from file using shortcut init")
         }
-
     }
 
     func testUserDefaults() {
