@@ -27,7 +27,8 @@ SOFTWARE.
 
 import Foundation
 
-/* A preference value extracted from a PreferencesType for a specific key */
+/// A preference value extracted from a PreferencesType for a specific key
+@propertyWrapper
 open class Preference<T> {
 
     var preferences: PreferencesType
@@ -45,25 +46,30 @@ open class Preference<T> {
         }
     }
 
-    public init(preferences: PreferencesType, key: PreferenceKey, transformation: PreferenceTransformation = TransformationKey.none) {
+    public init(preferences: PreferencesType = Prephirences.sharedInstance, key: PreferenceKey, transformation: PreferenceTransformation = TransformationKey.none) {
         self.preferences = preferences
         self.key = key
         self.transformation = transformation
     }
 
-    // Computed property value
+    /// Computed property value
     open var value: T? {
         return self.transformation.get(self.key, from: self.preferences)
     }
 
-    // Return true if value is not nil
+    /// property wrapper value
+    open var wrappedValue: T? {
+        return value
+    }
+
+    /// Return true if value is not nil
     open var hasValue: Bool {
         return self.preferences.hasObject(forKey: self.key)
     }
 
-    // Return true if value is nil
+    /// Return true if value is nil
     open var isEmpty: Bool {
-        return self.value == nil
+        return self.wrappedValue == nil
     }
 }
 
@@ -79,7 +85,8 @@ extension PreferencesType {
 
 }
 
-// Mutable instance of `Preference`
+/// Mutable instance of `Preference`
+@propertyWrapper
 open class MutablePreference<T>: Preference<T> {
 
     public typealias DidSetFunction = (_ newValue: T?, _ oldValue: T?) -> Void
@@ -91,11 +98,13 @@ open class MutablePreference<T>: Preference<T> {
         return preferences as! MutablePreferencesType
     }
 
-    public init(preferences: MutablePreferencesType, key: PreferenceKey, transformation: PreferenceTransformation = TransformationKey.none) {
+    public init(preferences: MutablePreferencesType = Prephirences.sharedMutableInstance ?? UserDefaults.standard,
+                key: PreferenceKey,
+                transformation: PreferenceTransformation = TransformationKey.none) {
         super.init(preferences: preferences, key: key, transformation: transformation)
     }
 
-    // Computed property value
+    /// Computed property value
     override open var value: T? {
         get {
             return self.transformation.get(self.key, from: self.preferences)
@@ -104,6 +113,16 @@ open class MutablePreference<T>: Preference<T> {
             notifyDidSet {
                 self.transformation.set(self.key, value: newValue, to: self.mutablePreferences)
             }
+        }
+    }
+
+    /// property wrapper value
+    override open var wrappedValue: T? {
+        get {
+            return value
+        }
+        set {
+            value = newValue
         }
     }
 

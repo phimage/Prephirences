@@ -32,6 +32,7 @@ public typealias PreferenceKey = String
 public typealias PreferencesDictionary = [PreferenceKey: PreferenceObject]
 
 // MARK: - Preferences
+@dynamicMemberLookup
 public protocol PreferencesType {
 
     func object(forKey key: PreferenceKey) -> PreferenceObject?
@@ -39,6 +40,9 @@ public protocol PreferencesType {
 
     // MARK: Optional methods
     subscript(key: PreferenceKey) -> PreferenceObject? {get}
+    #if swift(>=5.1)
+    subscript(dynamicMember key: PreferenceKey) -> PreferenceObject? {get}
+    #endif
     func hasObject(forKey: PreferenceKey) -> Bool
 
     func string(forKey: PreferenceKey) -> String?
@@ -58,6 +62,7 @@ public protocol PreferencesType {
 }
 
 // MARK: - Mutable Preferences
+@dynamicMemberLookup
 public protocol MutablePreferencesType: PreferencesType {
 
     func set(_ value: PreferenceObject?, forKey key: PreferenceKey)
@@ -66,6 +71,9 @@ public protocol MutablePreferencesType: PreferencesType {
     // MARK: Optional methods
 
     subscript(key: PreferenceKey) -> PreferenceObject? {get set}
+    #if swift(>=5.1)
+    subscript(dynamicMember key: PreferenceKey) -> PreferenceObject? {get set}
+    #endif
 
     func set(_ value: Int, forKey key: PreferenceKey)
     func set(_ value: Float, forKey key: PreferenceKey)
@@ -85,6 +93,13 @@ public extension PreferencesType {
     subscript(key: PreferenceKey) -> PreferenceObject? {
         return object(forKey: key)
     }
+
+    #if swift(>=5.1)
+    subscript(dynamicMember key: PreferenceKey) -> PreferenceObject? {
+        return object(forKey: key)
+    }
+    #endif
+
     func hasObject(forKey key: PreferenceKey) -> Bool {
         return self.object(forKey: key) != nil
     }
@@ -135,6 +150,21 @@ public extension MutablePreferencesType {
             }
         }
     }
+
+    #if swift(>=5.1)
+    subscript(dynamicMember key: PreferenceKey) -> PreferenceObject? {
+        get {
+            return self.object(forKey: key)
+        }
+        set {
+            if newValue == nil {
+                removeObject(forKey: key)
+            } else {
+                set(newValue, forKey: key)
+            }
+        }
+    }
+    #endif
 
     func set(_ value: Int, forKey key: PreferenceKey) {
         self.set(value as PreferenceObject?, forKey: key)

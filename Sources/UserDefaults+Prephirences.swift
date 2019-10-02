@@ -96,3 +96,26 @@ extension Foundation.UserDefaults: MutablePreferencesType {
         }
     }
 #endif
+
+// MARK: property wrapper
+
+@propertyWrapper
+class UserDefaultsPreference<T>: MutablePreference<T> {
+
+    public init(userDefaults: UserDefaults = .standard,
+                key: PreferenceKey,
+                transformation: PreferenceTransformation = TransformationKey.none) {
+        super.init(preferences: userDefaults, key: key, transformation: transformation)
+    }
+
+    /// property wrapper value
+    override open var wrappedValue: T? {
+        get {
+            return value
+        }
+        set {
+            value = newValue
+        }
+    }
+
+}

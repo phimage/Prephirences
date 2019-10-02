@@ -18,22 +18,32 @@
 [<img align="left" src="logo.png" hspace="20">](#logo) Prephirences is a Swift library that provides useful protocols and convenience methods to manage application preferences, configurations and app-state.
 
 ```swift
+  @Preference(key: "enabled")
+  var enabled: Bool?
+
+  @UserDefaultsPreference(key: "my.string.pref")
+  var pref: String?
+
+  @MutablePreference(preferences: UserDefaults.standard, key: "enabled")
+  var enabled: Bool?
+```
+```swift
 let userDefaults = UserDefaults.standard
 if let enabled = userDefaults["enabled"] as? Bool {..}
-userDefaults["mycolorkey", .Archive] = UIColor.blueColor()
+userDefaults["mycolorkey", archive] = UIColor.blue
 ```
 
-Preferences could be
-- User preferences `UserDefaults`
-- iCloud stored preferences `NSUbiquitousKeyValueStore`
+Preferences is not only `UserDefaults`, it could be also :
 - [Keychain](https://en.wikipedia.org/wiki/Keychain_%28software%29) to store credential
+- Any dictionary
 - Application information from `Bundle`
 - File stored preferences (ex: *[plist](http://en.wikipedia.org/wiki/Property_list)*)
+- iCloud stored preferences `NSUbiquitousKeyValueStore`
 - or your own private application preferences
 
 ie. any object which implement the simple protocol [PreferencesType](/Prephirences/PreferencesType.swift), which define key value store methods.
 
-You can also combine multiples preferences and work with them transparently (see [Composing](#composing))
+You can also **combine multiples preferences** and work with them transparently (see [Composing](#composing))
 
 ## Contents ##
 - [Usage](#usage)
