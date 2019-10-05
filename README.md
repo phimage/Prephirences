@@ -140,7 +140,7 @@ intPref /= 3
 switch(intPref) {
    case 1: println("one")
    case 2...10: println("not one or zero but...")
-   default: println("unkwown")
+   default: println("unknown")
 }
 
 var boolPref: MutablePreference<Bool> = aPrefs <| "boolKey")
@@ -363,7 +363,7 @@ extension MyCustomPreferences: PreferencesType {
     }
 }
 ```
-Only two functions are mandatory, others are automatically mapped but can be overrided for performance or readability.
+Only two functions are mandatory, others are automatically mapped but can be overridden for performance or readability.
 
 - In the same way you can implement `MutablePreferencesType` with `set` and `removeObject(forKey:` methods.
 - If you structure give a list of keys instead of a full dictionary, you can instead conform to `PreferencesAdapter` and implement `func keys() -> [String]`.
