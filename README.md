@@ -322,7 +322,7 @@ if let pass = keychain.stringForKey("anUserName") {..}
 ```
 **Accessibility**
 ````
-keychain.accessibility = .AccessibleAfterFirstUnlock
+keychain.accessible = .afterFirstUnlock
 ````
 
 **Sharing Keychain items**
