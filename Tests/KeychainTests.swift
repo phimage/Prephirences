@@ -17,7 +17,7 @@ class KeychainTests: XCTestCase {
     let myvalue = "value"
     let myvalue2 = "value2"
 
-    let keychain = KeychainPreferences(service: Bundle(for: KeychainTests.self).bundleIdentifier!)
+    let keychain = KeychainPreferences(service: Bundle(for: KeychainTests.self).bundleIdentifier ?? "test")
     //let keychain = KeychainPreferences.sharedInstance
 
     override func setUp() {

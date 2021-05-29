@@ -66,7 +66,7 @@ class PrephirencesTests: XCTestCase {
     }*/
 
     func testFromFile() {
-        if let filePath = Bundle(for: type(of: self)).path(forResource: "Test", ofType: "plist") {
+        if let filePath = path(forResource: "Test", ofType: "plist", in: Bundle(for: type(of: self))) {
             if  let preference = DictionaryPreferences(filePath: filePath) {
                     for (key,value) in preference.dictionary() {
                         print("\(key)=\(value)")
@@ -87,6 +87,19 @@ class PrephirencesTests: XCTestCase {
         } else {
             XCTFail("Failed to read from file using shortcut init")
         }
+    }
+
+    func path(forResource resource: String, ofType ext: String, in bundle: Bundle) -> String? {
+        #if !os(Linux)
+        if let url = bundle.path(forResource: resource, ofType: ext) {
+            return url
+        }
+        #endif
+        let path = "Tests/\(resource).\(ext)"
+        if FileManager.default.fileExists(atPath: path) {
+            return path
+        }
+        return nil
     }
 
     func testUserDefaults() {
@@ -373,11 +386,13 @@ class PrephirencesTests: XCTestCase {
     }
 
     func testBundle() {
-        let bundle = Bundle(for: PrephirencesTests.self)
+        if ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil {
+            let bundle = Bundle(for: PrephirencesTests.self)
 
-        let applicationName = bundle[.CFBundleName] as? String
+            let applicationName = bundle[.CFBundleName] as? String
 
-        XCTAssertNotNil(applicationName)
+            XCTAssertNotNil(applicationName)
+        }// else ingnore
     }
 
     func testNSHTTPCookieStorage() {
@@ -664,13 +679,15 @@ class PrephirencesTests: XCTestCase {
         structObject.integerValueMutableProperty = 8
         structObject.stringValueMutableProperty = "test"
         structObject.stringValuePropertyUserDefaults = "test"
-        
+
         XCTAssertEqual(mutable?["boolValue"] as? Bool, true)
         XCTAssertEqual(mutable?["integerValue"] as? Int, 8)
         XCTAssertEqual(mutable?["stringValue"] as? String, "test")
         XCTAssertEqual(mutable?["stringValueUserDefaults"] as? String, "test")
 
-        XCTAssertEqual(structObject.bundleTestProperty, "6.0") // from info plist
+        if ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil {
+            XCTAssertEqual(structObject.bundleTestProperty, "6.0") // from info plist
+        }
     }
 
     func testDynamicMember() {
