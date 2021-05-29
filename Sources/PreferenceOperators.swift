@@ -200,7 +200,7 @@ public func !=<T: LogicalOperationsType> ( preference: inout MutablePreference<T
     preference.value = !right()
 }
 
-/// MARK: Conjunctive
+// MARK: Conjunctive
 public protocol Conjunctive {
     static func && (left: Self, right:  @autoclosure () throws -> Self) rethrows -> Self // AND
 }
@@ -221,7 +221,7 @@ public func &&=<T> (preference: inout MutablePreference<T>, right: @autoclosure 
     try preference.value = c && right()
 }
 
-/// MARK: Disjunctive
+// MARK: Disjunctive
 public protocol Disjunctive {
     static func || (left: Self, right:  @autoclosure () throws -> Self) rethrows -> Self // OR
 }

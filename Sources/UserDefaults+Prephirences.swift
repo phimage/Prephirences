@@ -36,7 +36,7 @@ extension Foundation.UserDefaults: MutablePreferencesType {
         return self.dictionaryRepresentation()
     }
 
-    //subscript access
+    // subscript access
     public subscript(key: PreferenceKey) -> PreferenceObject? {
         get {
             return self.object(forKey: key)

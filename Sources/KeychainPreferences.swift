@@ -118,7 +118,7 @@ open class KeychainPreferences: PreferencesAdapter {
             static let context = String(kSecUseAuthenticationContext)
             static let ui = String(kSecUseAuthenticationUI)
 
-            //swiftlint:disable:next type_name
+            // swiftlint:disable:next type_name
             struct UI {
                 static let allow = String(kSecUseAuthenticationUIAllow)
                 static let fail = String(kSecUseAuthenticationUIFail)
@@ -747,7 +747,7 @@ extension KeychainPreferences.Attribute {
     public var accessControl: SecAccessControl? {
         if #available(OSX 10.10, *) {
             if let accessControl = attributes[KeychainPreferences.Attribute.accessControl] {
-                //swiftlint:disable:next force_cast
+                // swiftlint:disable:next force_cast
                 return (accessControl as! SecAccessControl)
             }
             return nil
