@@ -100,7 +100,7 @@ extension Foundation.UserDefaults: MutablePreferencesType {
 // MARK: property wrapper
 
 @propertyWrapper
-class UserDefaultsPreference<T>: MutablePreference<T> {
+public class UserDefaultsPreference<T>: MutablePreference<T> {
 
     public init(userDefaults: UserDefaults = .standard,
                 key: PreferenceKey,

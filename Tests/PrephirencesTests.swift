@@ -669,7 +669,8 @@ class PrephirencesTests: XCTestCase {
         XCTAssertEqual(mutable?["integerValue"] as? Int, 8)
         XCTAssertEqual(mutable?["stringValue"] as? String, "test")
         XCTAssertEqual(mutable?["stringValueUserDefaults"] as? String, "test")
-        
+
+        XCTAssertEqual(structObject.bundleTestProperty, "6.0") // from info plist
     }
 
     func testDynamicMember() {
@@ -736,4 +737,7 @@ public struct MyStruct: Prephirencable {
 
     @UserDefaultsPreference(key: "stringValueUserDefaults")
     var stringValuePropertyUserDefaults: String?
+
+    @BundlePreference(bundle: Bundle(for: PrephirencesTests.self), coreFoundationKeys: .CFBundleInfoDictionaryVersion)
+    var bundleTestProperty: String?
 }

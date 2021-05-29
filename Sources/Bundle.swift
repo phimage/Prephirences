@@ -38,3 +38,25 @@ extension Foundation.Bundle: PreferencesType {
     }
 
 }
+
+@propertyWrapper
+public class BundlePreference<T>: Preference<T> {
+
+    public init(bundle: Bundle = .main,
+                key: PreferenceKey,
+                transformation: PreferenceTransformation = TransformationKey.none) {
+        super.init(preferences: bundle, key: key, transformation: transformation)
+    }
+
+    public init(bundle: Bundle = .main,
+                coreFoundationKeys key: CoreFoundationKeys,
+                transformation: PreferenceTransformation = TransformationKey.none) {
+        super.init(preferences: bundle, key: key.rawValue, transformation: transformation)
+    }
+
+    /// property wrapper value
+    override open var wrappedValue: T? {
+        return value
+    }
+
+}

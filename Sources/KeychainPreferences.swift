@@ -755,3 +755,26 @@ extension KeychainPreferences.Attribute {
         return nil
     }
 }
+
+// MARK: property wrapper
+
+@propertyWrapper
+public class KeychainPreference<T>: MutablePreference<T> {
+
+    public init(keychain: KeychainPreferences = .sharedInstance,
+                key: PreferenceKey,
+                transformation: PreferenceTransformation = TransformationKey.none) {
+        super.init(preferences: keychain, key: key, transformation: transformation)
+    }
+
+    /// property wrapper value
+    override open var wrappedValue: T? {
+        get {
+            return value
+        }
+        set {
+            value = newValue
+        }
+    }
+
+}

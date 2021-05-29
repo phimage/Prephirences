@@ -189,7 +189,7 @@ extension TransformationKey: PreferenceTransformation {
                 return nil
             }
             return reverted as? T
-        case .closureTuple(let (_, revert)) :
+        case .closureTuple(_, let revert) :
             guard let reverted = revert(value) else {
                 return nil
             }
@@ -226,7 +226,7 @@ extension TransformationKey: PreferenceTransformation {
             return nil
         case .valueTransformer(let valueTransformer) :
             return valueTransformer.transformedValue(value)
-        case .closureTuple(let (transform, _)) :
+        case .closureTuple(let transform, _) :
             return transform == nil ? value : transform?(value)
         case .compose(transformations: let ts) :
             if ts.isEmpty {
