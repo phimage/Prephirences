@@ -27,6 +27,7 @@
   @MutablePreference(preferences: UserDefaults.standard, key: "enabled")
   var enabled: Bool?
 ```
+
 ```swift
 let userDefaults = UserDefaults.standard
 if let enabled = userDefaults["enabled"] as? Bool {..}
@@ -34,6 +35,7 @@ userDefaults["mycolorkey", archive] = UIColor.blue
 ```
 
 Preferences is not only `UserDefaults`, it could be also :
+
 - [Keychain](https://en.wikipedia.org/wiki/Keychain_%28software%29) to store credential
 - Any dictionary
 - Application information from `Bundle`
@@ -46,6 +48,7 @@ ie. any object which implement the simple protocol [PreferencesType](/Prephirenc
 You can also **combine multiples preferences** and work with them transparently (see [Composing](#composing))
 
 ## Contents ##
+
 - [Usage](#usage)
   - [Creating](#creating) • [Accessing](#accessing) • [Modifying](#modifying) • [Transformation and Archiving](#transformation-and-archiving)
   - [Some implementations](#some-implementations)
@@ -63,7 +66,9 @@ You can also **combine multiples preferences** and work with them transparently 
 # Usage #
 
 ## Creating ##
+
 The simplest implementation of [PreferencesType](/Prephirences/PreferencesType.swift) is [DictionaryPreferences](/Prephirences/DictionaryPreferences.swift)
+
 ```swift
 // From Dictionary
 var fromDico = DictionaryPreferences(myDictionary)
@@ -77,6 +82,7 @@ if let fromFile = DictionaryPreferences(filename: "prefs", ofType: "plist") {..}
 ```
 
 ## Accessing ##
+
 You can access with all methods defined in [PreferencesType](/Prephirences/PreferencesType.swift) protocol
 
 ```swift
@@ -90,6 +96,7 @@ var myValue = fromDicoLiteral.bool(forKey: "myKey")
 ```
 
 If you want to access using `RawRepresentable` `enum`.
+
 ```swift
 enum MyKey: PreferenceKey/*String*/ {
    case Key1, Key2, ...
@@ -98,6 +105,7 @@ if let myValue = fromDicoLiteral.object(forKey: MyKey.Key1) {..}
 var myValue = fromDicoLiteral.bool(forKey: MyKey.Key2)
 
 ```
+
 :warning: [RawRepresentableKey](/Prephirences/RawRepresentableKey/RawRepresentable+Prephirences.swift) must be imported, see [setup](#for-rawrepresentable-key).
 
 ## Modifying ##
@@ -114,17 +122,23 @@ mutableFromDico.set("myValue", forKey: "newKey")
 mutableFromDico.set(true, forKey: "newKey")
 ...
 ```
+
 You can append dictionary or other `PreferencesType` using operators
+
 ```swift
 mutableFromDico += ["newKey": "newValue", "otherKey": true]
 ```
+
 You can also remove one preference
+
 ```swift
 mutableFromDico -= "myKey"
 ```
 
 ### Apply operators to one preference ###
+
 You can extract a `MutablePreference` from any `MutablePreferencesTypes` and apply operators according to its value type
+
 ```swift
 var intPref: MutablePreference<Int> = aPrefs.preference(forKey: "intKey")
 var intPref: MutablePreference<Int> = aPrefs <| "intKey"
@@ -140,7 +154,7 @@ intPref /= 3
 switch(intPref) {
    case 1: println("one")
    case 2...10: println("not one or zero but...")
-   default: println("unknown")
+   default: println("unkwown")
 }
 
 var boolPref: MutablePreference<Bool> = aPrefs <| "boolKey")
@@ -150,25 +164,32 @@ boolPref |= true
 boolPref != true
 
 ```
+
 You can also use some methods to change value
+
 ```swift
 var stringPref: MutablePreference<String> = userDefaults <| "stringKey"
 stringPref.apply { value in
   return value?.uppercaseString
 }
 ```
+
 or transform the value type using closures
+
 ```swift
 let intFromBoolPref : MutablePreference<Int> = boolPref.transform { value in
   return (value ?? false) ? 1:0
 }
 ```
+
 ## Transformation and archiving ##
+
 Before storing or accessing the value, transformation could be applied, which conform to protocol `PreferenceTransformation`.
 
 This allow to archive, to change type, return default value if nil and many more.
 
 You can get and set value using `subscript`
+
 ```swift
 userDefaults["aKey", myTransformation] = myObject
 
@@ -176,10 +197,12 @@ if let object = userDefaults["aKey", myTransformation] {...}
 ```
 
 If you extract one preference, use `transformation` property to setup the transformation
+
 ```swift
 var aPref: MutablePreference<MyObject> = userDefaults <| "aKey"
 aPref.transformation = myTransformation
 ```
+
 or you can use some utility functions to specify a default value when the stored value match a condition
 
 ```swift
@@ -194,38 +217,49 @@ public var intValueMin10: MutablePreference<Int> {
 ```
 
 ### Archiving
+
 Archiving is particularly useful with `NSUserDefaults` because `NSUserDefaults` can't store all type of objects.
 The following functions could help by transforming the value into an other type
 
 You can archive into `Data` using this two methods
+
 ```swift
 userDefaults.set(objectToArchive: UIColor.blueColor(), forKey: "colorKey")
 userDefaults["colorKey", .Archive] = UIColor.blueColor()
 ```
+
 and unarchive using
+
 ```swift
 if let color = userDefaults.unarchiveObject(forKey: "colorKey") as? UIColor {..}
 if let color = userDefaults["colorKey", .Archive]  as? UIColor {..}
 ```
+
 If you extract one preference, use `transformation` property to setup archive mode
+
 ```swift
 var colorPref: MutablePreference<UIColor> = userDefaults <| "colorKey"
 colorPref.transformation = TransformationKey.Archive
 colorPref.value = UIColor.redColor()
 if let color = colorPref.value as? UIColor {..}
 ```
+
 ### NSValueTransformer
+
 You can also apply for all objects type an [`NSValueTransformer`](https://developer.apple.com/library/prerelease/ios/documentation/Cocoa/Reference/Foundation/Classes/NSValueTransformer_Class/index.html), to transform into JSON for instance
+
 ```swift
 userDefaults["colorKey", myValueTransformerToJson] = myComplexObject
 
 if let object = userDefaults["colorKey", myValueTransformerToJson] {...}
 ```
+
 :warning: `allowsReverseTransformation` must return `true`
 
 ### Store RawRepresentable objects
 
 For `RawRepresentable` objects like `enum` you can use the computed attribute `preferenceTransformation` as `transformation`
+
 ```swift
 enum PrefEnum: String {
     case One, Two, Three
@@ -236,6 +270,7 @@ pref.value = PrefEnum.Two
 ```
 
 ## Some implementations ##
+
 ### UserDefaults ###
 
 `UserDefaults` implement `PreferencesType` and can be acceded with same methods
@@ -247,6 +282,7 @@ if let myValue = userDefaults["mykey"] as? Bool {..}
 ```
 
 NSUserDefaults implement also `MutablePreferencesType` and can be modified with same methods
+
 ```swift
 userDefaults["mykey"] = "myvalue"
 // with type to archive
@@ -254,6 +290,7 @@ userDefaults["mykey", .Archive] = UIColor.blueColor()
 ```
 
 ### Bundle ###
+
 All `Bundle` implement `PreferencesType`, allowing to access Info.plist file.
 
 For instance the `Bundle.main` contains many useful informations about your application.
@@ -271,16 +308,20 @@ To store in iCloud, `NSUbiquitousKeyValueStore` implement also `PreferencesType`
 See composing chapter to merge and synchronize iCloud preferences with other preferences.
 
 ### Key Value Coding ###
+
 #### Foundation classes
+
 You can wrap an object respond to implicit protocol [NSKeyValueCoding](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/KeyValueCoding/Articles/KeyValueCoding.html) in `KVCPreferences` or `MutableKVCPreferences`
+
 ```swift
 let kvcPref = MutableKVCPreferences(myObject)
 ```
 Be sure to affect the correct object type
 
-
 #### Swift classes
+
 Using `ReflectingPreferences` you can easily access to a struct or swift class. Just add extension.
+
 ```swift
 struct PreferenceStruct {
     var color: String = "red"
@@ -289,18 +330,24 @@ struct PreferenceStruct {
 }
 extension PreferenceStruct: ReflectingPreferences {}
 ```
+
 You can then use all functions from `PreferencesType`
+
 ```
 var pref = PreferenceStruct(color: "red", age: 33)
 if pref["color"] as? String { .. }
 ```
 
 ### Core Data ###
+
 You can wrap on `NSManageObject` in `ManageObjectPreferences` or `MutableManageObjectPreferences`
+
 ```swift
 let managedPref = ManageObjectPreferences(myManagedObject)
 ```
+
 ### Plist ###
+
 There is many way to play with plist files
 
 - You can use `Plist` (with the useful `write` method)
@@ -308,32 +355,40 @@ There is many way to play with plist files
 - You can read dictionary from plist file and use `set(dictionary: ` on any mutable preferences
 
 ### Keychain ###
+
 To store into keychain, use an instance of ```KeychainPreferences```
 
 ```swift
 KeychainPreferences.sharedInstance // default instance with main bundle id
 var keychain = KeychainPreferences(service: "com.github.example")
 ```
+
 then store `String` or `Data`
+
 ```swift
 keychain["anUserName"] = "password-encoded"
 
 if let pass = keychain.stringForKey("anUserName") {..}
 ```
+
 **Accessibility**
-````
-keychain.accessible = .afterFirstUnlock
-````
+
+```swift
+keychain.accessibility = .AccessibleAfterFirstUnlock
+```
 
 **Sharing Keychain items**
+
 ```swift
 keychain.accessGroup = "AKEY.shared"
 ```
 
 ### NSCoder ###
+
 `NSCoder` is partially supported (`dictionary` is not available)
 
 When you implementing [NSCoding](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Protocols/NSCoding_Protocol/) you can do
+
 ```swift
 init?(coder decoder: NSCoder) {
   self.init()
@@ -350,7 +405,9 @@ func encodeWithCoder(coder: NSCoder) {
 ```
 
 ## Custom implementations ##
+
 ### Preferences
+
 Create a custom object that conform to `PreferencesType` is very easy.
 
 ```swift
@@ -363,24 +420,28 @@ extension MyCustomPreferences: PreferencesType {
     }
 }
 ```
-Only two functions are mandatory, others are automatically mapped but can be overridden for performance or readability.
+
+Only two functions are mandatory, others are automatically mapped but can be overrided for performance or readability.
 
 - In the same way you can implement `MutablePreferencesType` with `set` and `removeObject(forKey:` methods.
 - If you structure give a list of keys instead of a full dictionary, you can instead conform to `PreferencesAdapter` and implement `func keys() -> [String]`.
 - You have a collection of object with each object could define a key and a value take a look at `CollectionPreferencesAdapter` or see `NSHTTPCookieStorage` implementation.
 
-
 ### Accessing using custom key
+
 Instead of using `string` or `string` constants, you can use an `enum` to define a list of keys
 
 First create your `enum` with `String` raw value
+
 ```swift
 enum MyEnum: String {
   case MyFirstKey
   case MySecondKey
 }
 ```
+
 Then add a subscript for your key
+
 ```swift
 extension PreferencesType {
     subscript(key: MyEnum) -> Any? {
@@ -388,21 +449,26 @@ extension PreferencesType {
     }
 }
 ```
+
 Finally access your information
+
 ```swift
 if let firstValue = bundle[.MyFirstKey] {..}
 ```
+
 You can do the same with `MutablePreferencesType`
 
 ## Proxying preferences with prefix ##
+
 You can defined a subcategory of preferences prefixed with your own string like that
+
 ```swift
 let myAppPrefs = MutableProxyPreferences(preferences: userDefaults, key: "myAppKey.")
 // We have :
 userDefaults["myAppKey.myKey"] == myAppPrefs["myKey"] // is true
 ```
-This allow prefixing all your preferences (user defaults) with same key
 
+This allow prefixing all your preferences (user defaults) with same key
 
 ## Composing ##
 
@@ -425,25 +491,32 @@ You can access or modify this composite preferences like  any `PreferencesType`.
 The main goal is to define read-only preferences for your app (in code or files) and some mutable preferences (like `UserDefaults`, `NSUbiquitousKeyValueStore`). You can then access to one preference value without care about the origin.
 
 ## Managing preferences instances ##
+
 If you want to use Prephirences into a framework or want to get a `Preferences` without adding dependencies between classes, you can register any `PreferencesType` into `Prephirences`
 
 as shared instance
+
 ```swift
 Prephirences.sharedInstance = myPreferences
 ```
+
  or by providing an `Hashable` key
+
 ```swift
 Prephirences.register(preferences: myPreferences, forKey: "myKey")
 Prephirences.instances()["myKey"] = myPreferences
 Prephirences.instances()[NSStringFromClass(self.dynamicType)] = currentClassPreferences
 ```
+
 Then you can access it anywhere
+
 ```swift
 if let pref = Prephirences.instance(forKey: "myKey") {..}
 if let pref = Prephirences.instances()["myKey"] {..}
 ```
 
 ## Remote preferences ##
+
 By using remote preferences you can remotely control the behavior of your app.
 
 If you use [Alamofire](https://github.com/Alamofire/Alamofire), [Alamofire-Prephirences](https://github.com/phimage/Alamofire-Prephirences) will help you to load preferences from remote JSON or Plist
@@ -469,15 +542,19 @@ to learn more.
 2. Run `pod install` and open the `.xcworkspace` file to launch Xcode.
 
 ### For core data ###
+
 Add `pod 'Prephirences/CoreData'`
 
 ### For RawRepresentable key ###
+
 Add `pod 'Prephirences/RawRepresentableKey'`
 
 ### For PropertyListKeys ###
+
 Add `pod 'Prephirences/Keys'`
 
 ## Using Carthage ##
+
 [Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager for Objective-C and Swift.
 
 1. Add the project to your [Cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile).
