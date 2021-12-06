@@ -20,7 +20,7 @@ public extension Prephirencable {
         return "\(self)".lowercasingFirst + "."
     }
     static var parent: PreferencesType {
-        return Prephirences.sharedInstance
+        return Prephirences.sharedMutableInstance ?? Prephirences.sharedInstance
     }
     static var instance: PreferencesType {
         return ProxyPreferences(preferences: parent, key: key)
