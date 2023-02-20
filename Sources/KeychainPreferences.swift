@@ -290,7 +290,7 @@ open class KeychainPreferences: PreferencesAdapter {
 // MARK: Prephirences
 extension KeychainPreferences: MutablePreferencesType {
 
-    open subscript(key: PreferenceKey) -> PreferenceObject? {
+    public subscript(key: PreferenceKey) -> PreferenceObject? {
         get {
             return self.object(forKey: key)
         }
@@ -299,14 +299,14 @@ extension KeychainPreferences: MutablePreferencesType {
         }
     }
 
-    open func string(forKey key: PreferenceKey) -> String? {
+    public func string(forKey key: PreferenceKey) -> String? {
         if let data = data(forKey: key), let currentString = String(data: data, encoding: stringEncoding) {
             return currentString
         }
         return nil
     }
 
-    open func object(forKey key: PreferenceKey) -> PreferenceObject? {
+    public func object(forKey key: PreferenceKey) -> PreferenceObject? {
         // XXX not able to know if must decoded or not here...
         if let object = unarchiveObject(forKey: key) {
             return object
@@ -317,7 +317,7 @@ extension KeychainPreferences: MutablePreferencesType {
         return nil
     }
 
-    open func data(forKey key: PreferenceKey) -> Data? {
+    public func data(forKey key: PreferenceKey) -> Data? {
         var query: [String: Any] = newQuery()
         query[Attribute.account] = key
         query[Return.data] = kCFBooleanTrue
@@ -332,7 +332,7 @@ extension KeychainPreferences: MutablePreferencesType {
         return nil
     }
 
-    open func keys() -> [String] {
+    public func keys() -> [String] {
         var query: [String: Any] = newQuery()
         query[Return.attributes] = kCFBooleanTrue
         query[Match.limit] = Match.Limit.all
@@ -348,7 +348,7 @@ extension KeychainPreferences: MutablePreferencesType {
         return []
     }
 
-    open func dictionary() -> PreferencesDictionary {
+    public func dictionary() -> PreferencesDictionary {
         var query: [String: Any] = newQuery()
         query[Return.attributes] = kCFBooleanTrue
         #if os(iOS) || os(watchOS) || os(tvOS)
@@ -387,7 +387,7 @@ extension KeychainPreferences: MutablePreferencesType {
         return dico
     }
 
-    open func set(_ value: PreferenceObject?, forKey key: PreferenceKey) {
+    public func set(_ value: PreferenceObject?, forKey key: PreferenceKey) {
         if let string = value as? String {
             if let data = string.data(using: stringEncoding) {
                 set(data, forKey: key)
@@ -405,31 +405,31 @@ extension KeychainPreferences: MutablePreferencesType {
             removeObject(forKey: key)
         }
     }
-    open func removeObject(forKey key: PreferenceKey) {
+    public func removeObject(forKey key: PreferenceKey) {
         var query: [String: Any] = newQuery()
         query[Attribute.account] = key
         delete(query: query)
     }
-    open func set(_ value: Int, forKey key: PreferenceKey) {
+    public func set(_ value: Int, forKey key: PreferenceKey) {
         self.set(NSNumber(value: value), forKey: key)
     }
-    open func set(_ value: Float, forKey key: PreferenceKey) {
+    public func set(_ value: Float, forKey key: PreferenceKey) {
         self.set(NSNumber(value: value), forKey: key)
     }
-    open func set(_ value: Double, forKey key: PreferenceKey) {
+    public func set(_ value: Double, forKey key: PreferenceKey) {
         self.set(NSNumber(value: value), forKey: key)
     }
-    open func set(_ value: Bool, forKey key: PreferenceKey) {
+    public func set(_ value: Bool, forKey key: PreferenceKey) {
         self.set(NSNumber(value: value), forKey: key)
     }
-    open func set(url value: URL?, forKey key: PreferenceKey) {
+    public func set(url value: URL?, forKey key: PreferenceKey) {
         self.set(value, forKey: key)
     }
-    open func set(objectToArchive value: PreferenceObject?, forKey key: PreferenceKey) {
+    public func set(objectToArchive value: PreferenceObject?, forKey key: PreferenceKey) {
         Prephirences.archive(object: value, intoPreferences: self, forKey: key)
     }
 
-    open func hasObject(forKey key: PreferenceKey) -> Bool {
+    public func hasObject(forKey key: PreferenceKey) -> Bool {
         var query: [String: Any] = newQuery()
         query[Attribute.account] = key
 
@@ -445,7 +445,7 @@ extension KeychainPreferences: MutablePreferencesType {
         }
     }
 
-    open func clearAll() {
+    public func clearAll() {
         var query: [String: Any] = newQuery()
         #if !os(iOS) && !os(watchOS) && !os(tvOS)
         query[Match.limit] = Match.Limit.all
@@ -453,14 +453,14 @@ extension KeychainPreferences: MutablePreferencesType {
         delete(query: query)
     }
 
-    open func set(dictionary: PreferencesDictionary) {
+    public func set(dictionary: PreferencesDictionary) {
         for (key, value) in dictionary {
             set(value, forKey: key)
         }
     }
 
     // MARK: addon to cast on string or data
-    open subscript(string key: PreferenceKey) -> String? {
+    public subscript(string key: PreferenceKey) -> String? {
         get {
             return string(forKey: key)
         }
@@ -473,7 +473,7 @@ extension KeychainPreferences: MutablePreferencesType {
         }
     }
 
-    open subscript(data key: PreferenceKey) -> Data? {
+    public subscript(data key: PreferenceKey) -> Data? {
         get {
             return data(forKey: key)
         }
@@ -486,7 +486,7 @@ extension KeychainPreferences: MutablePreferencesType {
         }
     }
 
-    open subscript(attribute key: PreferenceKey) -> Attribute? {
+    public subscript(attribute key: PreferenceKey) -> Attribute? {
         return attribute(forKey: key)
     }
 

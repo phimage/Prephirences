@@ -74,49 +74,49 @@ open class CompositePreferences: ExpressibleByArrayLiteral {
 // MARK: PreferencesType
 extension CompositePreferences: PreferencesType {
 
-    open func object(forKey key: PreferenceKey) -> PreferenceObject? {
+    public func object(forKey key: PreferenceKey) -> PreferenceObject? {
         return self[key]
     }
 
-    open func hasObject(forKey key: PreferenceKey) -> Bool {
+    public func hasObject(forKey key: PreferenceKey) -> Bool {
         return self[key] != nil
     }
 
-    open func string(forKey key: PreferenceKey) -> String? {
+    public func string(forKey key: PreferenceKey) -> String? {
         return self[key] as? String
     }
-    open func array(forKey key: PreferenceKey) -> [PreferenceObject]? {
+    public func array(forKey key: PreferenceKey) -> [PreferenceObject]? {
         return self[key] as? [AnyObject]
     }
-    open func dictionary(forKey key: PreferenceKey) -> PreferencesDictionary? {
+    public func dictionary(forKey key: PreferenceKey) -> PreferencesDictionary? {
         return self[key] as? PreferencesDictionary
     }
-    open func data(forKey key: PreferenceKey) -> Data? {
+    public func data(forKey key: PreferenceKey) -> Data? {
         return self[key] as? Data
     }
-    open func stringArray(forKey key: PreferenceKey) -> [String]? {
+    public func stringArray(forKey key: PreferenceKey) -> [String]? {
         return self.array(forKey: key) as? [String]
     }
-    open func integer(forKey key: PreferenceKey) -> Int {
+    public func integer(forKey key: PreferenceKey) -> Int {
         return self[key] as? Int ?? 0
     }
-    open func float(forKey key: PreferenceKey) -> Float {
+    public func float(forKey key: PreferenceKey) -> Float {
         return self[key] as? Float ?? 0
     }
-    open func double(forKey key: PreferenceKey) -> Double {
+    public func double(forKey key: PreferenceKey) -> Double {
         return self[key] as? Double ?? 0
     }
-    open func bool(forKey key: PreferenceKey) -> Bool {
+    public func bool(forKey key: PreferenceKey) -> Bool {
         if let b = self[key] as? Bool {
             return b
         }
         return false
     }
-    open func url(forKey key: PreferenceKey) -> URL? {
+    public func url(forKey key: PreferenceKey) -> URL? {
         return self[key] as? URL
     }
 
-    open func dictionary() -> PreferencesDictionary {
+    public func dictionary() -> PreferencesDictionary {
         var dico = PreferencesDictionary()
         for prefs in _array.reversed() {
             dico += prefs.dictionary()
@@ -142,7 +142,7 @@ extension CompositePreferences {
     /// - parameter key: the key to check.
     ///
     /// - returns: The `PreferencesType` that we seek.
-    open func preferences(with key: PreferenceKey) -> PreferencesType? {
+    public func preferences(with key: PreferenceKey) -> PreferencesType? {
         // the first return win
         for prefs in _array {
             if prefs.hasObject(forKey: key) {
@@ -157,7 +157,7 @@ extension CompositePreferences {
     /// - parameter key: the key to check.
     ///
     /// - returns: The `MutablePreferencesType` that we seek.
-    open func mutablePreferences(with key: PreferenceKey) -> MutablePreferencesType? {
+    public func mutablePreferences(with key: PreferenceKey) -> MutablePreferencesType? {
         // the first return win
         for prefs in _array {
             if let mutablePrefs = prefs as? MutablePreferencesType, prefs.hasObject(forKey: key) {
