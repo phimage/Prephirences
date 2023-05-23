@@ -27,6 +27,9 @@
 		483C2FD122413E95007380E2 /* Prephirencable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483C2FCF22413D7C007380E2 /* Prephirencable.swift */; };
 		483C2FD222413E96007380E2 /* Prephirencable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483C2FCF22413D7C007380E2 /* Prephirencable.swift */; };
 		483C2FD322413E96007380E2 /* Prephirencable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483C2FCF22413D7C007380E2 /* Prephirencable.swift */; };
+		486DAC272A1D48010033CE6D /* PrephirenceType+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489EC52520B8376E00F54424 /* PrephirenceType+Codable.swift */; };
+		486DAC282A1D48250033CE6D /* PrephirenceType+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489EC52520B8376E00F54424 /* PrephirenceType+Codable.swift */; };
+		486DAC292A1D48250033CE6D /* PrephirenceType+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489EC52520B8376E00F54424 /* PrephirenceType+Codable.swift */; };
 		489EC52620B8376E00F54424 /* PrephirenceType+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489EC52520B8376E00F54424 /* PrephirenceType+Codable.swift */; };
 		C404AE171D81B2D200E5321E /* PreferencesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42114D01AE7D15D00A09DD9 /* PreferencesType.swift */; };
 		C404AE191D81B43100E5321E /* PreferenceTransformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C404AE181D81B43100E5321E /* PreferenceTransformation.swift */; };
@@ -583,9 +586,10 @@
 		C42114A71AE7D0CB00A09DD9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0940;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1430;
 				ORGANIZATIONNAME = phimage;
 				TargetAttributes = {
 					07FC415D1BE66517005F195C = {
@@ -719,6 +723,7 @@
 				07FC416A1BE6656C005F195C /* UserDefaults+Prephirences.swift in Sources */,
 				C4D15A1C1D3CE2780030E8CF /* RawRepresentable+Prephirences.swift in Sources */,
 				07FC416B1BE6656C005F195C /* NSUbiquitousKeyValueStore+Prephirences.swift in Sources */,
+				486DAC282A1D48250033CE6D /* PrephirenceType+Codable.swift in Sources */,
 				07FC416C1BE6656C005F195C /* KeychainPreferences.swift in Sources */,
 				C477D9DA1C03237F00486C13 /* ReflectingPreferences.swift in Sources */,
 				C404AE1B1D81B43100E5321E /* PreferenceTransformation.swift in Sources */,
@@ -750,6 +755,7 @@
 				C416C8041D81B9290006DD89 /* PreferencesController.swift in Sources */,
 				C416C7FF1D81B9210006DD89 /* NSHTTPCookieStorage+Prephirences.swift in Sources */,
 				C416C8061D81B92B0006DD89 /* UserDefaultsKeys.swift in Sources */,
+				486DAC292A1D48250033CE6D /* PrephirenceType+Codable.swift in Sources */,
 				C416C8091D81B9360006DD89 /* ManagedObjectPreferences.swift in Sources */,
 				C416C80A1D81BAF80006DD89 /* PreferenceOperators.swift in Sources */,
 				C416C8031D81B9210006DD89 /* NSCoder+Prephirences.swift in Sources */,
@@ -814,6 +820,7 @@
 				C4FA9B191C0F155F009CF439 /* PropertyListKeys.swift in Sources */,
 				C42115171AE7D90E00A09DD9 /* PreferencesType.swift in Sources */,
 				C477D9D91C03237F00486C13 /* ReflectingPreferences.swift in Sources */,
+				486DAC272A1D48010033CE6D /* PrephirenceType+Codable.swift in Sources */,
 				07FC41731BE66A30005F195C /* PreferencesOperators.swift in Sources */,
 				C4876C8A1F6578210080839E /* NSCachePreferences.swift in Sources */,
 				C404AE1A1D81B43100E5321E /* PreferenceTransformation.swift in Sources */,
@@ -868,11 +875,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = Xcodes/watchOS/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -881,6 +889,8 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu99 gnu++11";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.PrephirencesWatchos;
 				PRODUCT_NAME = Prephirences;
 				SDKROOT = watchos;
@@ -895,11 +905,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = Xcodes/watchOS/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -908,6 +919,8 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu99 gnu++11";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.PrephirencesWatchos;
 				PRODUCT_NAME = Prephirences;
 				SDKROOT = watchos;
@@ -923,11 +936,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = Xcodes/tvOS/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -936,6 +950,8 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu99 gnu++11";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.Prephirences;
 				PRODUCT_NAME = Prephirences;
 				SDKROOT = appletvos;
@@ -951,11 +967,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = Xcodes/tvOS/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -964,6 +981,8 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu99 gnu++11";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.Prephirences;
 				PRODUCT_NAME = Prephirences;
 				SDKROOT = appletvos;
@@ -1102,6 +1121,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1115,6 +1135,8 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu99 gnu++11";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.Prephirences;
 				PRODUCT_NAME = Prephirences;
 				SDKROOT = iphoneos;
@@ -1133,6 +1155,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = Xcodes/iOS/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
@@ -1142,6 +1165,8 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu99 gnu++11";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.Prephirences;
 				PRODUCT_NAME = Prephirences;
 				SDKROOT = iphoneos;
@@ -1161,6 +1186,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				FRAMEWORK_VERSION = A;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1174,6 +1200,8 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu99 gnu++11";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.Prephirences;
 				PRODUCT_NAME = Prephirences;
 				SKIP_INSTALL = YES;
@@ -1190,6 +1218,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = Xcodes/Mac/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1199,6 +1228,8 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu99 gnu++11";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.Prephirences;
 				PRODUCT_NAME = Prephirences;
 				SKIP_INSTALL = YES;
