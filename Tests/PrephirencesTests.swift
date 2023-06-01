@@ -17,6 +17,14 @@ typealias Color = UIColor
     import AppKit
 typealias Color = NSColor
 #endif
+#if os(watchOS)
+	import WatchKit
+typealias Color = UIColor
+#endif
+#if os(tvOS)
+	import TVUIKit
+typealias Color = UIColor
+#endif
 
 class PrephirencesTests: XCTestCase {
 
@@ -66,21 +74,21 @@ class PrephirencesTests: XCTestCase {
     }*/
 
     func testFromFile() {
-        if let filePath = path(forResource: "Test", ofType: "plist", in: Bundle(for: type(of: self))) {
-            if  let preference = DictionaryPreferences(filePath: filePath) {
-                    for (key,value) in preference.dictionary() {
-                        print("\(key)=\(value)")
-                    }
+		guard let filePath = path(forResource: "Test", ofType: "plist", in: Bundle(for: type(of: self))) else {
+			XCTFail("Failed to get file url")
+			return
+		}
+		if let preference = DictionaryPreferences(filePath: filePath) {
+				for (key,value) in preference.dictionary() {
+					print("\(key)=\(value)")
+				}
 
-            } else {
-                XCTFail("Failed to read from file")
-            }
-        } else {
-            XCTFail("Failed to get file url")
-        }
+		} else {
+			XCTFail("Failed to read from file")
+		}
         
         if let preference = DictionaryPreferences(filename: "Test", ofType: "plist", bundle: Bundle(for: type(of: self))) ??
-            DictionaryPreferences(filePath: "Tests/Test.plist") {
+            DictionaryPreferences(filePath: filePath) {
             for (key,value) in preference.dictionary() {
                 print("\(key)=\(value)")
             }
@@ -95,7 +103,11 @@ class PrephirencesTests: XCTestCase {
             return url
         }
         #endif
-        let path = "Tests/\(resource).\(ext)"
+		let path = URL(fileURLWithPath: #filePath)
+			.deletingLastPathComponent()
+			.deletingLastPathComponent()
+			.appendingPathComponent("Tests/\(resource).\(ext)")
+			.path
         if FileManager.default.fileExists(atPath: path) {
             return path
         }
