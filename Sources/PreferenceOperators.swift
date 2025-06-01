@@ -84,7 +84,7 @@ public func ^<T: FixedWidthInteger> (left: Preference<T>, right: Preference<T>) 
     return Preference<T>.operation(left, right, ^)
 }
 extension Preference {
-    static func operation<T>(_ left: Preference<T>, _ right: Preference<T>, _ op: (T, T) -> T) -> T? {
+    static func operation<U>(_ left: Preference<U>, _ right: Preference<U>, _ op: (U, U) -> U) -> U? {
         if let leftValue = left.value {
             if let rightValue = right.value {
                 return op(leftValue, rightValue)
