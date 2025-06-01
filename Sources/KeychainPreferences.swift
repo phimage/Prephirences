@@ -37,7 +37,7 @@ open class KeychainPreferences: PreferencesAdapter {
     // MARK: constantes
 
     /// Shared instance. service is equal to bundle identifier.
-    public static var sharedInstance = KeychainPreferences(service: Bundle.main.bundleIdentifier ?? "Prephirences")
+    nonisolated(unsafe) public static var sharedInstance = KeychainPreferences(service: Bundle.main.bundleIdentifier ?? "Prephirences")
 
     /// Class Constants
     static let klass = String(kSecClass)
@@ -55,8 +55,8 @@ open class KeychainPreferences: PreferencesAdapter {
         static let limit = String(kSecMatchLimit)
 
         struct Limit {
-            static let one = kSecMatchLimitOne
-            static let all = kSecMatchLimitAll
+            static let one = String(kSecMatchLimitOne)
+            static let all = String(kSecMatchLimitAll)
         }
     }
 
@@ -265,7 +265,7 @@ open class KeychainPreferences: PreferencesAdapter {
         query[Return.data] = kCFBooleanTrue
         query[Return.persistentRef] = kCFBooleanTrue
         query[Return.ref] = kCFBooleanTrue
-        query[Match.limit] = Match.Limit.one
+        query[Match.limit] = Match.Limit.one as CFString
 
         var result: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &result)
@@ -321,7 +321,7 @@ extension KeychainPreferences: MutablePreferencesType {
         var query: [String: Any] = newQuery()
         query[Attribute.account] = key
         query[Return.data] = kCFBooleanTrue
-        query[Match.limit] = Match.Limit.one
+        query[Match.limit] = Match.Limit.one as CFString
 
         var result: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &result)
@@ -335,7 +335,7 @@ extension KeychainPreferences: MutablePreferencesType {
     public func keys() -> [String] {
         var query: [String: Any] = newQuery()
         query[Return.attributes] = kCFBooleanTrue
-        query[Match.limit] = Match.Limit.all
+        query[Match.limit] = Match.Limit.all as CFString
 
         var result: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &result)
@@ -354,7 +354,7 @@ extension KeychainPreferences: MutablePreferencesType {
         #if os(iOS) || os(watchOS) || os(tvOS)
         query[Return.data] = kCFBooleanTrue
         #endif
-        query[Match.limit] = Match.Limit.all
+        query[Match.limit] = Match.Limit.all as CFString
 
         var result: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &result)
@@ -448,7 +448,7 @@ extension KeychainPreferences: MutablePreferencesType {
     public func clearAll() {
         var query: [String: Any] = newQuery()
         #if !os(iOS) && !os(watchOS) && !os(tvOS)
-        query[Match.limit] = Match.Limit.all
+        query[Match.limit] = Match.Limit.all as CFString
         #endif
         delete(query: query)
     }

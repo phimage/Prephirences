@@ -53,7 +53,7 @@ open class PreferencesKVCHelper: NSObject { // NSKeyValueCoding
     import AppKit
 
     @objc(PreferencesController)
-    public class PreferencesController: NSController {
+    public class PreferencesController: NSController, @unchecked Sendable {
 
         public var values = PreferencesKVCHelper(preferences: nil)
 

@@ -28,7 +28,7 @@ SOFTWARE.
 import Foundation
 
 /* Preferences manager class that contains some Preferences */
-open class Prephirences {
+public actor Prephirences {
 
     /** Shared preferences. Could be replaced by any other preferences */
     public static var sharedInstance: PreferencesType = MutableDictionaryPreferences()
@@ -42,7 +42,7 @@ open class Prephirences {
     fileprivate static var _instances = [PrephirencesKey: PreferencesType]()
 
     /* Get Preferences for PrephirencesKey */
-    fileprivate class func instance(forKey key: PrephirencesKey, orRegister newOne: PreferencesType? = nil) -> PreferencesType? {
+    fileprivate static func instance(forKey key: PrephirencesKey, orRegister newOne: PreferencesType? = nil) -> PreferencesType? {
         if let value = self._instances[key] {
             return value
         } else if let toRegister = newOne {
@@ -51,24 +51,24 @@ open class Prephirences {
         return newOne
     }
     /* Add Preferences for PrephirencesKey */
-    fileprivate class func register(preferences: PreferencesType, forKey key: PrephirencesKey) {
+    fileprivate static func register(preferences: PreferencesType, forKey key: PrephirencesKey) {
         self._instances[key] = preferences
     }
     /* Remove Preferences for PrephirencesKey */
-    fileprivate class func unregisterPreferences(forKey key: PrephirencesKey) -> PreferencesType? {
+    fileprivate static func unregisterPreferences(forKey key: PrephirencesKey) -> PreferencesType? {
         return self._instances.removeValue(forKey: key)
     }
 
     /* Get Preferences for key */
-    open class func instance<Key: Hashable>(forKey key: Key, orRegister newOne: PreferencesType? = nil) -> PreferencesType? {
+    public static func instance<Key: Hashable>(forKey key: Key, orRegister newOne: PreferencesType? = nil) -> PreferencesType? {
         return self.instance(forKey: PrephirencesKey(key), orRegister: newOne)
     }
     /* Add Preferences for key */
-    open class func registerInstance<Key: Hashable>(_ preferences: PreferencesType, forKey key: Key) {
+    public static func registerInstance<Key: Hashable>(_ preferences: PreferencesType, forKey key: Key) {
         self.register(preferences: preferences, forKey: PrephirencesKey(key))
     }
     /* Remove Preferences for key */
-    open class func unregisterInstance<Key: Hashable>(forKey key: Key) -> PreferencesType? {
+    public static func unregisterInstance<Key: Hashable>(forKey key: Key) -> PreferencesType? {
         return self.unregisterPreferences(forKey: PrephirencesKey(key))
     }
 

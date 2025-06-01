@@ -66,7 +66,8 @@ class PrephirencesTests: XCTestCase {
     }*/
 
     func testFromFile() {
-        if let filePath = path(forResource: "Test", ofType: "plist", in: Bundle(for: type(of: self))) {
+        if let filePath = path(forResource: "Test", ofType: "plist", in: Bundle(for: type(of: self)))
+            ?? path(forResource: "Test", ofType: "plist", in: Bundle.module) {
             if  let preference = DictionaryPreferences(filePath: filePath) {
                     for (key,value) in preference.dictionary() {
                         print("\(key)=\(value)")
@@ -79,8 +80,9 @@ class PrephirencesTests: XCTestCase {
             XCTFail("Failed to get file url")
         }
         
-        if let preference = DictionaryPreferences(filename: "Test", ofType: "plist", bundle: Bundle(for: type(of: self))) ??
-            DictionaryPreferences(filePath: "Tests/Test.plist") {
+        if let preference = DictionaryPreferences(filename: "Test", ofType: "plist", bundle: Bundle(for: type(of: self)))
+            ?? DictionaryPreferences(filename: "Test", ofType: "plist", bundle: Bundle.module)
+            ?? DictionaryPreferences(filePath: "Tests/Test.plist") {
             for (key,value) in preference.dictionary() {
                 print("\(key)=\(value)")
             }
@@ -726,7 +728,7 @@ public struct MyStruct: Prephirencable {
     public static let stringValueLoaded: String? = instance["stringValueLoaded"] as? String
 
     public struct MySubLevel: Prephirencable { // swiftlint:disable:this nesting
-        public static let parent = MyStruct.instance
+        nonisolated(unsafe) public static let parent = MyStruct.instance
 
         public static let boolValue: Bool = instance["boolValue"] as? Bool ?? false
         public static let integer: Int? = instance["integer"] as? Int

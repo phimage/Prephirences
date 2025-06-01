@@ -42,7 +42,7 @@ open class CompositePreferences: ExpressibleByArrayLiteral {
 
     // MARK: singleton
     /// Shared instance.
-    static let sharedInstance = CompositePreferences([])
+    nonisolated(unsafe) static let sharedInstance = CompositePreferences([])
 
     // MARK: init
     /// Initialize using an array of `PreferencesType`.
